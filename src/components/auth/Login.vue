@@ -62,6 +62,8 @@ export default {
                 password: this.password
             })
             .then(response => {
+                //this.$store.dispatch('getApps')
+                this.$store.dispatch('getRoles')
                 this.$router.push('/')
             })
         }

@@ -8,6 +8,8 @@ axios.defaults.baseURL = 'http://127.0.0.1:8000/api/auth'
 export default new Vuex.Store({
   state: {
     token: localStorage.getItem('access_token') || null,
+    apps: {},
+    roles: {}
   },
   getters: {
     loggedIn(state) {
@@ -20,9 +22,59 @@ export default new Vuex.Store({
     },
     destroyToken(state) {
       state.token = null
+    },
+    getApps(state, apps) {
+      state.apps = apps
+    },
+    getRoles(state, roles) {
+      state.roles = roles
     }
   },
   actions: {
+    getApps(context) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+      return new Promise((resolve, reject) => {
+        axios.post('/me')
+        .then(response => {
+            const _apps = response.data.apps
+            const apps = {}
+
+            _apps.forEach(el => {
+              apps.push(el.app)
+            })
+
+            context.commit('getApps', apps)
+            resolve(response)
+        })
+        .catch(error => {
+            reject(error)
+            console.log(error)
+        })
+      })
+    },
+
+    getRoles(context) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+      return new Promise((resolve, reject) => {
+        axios.post('/me')
+        .then(response => {
+            const _roles = response.data.roles
+            const roles = {}
+
+            _roles.forEach(el => {
+              roles.push(el.role)
+            })
+
+            context.commit('getRoles', roles)
+            resolve(response)
+        })
+        .catch(error => {
+            reject(error)
+            console.log(error)
+        })
+      })
+    },
+
     retrieveToken(context, credentials) {
       return new Promise((resolve, reject) => {
         axios.post('/login', {
