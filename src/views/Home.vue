@@ -5,7 +5,7 @@
     <ul :class="{'toggled': isCollapsed}" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-            <div class="sidebar-brand-icon rotate-n-15">
+            <div class="sidebar-brand-icon">
                 <i class="fas fa-chart-area"></i>
             </div>
             <div class="sidebar-brand-text mx-3">Dowell Estimating</div>
@@ -38,8 +38,7 @@
             <div id="collapseNAT" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar" style="">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Categories:</h6>
-                    <router-link class="collapse-item" to="/national-sales">Sales</router-link>
-                    <router-link class="collapse-item" to="/national-reports">Reports</router-link>
+                    <router-link class="collapse-item" to="/national-totals">Totals</router-link>
                 </div>
             </div>
         </li>
@@ -51,9 +50,17 @@
             </a>
             <div id="collapseVIC" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar" style="">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Categories:</h6>
-                    <router-link class="collapse-item" to="/vic-sales">Sales</router-link>
-                    <router-link class="collapse-item" to="/vic-reports">Reports</router-link>
+                    <h6 class="collapse-header">Sites:</h6>
+                    <router-link class="collapse-item" to="/">Totals</router-link>
+                    <router-link class="collapse-item" to="/">Bayswater</router-link>
+                    <router-link class="collapse-item" to="/">Epping</router-link>
+                    <router-link class="collapse-item" to="/">Shepparton</router-link>
+                    <router-link class="collapse-item" to="/">Ballarat</router-link>
+                    <router-link class="collapse-item" to="/">Bayswater</router-link>
+                    <router-link class="collapse-item" to="/">Bendigo</router-link>
+                    <router-link class="collapse-item" to="/">Geelong</router-link>
+                    <router-link class="collapse-item" to="/">Wodonga</router-link>
+                    <router-link class="collapse-item" to="/">Warnambool</router-link>
                 </div>
             </div>
         </li>
@@ -65,9 +72,9 @@
             </a>
             <div id="collapseQLD" class="collapse">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Categories:</h6>
-                    <router-link class="collapse-item" to="/wa-sales">Sales</router-link>
-                    <router-link class="collapse-item" to="/wa-reports">Reports</router-link>
+                    <h6 class="collapse-header">Sites:</h6>
+                    <router-link class="collapse-item" to="/">Totals</router-link>
+                    <router-link class="collapse-item" to="/">Geebung</router-link>
                 </div>
             </div>
         </li>
@@ -79,14 +86,16 @@
             </a>
             <div id="collapseNSW" class="collapse">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Categories:</h6>
-                    <router-link class="collapse-item" to="/wa-sales">Sales</router-link>
-                    <router-link class="collapse-item" to="/wa-reports">Reports</router-link>
+                    <h6 class="collapse-header">Sites:</h6>
+                    <router-link class="collapse-item" to="/">Totals</router-link>
+                    <router-link class="collapse-item" to="/">Smithfield</router-link>
+                    <router-link class="collapse-item" to="/">Nowra</router-link>
+                    <router-link class="collapse-item" to="/">Newcastle</router-link>
                 </div>
             </div>
         </li>
 
-        <li v-if="loggedIn && isEstimating" class="nav-item">
+        <!-- <li v-if="loggedIn && isEstimating" class="nav-item">
             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseWA" aria-expanded="true" aria-controls="collapseWA">
                 <i class="fas fa-fw fa-map-marked"></i>
                 <span>Western Australia</span>
@@ -98,7 +107,7 @@
                     <router-link class="collapse-item" to="/wa-reports">Reports</router-link>
                 </div>
             </div>
-        </li>
+        </li> -->
         
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
@@ -203,6 +212,9 @@ export default {
         },
         isNSW() {
             return this.$store.getters.isNSW
+        },
+        isBAY() {
+            return this.$store.getters.isBAY
         },
     },
     created() {

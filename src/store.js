@@ -67,10 +67,13 @@ export default new Vuex.Store({
     *** Sites 
     ***---------------------------------------
     **/
+    // Queensland
     isGBG(state) {
       const sites = state.sites
       return (sites.includes("gbg") ? true : false) 
     },
+    
+    // New South Wales
     isNOW(state) {
       const sites = state.sites
       return (sites.includes("now") ? true : false) 
@@ -82,6 +85,12 @@ export default new Vuex.Store({
     isSMT(state) {
       const sites = state.sites
       return (sites.includes("smt") ? true : false) 
+    },
+
+    //Victoria
+    isBAY(state) {
+      const sites = state.sites
+      return (sites.includes("bay") ? true : false) 
     },
 
     

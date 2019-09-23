@@ -23,9 +23,9 @@ export default new Router({
       component: () => import('./components/auth/Logout.vue')
     },
     {
-      path: '/national-sales',
-      name: 'national-sales',
-      component: () => import('./components/national/NationalSales.vue')
+      path: '/national-totals',
+      name: 'national-totals',
+      component: () => import('./components/national/NationalTotals.vue')
     },
     {
       path: '/404',
