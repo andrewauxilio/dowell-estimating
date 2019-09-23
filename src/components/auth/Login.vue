@@ -58,13 +58,24 @@ export default {
     methods: {
         login() {
             this.$store.dispatch('retrieveToken', {
-                email: this.email,
-                password: this.password
-            })
-            .then(response => {
-                this.$store.dispatch('getUserDetails')
-                this.$router.push('/')
-            })
+                    email: this.email,
+                    password: this.password
+                })
+                .then(response => {
+                    this.$store.dispatch('getUserDetails')
+                    toast.fire({
+                        type: "success",
+                        title: "You have logged in successfully"
+                    });
+                    this.$router.push('/')
+                })
+                .catch(() => {
+                    swal.fire(
+                        "Login Failed",
+                        "There was an error logging in. Please try again.",
+                        "warning"
+                    );
+                })
         }
     }
 }
