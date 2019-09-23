@@ -6,30 +6,31 @@
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
             <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-wave-square"></i>
+                <i class="fas fa-chart-area"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">Pulse</div>
+            <div class="sidebar-brand-text mx-3">Dowell Estimating</div>
         </a>
 
         <!-- Divider -->
-        <hr class="sidebar-divider my-0">
+        <hr v-if="loggedIn && isEstimating" class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
+        <li v-if="loggedIn && isEstimating" class="nav-item active">
             <a class="nav-link" href="index.html">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
+                <span>Dashboard</span>
+            </a>
         </li>
 
         <!-- Divider -->
-        <hr v-if="loggedIn" class="sidebar-divider">
+        <hr v-if="loggedIn && isEstimating" class="sidebar-divider">
 
         <!-- Heading -->
-        <div v-if="loggedIn" class="sidebar-heading">
+        <div v-if="loggedIn && isEstimating" class="sidebar-heading">
             Analytics
         </div>
 
-        <li v-if="loggedIn" class="nav-item">
+        <li v-if="loggedIn && isEstimating && isNAT" class="nav-item">
             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseNAT" aria-expanded="true" aria-controls="collapseNAT">
                 <i class="fas fa-fw fa-flag"></i>
                 <span>National</span>
@@ -43,7 +44,7 @@
             </div>
         </li>
 
-        <li v-if="loggedIn" class="nav-item">
+        <li v-if="loggedIn && isEstimating && isVIC" class="nav-item">
             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseVIC" aria-expanded="true" aria-controls="collapseVIC">
                 <i class="fas fa-fw fa-map-marked"></i>
                 <span>Victoria</span>
@@ -57,7 +58,35 @@
             </div>
         </li>
 
-        <li v-if="loggedIn" class="nav-item">
+        <li v-if="loggedIn && isEstimating && isQLD" class="nav-item">
+            <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseQLD" aria-expanded="true" aria-controls="collapseQLD">
+                <i class="fas fa-fw fa-map-marked"></i>
+                <span>Queensland</span>
+            </a>
+            <div id="collapseQLD" class="collapse">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Categories:</h6>
+                    <router-link class="collapse-item" to="/wa-sales">Sales</router-link>
+                    <router-link class="collapse-item" to="/wa-reports">Reports</router-link>
+                </div>
+            </div>
+        </li>
+
+        <li v-if="loggedIn && isEstimating && isNSW" class="nav-item">
+            <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseNSW" aria-expanded="true" aria-controls="collapseNSW">
+                <i class="fas fa-fw fa-map-marked"></i>
+                <span>New South Wales</span>
+            </a>
+            <div id="collapseNSW" class="collapse">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Categories:</h6>
+                    <router-link class="collapse-item" to="/wa-sales">Sales</router-link>
+                    <router-link class="collapse-item" to="/wa-reports">Reports</router-link>
+                </div>
+            </div>
+        </li>
+
+        <li v-if="loggedIn && isEstimating" class="nav-item">
             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseWA" aria-expanded="true" aria-controls="collapseWA">
                 <i class="fas fa-fw fa-map-marked"></i>
                 <span>Western Australia</span>
@@ -136,7 +165,7 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-                <router-view />
+                <router-view  />
             </div>
         </div>
     </div>
@@ -152,12 +181,28 @@ export default {
     data() {
         return {
             isCollapsed: true,
-            name: ''
+            name: '',
+            sites: this.$store.state.sites,
         }
     },
     computed: {
         loggedIn() {
             return this.$store.getters.loggedIn
+        },
+        isEstimating() {
+            return this.$store.getters.isEstimating
+        },
+        isNAT() {
+            return this.$store.getters.isNAT
+        },
+        isVIC() {
+            return this.$store.getters.isVIC
+        },
+        isQLD() {
+            return this.$store.getters.isQLD
+        },
+        isNSW() {
+            return this.$store.getters.isNSW
         },
     },
     created() {

@@ -1,8 +1,10 @@
 <template>
 <div class="card">
-    <Chart />
-    <div class="card">{{ apps }}</div>
+    <Chart v-if="isGBG" />
+    <!-- <div class="card">{{ apps }}</div>
     <div class="card">{{ roles }}</div>
+    <div class="card">{{ states }}</div> -->
+    <div class="card">{{ sites }}</div>
 </div>
 </template>
 
@@ -13,22 +15,15 @@ export default {
     components: {
         Chart
     },
-    mounted() {
-
+    data() {
+       return {
+           sites: this.$store.state.sites,
+       }
     },
     computed: {
-        // apps() {
-        //     return this.$store.state.apps
-        // },
-        roles() {
-            return this.$store.state.roles
+        isGBG() {
+            return this.$store.getters.isGBG
         }
     },
-    data() {
-       
-    },
-    methods: {
-
-    }
 }
 </script>

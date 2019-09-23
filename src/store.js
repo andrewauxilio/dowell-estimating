@@ -1,20 +1,90 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api/auth'
+axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
 
 export default new Vuex.Store({
   state: {
     token: localStorage.getItem('access_token') || null,
-    apps: {},
-    roles: {}
+    apps: [],
+    roles: [],
+    states: [],
+    sites: [],
   },
+  plugins: [createPersistedState()],
   getters: {
     loggedIn(state) {
       return state.token !== null
     },
+
+    /**---------------------------------------
+    *** Apps 
+    ***---------------------------------------
+    **/
+    isEstimating(state) {
+      const apps = state.apps
+      return (apps.includes("estimating") ? true : false) 
+    },
+
+    /**---------------------------------------
+    *** Roles 
+    ***---------------------------------------
+    **/
+    isManager(state) {
+      const roles = state.roles
+      return (roles.includes("manager") ? true : false) 
+    },
+    isUser(state) {
+      const roles = state.roles
+      return (roles.includes("user") ? true : false) 
+    },
+
+    /**---------------------------------------
+    *** States 
+    ***---------------------------------------
+    **/
+    isNAT(state) {
+      const states = state.states
+      return (states.includes("nat") ? true : false) 
+    },
+    isVIC(state) {
+      const states = state.states
+      return (states.includes("vic") ? true : false) 
+    },
+    isQLD(state) {
+      const states = state.states
+      return (states.includes("nsw") ? true : false) 
+    },
+    isNSW(state) {
+      const states = state.states
+      return (states.includes("qld") ? true : false) 
+    },
+
+    /**---------------------------------------
+    *** Sites 
+    ***---------------------------------------
+    **/
+    isGBG(state) {
+      const sites = state.sites
+      return (sites.includes("gbg") ? true : false) 
+    },
+    isNOW(state) {
+      const sites = state.sites
+      return (sites.includes("now") ? true : false) 
+    },
+    isNEW(state) {
+      const sites = state.sites
+      return (sites.includes("new") ? true : false) 
+    },
+    isSMT(state) {
+      const sites = state.sites
+      return (sites.includes("smt") ? true : false) 
+    },
+
+    
   },
   mutations: {
     retrieveToken(state, token) {
@@ -28,44 +98,57 @@ export default new Vuex.Store({
     },
     getRoles(state, roles) {
       state.roles = roles
+    },
+    getStates(state, states) {
+      state.states = states
+    },
+    getSites(state, sites) {
+      state.sites = sites
     }
   },
   actions: {
-    getApps(context) {
+    getUserDetails(context) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
       return new Promise((resolve, reject) => {
-        axios.post('/me')
+        axios.post('/auth/me')
         .then(response => {
             const _apps = response.data.apps
-            const apps = {}
+            const apps = []
+
+            const _roles = response.data.roles
+            const roles = []
+
+            const _states = response.data.states
+            const states = []
+
+            const _sites = response.data.sites
+            const sites = []
 
             _apps.forEach(el => {
               apps.push(el.app)
+              console.log(el.app)
             })
-
-            context.commit('getApps', apps)
-            resolve(response)
-        })
-        .catch(error => {
-            reject(error)
-            console.log(error)
-        })
-      })
-    },
-
-    getRoles(context) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
-      return new Promise((resolve, reject) => {
-        axios.post('/me')
-        .then(response => {
-            const _roles = response.data.roles
-            const roles = {}
 
             _roles.forEach(el => {
               roles.push(el.role)
+              console.log(el.role)
             })
 
+            _states.forEach(el => {
+              states.push(el.state)
+              console.log(el.state)
+            })
+
+            _sites.forEach(el => {
+              sites.push(el.site)
+              console.log(el.site)
+            })
+
+            context.commit('getApps', apps)
             context.commit('getRoles', roles)
+            context.commit('getStates', states)
+            context.commit('getSites', sites)
+
             resolve(response)
         })
         .catch(error => {
@@ -77,7 +160,7 @@ export default new Vuex.Store({
 
     retrieveToken(context, credentials) {
       return new Promise((resolve, reject) => {
-        axios.post('/login', {
+        axios.post('/auth/login', {
           email: credentials.email,
           password: credentials.password
         })
@@ -99,7 +182,7 @@ export default new Vuex.Store({
       
       if (context.getters.loggedIn) {
         return new Promise((resolve, reject) => {
-          axios.post('/logout')
+          axios.post('/auth/logout')
           .then(response => {
             localStorage.removeItem('access_token')
             context.commit('destroyToken')
