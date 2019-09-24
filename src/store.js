@@ -14,7 +14,9 @@ export default new Vuex.Store({
     states: [],
     sites: [],
   },
+
   plugins: [createPersistedState()],
+  
   getters: {
     loggedIn(state) {
       return state.token !== null
@@ -95,6 +97,7 @@ export default new Vuex.Store({
 
     
   },
+
   mutations: {
     retrieveToken(state, token) {
       state.token = token
@@ -115,50 +118,56 @@ export default new Vuex.Store({
       state.sites = sites
     }
   },
+
   actions: {
+    /**-------------------------------------------------------------------
+    ***                   Retrieve User Details
+    ***-------------------------------------------------------------------
+    *** Function: Once the user logs in, this is  executed and the user
+    *** apps, roles, states and sites will be stored in state as an array
+    ***------------------------------------------------------------------
+    **/
     getUserDetails(context) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
       return new Promise((resolve, reject) => {
         axios.post('/auth/me')
         .then(response => {
-            const _apps = response.data.apps
-            const apps = []
 
-            const _roles = response.data.roles
-            const roles = []
+          //Store objects and initialize array
+          const _apps = response.data.apps
+          const apps = []
+          const _roles = response.data.roles
+          const roles = []
+          const _states = response.data.states
+          const states = []
+          const _sites = response.data.sites
+          const sites = []
 
-            const _states = response.data.states
-            const states = []
+          //Loop array of objects and push to array
+          _apps.forEach(el => {
+            apps.push(el.app)
+            console.log(el.app)
+          })
+          _roles.forEach(el => {
+            roles.push(el.role)
+            console.log(el.role)
+          })
+          _states.forEach(el => {
+            states.push(el.state)
+            console.log(el.state)
+          })
+          _sites.forEach(el => {
+            sites.push(el.site)
+            console.log(el.site)
+          })
 
-            const _sites = response.data.sites
-            const sites = []
+          //Save each array in state
+          context.commit('getApps', apps)
+          context.commit('getRoles', roles)
+          context.commit('getStates', states)
+          context.commit('getSites', sites)
 
-            _apps.forEach(el => {
-              apps.push(el.app)
-              console.log(el.app)
-            })
-
-            _roles.forEach(el => {
-              roles.push(el.role)
-              console.log(el.role)
-            })
-
-            _states.forEach(el => {
-              states.push(el.state)
-              console.log(el.state)
-            })
-
-            _sites.forEach(el => {
-              sites.push(el.site)
-              console.log(el.site)
-            })
-
-            context.commit('getApps', apps)
-            context.commit('getRoles', roles)
-            context.commit('getStates', states)
-            context.commit('getSites', sites)
-
-            resolve(response)
+          resolve(response)
         })
         .catch(error => {
             reject(error)
@@ -167,6 +176,13 @@ export default new Vuex.Store({
       })
     },
 
+    /**-------------------------------------------------------------------
+    ***                   Retrieve User Details
+    ***-------------------------------------------------------------------
+    *** Function: The login function. This retrieves a token for the user
+    *** and saves it into state and localStorage
+    ***------------------------------------------------------------------
+    **/
     retrieveToken(context, credentials) {
       return new Promise((resolve, reject) => {
         axios.post('/auth/login', {
@@ -186,6 +202,13 @@ export default new Vuex.Store({
       })
     },
 
+    /**-------------------------------------------------------------------
+    ***                    Destroy User Token
+    ***-------------------------------------------------------------------
+    *** Function: The logout function. This destroys the token for the 
+    *** user and their user details
+    ***-------------------------------------------------------------------
+    **/
     destroyToken(context) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
       

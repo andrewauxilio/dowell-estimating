@@ -2,7 +2,6 @@
 import { Pie } from "vue-chartjs";
 
 import axios from 'axios'
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api/estimating'
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.access_token
 
 export default {
@@ -10,7 +9,7 @@ export default {
   mounted() {
     let location = new Array();
     let quantity = new Array();
-    axios.get("/nat/new-quote-requests/all").then(response => {
+    axios.get("/estimating/nat/new-quote-requests/all").then(response => {
       let data = response.data;
       if (data) {
         data.forEach(element => {

@@ -1,9 +1,9 @@
 <template>
-<!-- Page Wrapper -->
 <div id="wrapper">
-    <!-- Sidebar -->
+    <!--------------------------------------------------------------------
+                             Main Navigation
+    --------------------------------------------------------------------->
     <ul :class="{'toggled': isCollapsed}" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-        <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
             <div class="sidebar-brand-icon">
                 <i class="fas fa-chart-area"></i>
@@ -13,19 +13,14 @@
 
         <!-- Divider -->
         <hr v-if="loggedIn && isEstimating" class="sidebar-divider my-0">
-
-        <!-- Nav Item - Dashboard -->
         <li v-if="loggedIn && isEstimating" class="nav-item active">
             <a class="nav-link" href="index.html">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </a>
         </li>
-
-        <!-- Divider -->
+      
         <hr v-if="loggedIn && isEstimating" class="sidebar-divider">
-
-        <!-- Heading -->
         <div v-if="loggedIn && isEstimating" class="sidebar-heading">
             Analytics
         </div>
@@ -109,10 +104,7 @@
             </div>
         </li> -->
         
-        <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
-
-        <!-- Heading -->
         <div class="sidebar-heading">
             Account Controls
         </div>
@@ -131,7 +123,6 @@
             </router-link>
         </li>
 
-        <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
         <!-- Sidebar Toggler (Sidebar) -->
@@ -139,39 +130,22 @@
             <button @click="sideBarToggle()" class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
     </ul>
-    <!-- End of Sidebar -->
 
-    <!-- Content Wrapper -->
+
+    <!--------------------------------------------------------------------
+                               Main Content
+    --------------------------------------------------------------------->
     <div id="content-wrapper" class="d-flex flex-column">
-        <!-- Main Content -->
         <div id="content">
-            <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                 <!-- Sidebar Toggle (Topbar) -->
                 <button @click="sideBarToggle()" id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                     <i class="fa fa-bars"></i>
                 </button>
-
-                <!-- <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small" v-if="loggedIn">Welcome</span>
-                            <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout
-                            </a>
-                        </div>
-                    </li>
-                </ul> -->
             </nav>
-            <!-- End of Topbar -->
-
-            <!-- Begin Page Content -->
             <div class="container-fluid">
                 <transition name="fade">
+                    <!-- Router View -->
                     <router-view  />
                 </transition>
             </div>
@@ -215,9 +189,6 @@ export default {
         isBAY() {
             return this.$store.getters.isBAY
         },
-    },
-    created() {
-        //this.getUserName();
     },
     methods: {
         sideBarToggle() {
