@@ -22,7 +22,7 @@ export default {
             datasets: [
               {
                 label: "No. of Quote Requests",
-                backgroundColor: "rgba(54, 162, 235, 0.7)",
+                backgroundColor: "rgba(75, 192, 192, 0.7)",
                 data: quantity
               }
             ]
