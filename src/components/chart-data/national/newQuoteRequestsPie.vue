@@ -15,7 +15,7 @@
 import PieChart from '../../../chart-js/pie-chart'
 
 import axios from 'axios'
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.access_token
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.access_token
 
 export default {
     components: {
@@ -56,21 +56,26 @@ export default {
                         datasets: [{
                             label: "Quote Requests",
                             backgroundColor: [
-                              "rgba(54, 162, 235, 0.5)",
-                              "rgba(255, 206, 86, 0.5)",
-                              "rgba(75, 192, 192, 0.5)",
-                              "rgba(153, 102, 255, 0.5)",
-                              "rgba(255, 159, 64, 0.5)",
-                              "rgba(255, 99, 132, 0.5)"
+                              "#B1E6C8",
+                              "#83DBA9",
+                              "#C3F4E4",
+                              "#63E5A9",
+                              "#69DFB5",
+                              "#42E4B3",
+                              "#52A36B",
+                              "#27B46F",
+                              "#38A97D",
+                              "#01AC78"
+                             
                             ],
-                            borderColor: [
-                              "rgba(54, 162, 235, 1)",
-                              "rgba(255, 206, 86, 1)",
-                              "rgba(75, 192, 192, 1)",
-                              "rgba(153, 102, 255, 1)",
-                              "rgba(255, 159, 64, 1)",
-                              "rgba(255, 99, 132, 1)"
-                            ],
+                            // borderColor: [
+                            //   "rgba(54, 162, 235, 1)",
+                            //   "rgba(255, 206, 86, 1)",
+                            //   "rgba(75, 192, 192, 1)",
+                            //   "rgba(153, 102, 255, 1)",
+                            //   "rgba(255, 159, 64, 1)",
+                            //   "rgba(255, 99, 132, 1)"
+                            // ],
                             data: quantity
                         }]
                     }

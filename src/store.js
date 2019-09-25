@@ -8,14 +8,14 @@ axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
 
 export default new Vuex.Store({
   state: {
-    token: localStorage.getItem('access_token') || null,
+    token: sessionStorage.getItem('access_token') || null,
     apps: [],
     roles: [],
     states: [],
     sites: [],
   },
 
-  plugins: [createPersistedState()],
+  plugins: [createPersistedState({storage: sessionStorage})],
   
   getters: {
     loggedIn(state) {
@@ -180,7 +180,7 @@ export default new Vuex.Store({
     ***                   Retrieve User Details
     ***-------------------------------------------------------------------
     *** Function: The login function. This retrieves a token for the user
-    *** and saves it into state and localStorage
+    *** and saves it into state and sessionStorage
     ***------------------------------------------------------------------
     **/
     retrieveToken(context, credentials) {
@@ -191,7 +191,7 @@ export default new Vuex.Store({
         })
         .then(response => {
           const token = response.data.access_token
-          localStorage.setItem('access_token', token)
+          sessionStorage.setItem('access_token', token)
           context.commit('retrieveToken', token)
           resolve(response)
         })
@@ -216,12 +216,12 @@ export default new Vuex.Store({
         return new Promise((resolve, reject) => {
           axios.post('/auth/logout')
           .then(response => {
-            localStorage.removeItem('access_token')
+            sessionStorage.removeItem('access_token')
             context.commit('destroyToken')
             resolve(response)
           })
           .catch(error => {
-            localStorage.removeItem('access_token')
+            sessionStorage.removeItem('access_token')
             context.commit('destroyToken')
             reject(error)
           })

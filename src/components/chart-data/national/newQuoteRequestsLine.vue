@@ -15,7 +15,7 @@
 import LineChart from '../../../chart-js/line-chart'
 
 import axios from 'axios'
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.access_token
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.access_token
 
 export default {
     components: {
@@ -32,7 +32,7 @@ export default {
         }
     },
     mounted() {
-        this.fillData()
+        this.fillData() 
     },
     methods: {
         fillData() {

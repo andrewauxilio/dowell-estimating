@@ -27,7 +27,7 @@
                                             <label class="custom-control-label" for="customCheck">Remember Me</label>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                                    <button type="submit" class="btn btn-success btn-user btn-block">
                                         Login
                                     </button>
                                 </form>

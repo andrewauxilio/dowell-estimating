@@ -103,7 +103,7 @@ export default {
     },
     methods: {
         getQuoteRequests(context) {
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.access_token
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.access_token
             return new Promise((resolve, reject) => {
                 axios.get('/estimating/nat/new-quote-requests/all')
                     .then(response => {
