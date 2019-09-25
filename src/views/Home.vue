@@ -4,12 +4,12 @@
                              Main Navigation
     --------------------------------------------------------------------->
     <ul :class="{'toggled': isCollapsed}" class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <router-link class="sidebar-brand d-flex align-items-center justify-content-center" to="/">
             <div class="sidebar-brand-icon">
                 <i class="fas fa-chart-area"></i>
             </div>
             <div class="sidebar-brand-text mx-3">Dowell Estimating</div>
-        </a>
+        </router-link>
 
         <!-- Divider -->
         <hr v-if="loggedIn && isEstimating" class="sidebar-divider my-0">
