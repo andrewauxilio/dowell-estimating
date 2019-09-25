@@ -5,7 +5,7 @@
         <div class="col-xl-6 col-lg-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-success">Bar Chart</h6>
+                    <h6 class="m-0 font-weight-bold text-success">New Quote Rquests (Bar Chart)</h6>
                 </div>
                 <div class="card-body">
                     <div class="card-body table-responsive p-0">
@@ -18,7 +18,7 @@
         <div class="col-xl-6 col-lg-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-success">Pie Chart</h6>
+                    <h6 class="m-0 font-weight-bold text-success">New Quote Rquests (Pie Chart)</h6>
                 </div>
                 <div class="card-body">
                     <div class="card-body table-responsive p-0">
@@ -31,7 +31,7 @@
         <div class="col-xl-6 col-lg-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-success">Line Chart</h6>
+                    <h6 class="m-0 font-weight-bold text-success">New Quote Rquests (Line Chart)</h6>
                 </div>
                 <div class="card-body">
                     <div class="card-body table-responsive p-0">

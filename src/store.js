@@ -116,6 +116,18 @@ export default new Vuex.Store({
     },
     getSites(state, sites) {
       state.sites = sites
+    },
+    destroyApps(state) {
+      state.apps = []
+    },
+    destroyRoles(state) {
+      state.roles = []
+    },
+    destroyStates(state) {
+      state.states = []
+    },
+    destroySites(state) {
+      state.sites = []
     }
   },
 
@@ -209,7 +221,7 @@ export default new Vuex.Store({
     *** user and their user details
     ***-------------------------------------------------------------------
     **/
-    destroyToken(context) {
+    destroyUserDetails(context) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
       
       if (context.getters.loggedIn) {
@@ -218,11 +230,19 @@ export default new Vuex.Store({
           .then(response => {
             sessionStorage.removeItem('access_token')
             context.commit('destroyToken')
+            context.commit('destroyApps')
+            context.commit('destroyRoles')
+            context.commit('destroyStates')
+            context.commit('destroySites')
             resolve(response)
           })
           .catch(error => {
             sessionStorage.removeItem('access_token')
             context.commit('destroyToken')
+            context.commit('destroyApps')
+            context.commit('destroyRoles')
+            context.commit('destroyStates')
+            context.commit('destroySites')
             reject(error)
           })
         })

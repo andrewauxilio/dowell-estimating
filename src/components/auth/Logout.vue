@@ -5,7 +5,7 @@
 <script>
 export default {
     created() {
-        this.$store.dispatch('destroyToken')
+        this.$store.dispatch('destroyUserDetails')
             .then(response => {
                 this.$router.push('/login')
                 toast.fire({
