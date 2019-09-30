@@ -14,10 +14,10 @@
         <!-- Divider -->
         <hr v-if="loggedIn && isEstimating" class="sidebar-divider my-0">
         <li v-if="loggedIn && isEstimating" class="nav-item active">
-            <a class="nav-link" href="index.html">
+            <router-link class="nav-link" to="/">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span>
-            </a>
+            </router-link>
         </li>
       
         <hr v-if="loggedIn && isEstimating" class="sidebar-divider">
