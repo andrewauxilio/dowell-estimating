@@ -105,16 +105,9 @@
         </li> -->
         
         <hr class="sidebar-divider d-none d-md-block">
-        <div class="sidebar-heading">
+        <div v-if="loggedIn" class="sidebar-heading">
             Account Controls
         </div>
-
-        <li v-if="!loggedIn" class="nav-item">
-            <router-link class="nav-link" to="/login">
-                <i class="fas fa-fw fa-power-off"></i>
-                <span>Login</span>
-            </router-link>
-        </li>
 
         <li v-if="loggedIn" class="nav-item">
             <router-link class="nav-link" to="/logout">
@@ -123,7 +116,7 @@
             </router-link>
         </li>
 
-        <hr class="sidebar-divider d-none d-md-block">
+        <hr v-if="loggedIn" class="sidebar-divider d-none d-md-block">
 
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">

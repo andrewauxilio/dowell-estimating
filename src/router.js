@@ -10,12 +10,12 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: () => import('./components/Landing.vue')
+      component: () => import('./components/auth/Login.vue')
     },
     {
-      path: '/login',
-      name: 'login',
-      component: () => import('./components/auth/Login.vue')
+      path: '/landing',
+      name: 'landing',
+      component: () => import('./components/Landing.vue')
     },
     {
       path: '/logout',

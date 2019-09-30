@@ -55,7 +55,16 @@ export default {
             password: ''
         }
     },
+    mounted() {
+        this.check() 
+    },
     methods: {
+        check() {
+             if (this.$store.getters.loggedIn) {
+                this.$router.push('/landing')
+            }
+        },
+
         login() {
             this.$store.dispatch('retrieveToken', {
                     email: this.email,
@@ -67,7 +76,7 @@ export default {
                         type: "success",
                         title: "You have logged in successfully"
                     });
-                    this.$router.push('/')
+                    this.$router.push('/landing')
                 })
                 .catch(() => {
                     swal.fire(
