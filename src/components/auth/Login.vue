@@ -72,13 +72,25 @@ export default {
                 })
                 .then(response => {
                     this.$store.dispatch('getUserDetails')
-                    toast.fire({
-                        type: "success",
-                        title: "You have logged in successfully"
-                    });
-                    this.$router.push('/landing')
+                    .then(response => {
+                        if (this.$store.getters.isEstimating) {
+                            this.$router.push('/landing')
+                            toast.fire({
+                                type: "success",
+                                title: "You have logged in successfully"
+                            })
+                        } else {
+                            this.$store.dispatch('destroyUserDetails2')
+                            swal.fire(
+                                "Login Failed",
+                                "There was an error logging in. Please try again.",
+                                "warning"
+                            )
+                        }
+                    }) 
                 })
                 .catch(() => {
+                    this.$store.dispatch('destroyUserDetails2')
                     swal.fire(
                         "Login Failed",
                         "There was an error logging in. Please try again.",

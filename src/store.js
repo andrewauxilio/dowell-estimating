@@ -158,19 +158,19 @@ export default new Vuex.Store({
           //Loop array of objects and push to array
           _apps.forEach(el => {
             apps.push(el.app)
-            console.log(el.app)
+            //console.log(el.app)
           })
           _roles.forEach(el => {
             roles.push(el.role)
-            console.log(el.role)
+            //console.log(el.role)
           })
           _states.forEach(el => {
             states.push(el.state)
-            console.log(el.state)
+            //console.log(el.state)
           })
           _sites.forEach(el => {
             sites.push(el.site)
-            console.log(el.site)
+            //console.log(el.site)
           })
 
           //Save each array in state
@@ -248,5 +248,14 @@ export default new Vuex.Store({
         })
       }
     },
-  }
+
+    destroyUserDetails2(context) {
+      sessionStorage.removeItem('access_token')
+      context.commit('destroyToken')
+      context.commit('destroyApps')
+      context.commit('destroyRoles')
+      context.commit('destroyStates')
+      context.commit('destroySites')
+    }
+  },
 })

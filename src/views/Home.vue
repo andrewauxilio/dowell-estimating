@@ -68,8 +68,8 @@
             <div id="collapseQLD" class="collapse">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Sites:</h6>
-                    <router-link class="collapse-item" to="/">Totals</router-link>
-                    <router-link class="collapse-item" to="/">Geebung</router-link>
+                    <router-link v-if="isNAT" class="collapse-item" to="/">Totals</router-link>
+                    <router-link v-if="isGBG" class="collapse-item" to="/gbg">Geebung</router-link>
                 </div>
             </div>
         </li>
@@ -173,14 +173,18 @@ export default {
         isVIC() {
             return this.$store.getters.isVIC
         },
+        isBAY() {
+            return this.$store.getters.isBAY
+        },
+        //QLD Getters (State and Sites)
         isQLD() {
             return this.$store.getters.isQLD
         },
+        isGBG() {
+            return this.$store.getters.isGBG
+        },
         isNSW() {
             return this.$store.getters.isNSW
-        },
-        isBAY() {
-            return this.$store.getters.isBAY
         },
     },
     methods: {

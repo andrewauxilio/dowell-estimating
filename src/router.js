@@ -28,6 +28,11 @@ export default new Router({
       component: () => import('./components/national/NationalTotals.vue')
     },
     {
+      path: '/gbg',
+      name: 'gbg',
+      component: () => import('./components/gbg/Geebung.vue')
+    },
+    {
       path: '/404',
       name: '404',
       component: () => import('./components/auth/404.vue')
