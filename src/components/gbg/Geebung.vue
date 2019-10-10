@@ -1,5 +1,5 @@
 <template>
-<div class="container-fluid">
+<div v-if="loggedIn && isGBG" class="container-fluid">
     <div class="row">
         <div class="col-xl-12 col-lg-12">
             <div class="card shadow mb-4">
@@ -99,75 +99,24 @@ export default {
             loading: true
         }
     },
+    computed: {
+        loggedIn() {
+            return this.$store.getters.loggedIn
+        },
+        isGBG() {
+            return this.$store.getters.isGBG
+        },
+    },
     mounted() {
-
+        this.permissionCheck();
     },
     methods: {
-
+        permissionCheck() {
+            if(!this.isGBG || !loggedIn) {
+                this.$router.push('/404')
+            }
+        }
     }
 }
 </script>
 
-<style scoped>
-
-.t_center {
-    text-align: center;
-    align-content: center;  
-}
-
-.spinner {
-    margin: 50px auto 0;
-    margin-bottom: 50px;
-    width: 70px;
-    text-align: center;
-}
-
-.spinner>div {
-    width: 18px;
-    height: 18px;
-    background-color: #17A471;
-
-    border-radius: 100%;
-    display: inline-block;
-    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-}
-
-.spinner .bounce1 {
-    -webkit-animation-delay: -0.32s;
-    animation-delay: -0.32s;
-}
-
-.spinner .bounce2 {
-    -webkit-animation-delay: -0.16s;
-    animation-delay: -0.16s;
-}
-
-@-webkit-keyframes sk-bouncedelay {
-
-    0%,
-    80%,
-    100% {
-        -webkit-transform: scale(0)
-    }
-
-    40% {
-        -webkit-transform: scale(1.0)
-    }
-}
-
-@keyframes sk-bouncedelay {
-
-    0%,
-    80%,
-    100% {
-        -webkit-transform: scale(0);
-        transform: scale(0);
-    }
-
-    40% {
-        -webkit-transform: scale(1.0);
-        transform: scale(1.0);
-    }
-}
-</style>

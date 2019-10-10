@@ -58,11 +58,11 @@ export default new Vuex.Store({
     },
     isQLD(state) {
       const states = state.states
-      return (states.includes("nsw") ? true : false) 
+      return (states.includes("qld") ? true : false) 
     },
     isNSW(state) {
       const states = state.states
-      return (states.includes("qld") ? true : false) 
+      return (states.includes("nsw") ? true : false) 
     },
 
     /**---------------------------------------
