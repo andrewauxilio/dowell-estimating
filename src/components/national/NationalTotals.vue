@@ -2,7 +2,7 @@
 <div v-if="loggedIn && isNAT" class="container-fluid">
     
     <div class="row">
-        <div class="col-xl-6 col-lg-6">
+        <div class="col-xl-3 col-lg-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-success">New Quote Rquests (Bar Chart)</h6>
@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <div class="col-xl-6 col-lg-6">
+        <div class="col-xl-3 col-lg-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-success">New Quote Rquests (Pie Chart)</h6>
@@ -28,7 +28,7 @@
             </div>
         </div>
 
-        <div class="col-xl-6 col-lg-6">
+        <div class="col-xl-3 col-lg-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-success">New Quote Rquests (Line Chart)</h6>
@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <div class="col-xl-6 col-lg-6">
+        <div class="col-xl-3 col-lg-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-success">All Quote Requests</h6>
@@ -112,7 +112,7 @@ export default {
     },
     methods: {
         permissionCheck() {
-            if(!this.isNAT || !loggedIn) {
+            if(!this.isNAT || !this.loggedIn) {
                 this.$router.push('/404')
             }
         },
@@ -125,6 +125,7 @@ export default {
                 axios.get('/estimating/nat/new-quote-requests/all')
                     .then(response => {
                         this.newQuoteRequests = response
+                        console.log(response)
                         resolve(response)
                     })
                     .catch(error => {

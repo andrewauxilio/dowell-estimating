@@ -4,78 +4,37 @@
         <div class="col-xl-12 col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-success">Estimating KPIs</h6>
+                    <h6 class="m-0 font-weight-bold text-success">Estimating KPIs (Last 30 Days)</h6>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
+                    <div v-if="loading" class="spinner">
+                        <div class="bounce1"></div>
+                        <div class="bounce2"></div>
+                        <div class="bounce3"></div>
+                    </div>
+                    <div v-if="!loading" class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th scope="col">Estimator</th>
                                     <th scope="col" class="bg-success text-light">Sales</th>
-                                    <th scope="col" class="bg-secondary text-light">Quotes In</th>
-                                    <th scope="col" class="bg-secondary text-light">Revisions</th>
-                                    <th scope="col" class="bg-primary text-light">Orders In</th>
+                                    <th scope="col" class="bg-secondary text-light">Quotes Value </th>
+                                    <th scope="col" class="bg-secondary text-light">No. of Quotes</th>
+                                    <th scope="col" class="bg-secondary text-light">Revisions Value</th>
+                                    <th scope="col" class="bg-secondary text-light">No. of Revision</th>
+                                    <th scope="col" class="bg-secondary text-light">Orders Value</th>
+                                    <th scope="col" class="bg-secondary text-light">No. of Orders</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">John Doe</th>
-                                    <td>$25000</td>
-                                    <td>
-                                        <th scope="col">$</th>
-                                        <th scope="col">#</th>
-                                        <tr><td>$30000</td><td>5</td></tr>
-                                    </td>
-                                    <td>
-                                        <th scope="col">$</th>
-                                        <th scope="col">#</th>
-                                        <tr><td>$25000</td><td>2</td></tr>
-                                    </td>
-                                    <td>
-                                        <th scope="col">$</th>
-                                        <th scope="col">#</th>
-                                        <tr><td>$25000</td><td>5</td></tr>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Jane Doe</th>
-                                    <td>$15000</td>
-                                    <td>
-                                        <th scope="col">$</th>
-                                        <th scope="col">#</th>
-                                        <tr><td>$20000</td><td>2</td></tr>
-                                    </td>
-                                    <td>
-                                        <th scope="col">$</th>
-                                        <th scope="col">#</th>
-                                        <tr><td>$15000</td><td>3</td></tr>
-                                    </td>
-                                    <td>
-                                        <th scope="col">$</th>
-                                        <th scope="col">#</th>
-                                        <tr><td>$15000</td><td>1</td></tr>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Bruce Wayne</th>
-                                    <td>$45000</td>
-                                    <td>
-                                        <th scope="col">$</th>
-                                        <th scope="col">#</th>
-                                        <tr><td>$50000</td><td>5</td></tr>
-                                    </td>
-                                    <td>
-                                        <th scope="col">$</th>
-                                        <th scope="col">#</th>
-                                        <tr><td>$45000</td><td>5</td></tr>
-                                    </td>
-                                    <td>
-                                        <th scope="col">$</th>
-                                        <th scope="col">#</th>
-                                        <tr><td>$45000</td><td>4</td></tr>
-                                    </td>
-                                </tr>
+                            <tbody v-for="estimatorKPI in estimatorKPI.data" :key="estimatorKPI.id">
+                               <td>{{ estimatorKPI.USER_NAME }}</td>
+                               <td>{{ estimatorKPI.SVALUE }}</td>
+                               <td>{{ estimatorKPI.QVALUE }}</td>
+                               <td>{{ estimatorKPI.QTEQTY }}</td>
+                               <td>{{ estimatorKPI.RVALUE }}</td>
+                               <td>{{ estimatorKPI.RQTY }}</td>
+                               <td>{{ estimatorKPI.DLVALUE }}</td>
+                               <td>{{ estimatorKPI.DLQTY }}</td>
                             </tbody>
                         </table>
                     </div>
@@ -96,6 +55,7 @@ export default {
     components: {},
     data() {
         return {
+            estimatorKPI: {},
             loading: true
         }
     },
@@ -109,13 +69,36 @@ export default {
     },
     mounted() {
         this.permissionCheck();
+        this.getGBGKPI();
     },
     methods: {
         permissionCheck() {
-            if(!this.isGBG || !loggedIn) {
+            if(!this.isGBG || !this.loggedIn) {
                 this.$router.push('/404')
             }
-        }
+        },
+
+        getGBGKPI(context) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.access_token
+
+            if(this.isGBG) {
+                return new Promise((resolve, reject) => {
+                axios.get('/estimating/qld/kpi/gbg')
+                    .then(response => {
+                        this.estimatorKPI = response
+                        console.log(response);
+                        resolve(response)
+                    })
+                    .catch(error => {
+                        reject(error)
+                        console.log(error)
+                    })
+                    .finally(() => {
+                        this.loading = false
+                    })
+                })
+            }
+        },
     }
 }
 </script>
