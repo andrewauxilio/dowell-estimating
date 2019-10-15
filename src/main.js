@@ -26,6 +26,16 @@ const toast = swal.mixin({
 window.toast = toast
 window.Fire = new Vue()
 
+Vue.filter("toDollar", function(text) {
+  const formatter = new Intl.NumberFormat('en-AUD', {
+    style: 'currency',
+    currency: 'AUD',
+    minimumFractionDigits: 2
+  })
+  
+  return formatter.format(text);
+});
+
 Vue.config.productionTip = false
 
 new Vue({
