@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import BarChart from '../../../chart-js/bar-chart'
+import BarChart from '../../../../chart-js/bar-chart'
 
 import axios from 'axios'
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.access_token
@@ -81,17 +81,17 @@ export default {
     methods: {
         fillData() {
             let quantity = [];
-            axios.get("/estimating/qld/kpi/total")
+            axios.get("/estimating/qld/kpi/gbg-total")
                 .then(response => {
-                    quantity = response.data;
+                    quantity = response.data;           
                 })
                 .finally(() => {
                     this.datacollection = {
-                        labels: ['No. of Quotes', 'No. of Revisions', 'No. of Orders'],
+                        labels: ['Sales', 'Quotes', 'Revisons', 'Orders'],
                         datasets: [{
-                            label: "Quantity",
+                            label: "Value in AUD",
                             backgroundColor: "rgba(75, 192, 192, 0.7)",
-                            data: [quantity[0].QTEQTY, quantity[0].RQTY, quantity[0].DLQTY]
+                            data: [quantity[0].SVALUE, quantity[0].QVALUE, quantity[0].RVALUE, quantity[0].DLVALUE]
                         }]
                     }
                     this.loading = false

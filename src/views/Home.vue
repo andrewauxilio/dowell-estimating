@@ -83,7 +83,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Sites:</h6>
                     <router-link class="collapse-item" to="/">Totals</router-link>
-                    <router-link class="collapse-item" to="/">Smithfield</router-link>
+                    <router-link class="collapse-item" to="/smt">Smithfield</router-link>
                     <router-link class="collapse-item" to="/">Nowra</router-link>
                     <router-link class="collapse-item" to="/">Newcastle</router-link>
                 </div>

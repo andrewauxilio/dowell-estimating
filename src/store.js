@@ -4,7 +4,6 @@ import axios from 'axios'
 import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
 
 export default new Vuex.Store({
   state: {

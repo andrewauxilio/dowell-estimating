@@ -30,7 +30,12 @@ export default new Router({
     {
       path: '/gbg',
       name: 'gbg',
-      component: () => import('./components/gbg/Geebung.vue')
+      component: () => import('./components/qld/gbg/Geebung.vue')
+    },
+    {
+      path: '/smt',
+      name: 'smt',
+      component: () => import('./components/nsw/smt/Smithfield.vue')
     },
     {
       path: '/404',

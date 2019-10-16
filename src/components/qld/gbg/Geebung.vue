@@ -206,10 +206,10 @@
 </template>
 
 <script>
-import totalValueBar from '../chart-data/gbg/totalValueBar';
-import totalQuantityBar from '../chart-data/gbg/totalQuantityBar';
+import totalValueBar from '../../chart-data/qld/gbg/totalValueBar';
+import totalQuantityBar from '../../chart-data/qld/gbg/totalQuantityBar';
 import axios from 'axios'
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
+//axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
 
 export default {
     name: 'national-totals',
@@ -271,10 +271,9 @@ export default {
 
             if (this.isGBG) {
                 return new Promise((resolve, reject) => {
-                    axios.get('/estimating/qld/kpi/total')
+                    axios.get('/estimating/qld/kpi/gbg-total')
                         .then(response => {
                             this.estimatorTotals = response.data[0]
-                            console.log(response.data[0])
                             resolve(response)
                         })
                         .catch(error => {

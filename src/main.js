@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import axios from 'axios'
 
 //Bootstrap, Admin, Fontawesome CSS
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -37,6 +38,8 @@ Vue.filter("toDollar", function(text) {
 });
 
 Vue.config.productionTip = false
+
+axios.defaults.baseURL = process.env.VUE_APP_API_URL
 
 new Vue({
   router,

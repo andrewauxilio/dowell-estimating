@@ -83,7 +83,7 @@ import newQuoteRequestBar from '../chart-data/national/newQuoteRequestsBar';
 import newQuoteRequestPie from '../chart-data/national/newQuoteRequestsPie';
 import newQuoteRequestLine from '../chart-data/national/newQuoteRequestsLine';
 import axios from 'axios'
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
+//axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
 
 export default {
     name: 'national-totals',
