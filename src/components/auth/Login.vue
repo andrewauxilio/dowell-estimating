@@ -66,7 +66,7 @@ export default {
         },
 
         login() {
-            this.$store.dispatch('retrieveToken', {
+            this.$store.dispatch('getToken', {
                     email: this.email,
                     password: this.password
                 })
@@ -90,7 +90,7 @@ export default {
                     }) 
                 })
                 .catch(() => {
-                    this.$store.dispatch('destroyUserDetails2')
+                    this.$store.dispatch('removeUserDetails2')
                     swal.fire(
                         "Login Failed",
                         "There was an error logging in. Please try again.",
