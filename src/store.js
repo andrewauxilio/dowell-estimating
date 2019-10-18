@@ -1,14 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import auth from './modules/auth'
 import createPersistedState from "vuex-persistedstate";
+
+import auth from './modules/auth'
+import gbg from './modules/geebung'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   plugins: [createPersistedState({ storage: sessionStorage })],
-  
+
   modules: {
-      auth
+      auth,
+      gbg
   },
 });

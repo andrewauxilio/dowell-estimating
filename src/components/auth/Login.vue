@@ -71,6 +71,7 @@ export default {
                     password: this.password
                 })
                 .then(response => {
+                    this.$store.dispatch('getGBGKPI')
                     this.$store.dispatch('getUserDetails')
                     .then(response => {
                         if (this.$store.getters.isEstimating) {
