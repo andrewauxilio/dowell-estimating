@@ -139,7 +139,7 @@
             <div class="container-fluid">
                 <transition name="fade">
                     <!-- Router View -->
-                    <router-view  />
+                    <router-view :key="$route.fullPath" />
                 </transition>
             </div>
         </div>

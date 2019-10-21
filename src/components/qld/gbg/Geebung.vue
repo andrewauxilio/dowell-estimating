@@ -8,16 +8,16 @@
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
-                        <div v-if="loading2" class="spinner">
+                        <div v-if="!isLoaded" class="spinner">
                             <div class="bounce1"></div>
                             <div class="bounce2"></div>
                             <div class="bounce3"></div>
                         </div>
-                        <div v-if="!loading2" class="col mr-2">
+                        <div v-if="isLoaded" class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Sales Value (Monthly)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ estimatorTotals.SVALUE | toDollar }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ getGBGKPITotal[0].SVALUE | toDollar }}</div>
                         </div>
-                        <div v-if="!loading2" class="col-auto">
+                        <div v-if="isLoaded" class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                         </div>
                     </div>
@@ -29,16 +29,16 @@
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
-                        <div v-if="loading2" class="spinner">
+                        <div v-if="!isLoaded" class="spinner">
                             <div class="bounce1"></div>
                             <div class="bounce2"></div>
                             <div class="bounce3"></div>
                         </div>
-                        <div v-if="!loading2" class="col mr-2">
+                        <div v-if="isLoaded" class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Quotes Value (Monthly)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ estimatorTotals.QVALUE | toDollar }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ getGBGKPITotal[0].QVALUE | toDollar }}</div>
                         </div>
-                        <div v-if="!loading2" class="col-auto">
+                        <div v-if="isLoaded" class="col-auto">
                             <i class="fas fa-book fa-2x text-gray-300"></i>
                         </div>
                     </div>
@@ -50,16 +50,16 @@
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
-                        <div v-if="loading2" class="spinner">
+                        <div v-if="!isLoaded" class="spinner">
                             <div class="bounce1"></div>
                             <div class="bounce2"></div>
                             <div class="bounce3"></div>
                         </div>
-                        <div v-if="!loading2" class="col mr-2">
+                        <div v-if="isLoaded" class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Revisions Value (Monthly)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ estimatorTotals.RVALUE | toDollar }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ getGBGKPITotal[0].RVALUE | toDollar }}</div>
                         </div>
-                        <div v-if="!loading2" class="col-auto">
+                        <div v-if="isLoaded" class="col-auto">
                             <i class="fas fa-redo fa-2x text-gray-300"></i>
                         </div>
                     </div>
@@ -71,16 +71,16 @@
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
-                        <div v-if="loading2" class="spinner">
+                        <div v-if="!isLoaded" class="spinner">
                             <div class="bounce1"></div>
                             <div class="bounce2"></div>
                             <div class="bounce3"></div>
                         </div>
-                        <div v-if="!loading2" class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Orders Value (Monthly)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ estimatorTotals.DLVALUE | toDollar }}</div>
+                        <div v-if="isLoaded" class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Quotes Value (Monthly)</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ getGBGKPITotal[0].DLVALUE | toDollar }}</div>
                         </div>
-                        <div v-if="!loading2" class="col-auto">
+                        <div v-if="isLoaded" class="col-auto">
                             <i class="fas fa-clipboard-check fa-2x text-gray-300"></i>
                         </div>
                     </div>
@@ -98,7 +98,12 @@
                 </div>
                 <div class="card-body">
                     <div class="card-body table-responsive p-0">
-                        <totalValueBar />
+                        <div v-if="!isLoaded" class="spinner">
+                            <div class="bounce1"></div>
+                            <div class="bounce2"></div>
+                            <div class="bounce3"></div>
+                        </div>
+                        <totalValueBar v-if="isLoaded" />
                     </div>
                 </div>
             </div>
@@ -111,7 +116,12 @@
                 </div>
                 <div class="card-body">
                     <div class="card-body table-responsive p-0">
-                        <totalQuantityBar />
+                        <div v-if="!isLoaded" class="spinner">
+                            <div class="bounce1"></div>
+                            <div class="bounce2"></div>
+                            <div class="bounce3"></div>
+                        </div>
+                        <totalQuantityBar v-if="isLoaded" />
                     </div>
                 </div>
             </div>
@@ -123,12 +133,12 @@
                     <h6 class="m-0 font-weight-bold text-success">Estimating KPIs (Last 30 Days)</h6>
                 </div>
                 <div class="card-body">
-                    <div v-if="loading" class="spinner">
+                    <div v-if="!isLoaded" class="spinner">
                         <div class="bounce1"></div>
                         <div class="bounce2"></div>
                         <div class="bounce3"></div>
                     </div>
-                    <div v-if="!loading" class="table-responsive">
+                    <div v-if="isLoaded" class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -142,7 +152,7 @@
                                     <th scope="col" class="bg-secondary text-light">No. of Orders</th>
                                 </tr>
                             </thead>
-                            <tbody v-for="estimatorKPI in estimatorKPI.data" :key="estimatorKPI.id">
+                            <tbody v-for="estimatorKPI in getGBGKPI" :key="estimatorKPI.id">
                                 <td>{{ estimatorKPI.USER_NAME }}</td>
                                 <td>{{ estimatorKPI.SVALUE | toDollar }}</td>
                                 <td>{{ estimatorKPI.QVALUE | toDollar }}</td>
@@ -212,31 +222,36 @@ import axios from 'axios'
 //axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
 
 export default {
-    name: 'national-totals',
+    name: 'geebung',
     components: {
         totalValueBar,
         totalQuantityBar
     },
     data() {
         return {
-            estimatorKPI: {},
-            estimatorTotals: {},
-            loading: true,
-            loading2: true
+
         }
     },
     computed: {
+        isLoaded() {
+            return this.$store.getters.gbgLoaded
+        },
         loggedIn() {
             return this.$store.getters.loggedIn
         },
         isGBG() {
             return this.$store.getters.isGBG
         },
+        getGBGKPI() {
+            return this.$store.getters.getGBGKPI
+        },
+        getGBGKPITotal() {
+            return this.$store.getters.getGBGKPITotal
+        },
     },
     mounted() {
         this.permissionCheck();
-        this.getGBGKPI();
-        this.getGBGKPITotals();
+        this.getData();
     },
     methods: {
         permissionCheck() {
@@ -244,49 +259,11 @@ export default {
                 this.$router.push('/404')
             }
         },
-
-        getGBGKPI() {
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.access_token
-
-            if (this.isGBG) {
-                return new Promise((resolve, reject) => {
-                    axios.get('/estimating/qld/kpi/gbg')
-                        .then(response => {
-                            this.estimatorKPI = response
-                            resolve(response)
-                        })
-                        .catch(error => {
-                            reject(error)
-                            console.log(error)
-                        })
-                        .finally(() => {
-                            this.loading = false
-                        })
-                })
+        getData() {
+            if (this.loggedIn && this.isGBG) {
+                this.$store.dispatch('getGBGKPI')
+                this.$store.dispatch('getGBGKPITotal')
             }
-        },
-
-        getGBGKPITotals() {
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.access_token
-
-            if (this.isGBG) {
-                return new Promise((resolve, reject) => {
-                    axios.get('/estimating/qld/kpi/gbg-total')
-                        .then(response => {
-                            this.estimatorTotals = response.data[0]
-                            resolve(response)
-                        })
-                        .catch(error => {
-                            reject(error)
-                            console.log(error)
-                        })
-                        .finally(() => {
-                            this.loading2 = false
-                        })
-                })
-            }
-
-            console.log(this.estimatorTotals)
         }
     }
 }

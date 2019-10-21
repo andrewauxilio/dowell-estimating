@@ -1,12 +1,7 @@
 <template>
 <div class="container-fluid">
-    <div v-if="loading" class="spinner">
-        <div class="bounce1"></div>
-        <div class="bounce2"></div>
-        <div class="bounce3"></div>
-    </div>
     <transition name="fade">
-        <bar-chart v-if="!loading" :chart-data="datacollection" :options="options"></bar-chart>
+        <bar-chart :chart-data="datacollection" :options="options"></bar-chart>
     </transition>
 </div>
 </template>
@@ -23,7 +18,6 @@ export default {
     },
     data() {
         return {
-            loading: true,
             datacollection: {},
             options: {
                 responsive: true,
@@ -58,19 +52,19 @@ export default {
                     display: false
                 },
                 tooltips: {
-                backgroundColor: "rgb(255,255,255)",
-                bodyFontColor: "#858796",
-                titleMarginBottom: 10,
-                titleFontColor: '#6e707e',
-                titleFontSize: 14,
-                borderColor: '#dddfeb',
-                borderWidth: 1,
-                xPadding: 15,
-                yPadding: 15,
-                displayColors: false,
-                intersect: false,
-                mode: 'index',
-                caretPadding: 10,
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#858796",
+                    titleMarginBottom: 10,
+                    titleFontColor: '#6e707e',
+                    titleFontSize: 14,
+                    borderColor: '#dddfeb',
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    intersect: false,
+                    mode: 'index',
+                    caretPadding: 10,
                 }
             }
         }
@@ -80,24 +74,18 @@ export default {
     },
     methods: {
         fillData() {
-            let quantity = [];
-            axios.get("/estimating/nsw/kpi/smt-total")
-                .then(response => {
-                    quantity = response.data;           
-                })
-                .finally(() => {
-                    this.datacollection = {
-                        labels: ['Sales', 'Quotes', 'Revisons', 'Orders'],
-                        datasets: [{
-                            label: "Value in AUD",
-                            backgroundColor: "rgba(75, 192, 192, 0.7)",
-                            data: [quantity[0].SVALUE, quantity[0].QVALUE, quantity[0].RVALUE, quantity[0].DLVALUE]
-                        }]
-                    }
-                    this.loading = false
-                })
+            let quantity = this.$store.getters.getSMTKPITotal;
+
+            this.datacollection = {
+                labels: ['Sales', 'Quotes', 'Revisons', 'Orders'],
+                datasets: [{
+                    label: "Value in AUD",
+                    backgroundColor: "rgba(75, 192, 192, 0.7)",
+                    data: [quantity[0].SVALUE, quantity[0].QVALUE, quantity[0].RVALUE, quantity[0].DLVALUE]
+                }]
+            }
+
         }
     }
 };
 </script>
-

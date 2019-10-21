@@ -173,23 +173,23 @@ export default {
   },
 
   mutations: {
-    SET_TOKEN(state, token) {
-      state.token = token;
+    SET_TOKEN(state, payload) {
+      state.token = payload;
     },
     REMOVE_TOKEN(state) {
       state.token = null;
     },
-    SET_APPS(state, apps) {
-      state.apps = apps;
+    SET_APPS(state, payload) {
+      state.apps = payload;
     },
-    SET_ROLES(state, roles) {
-      state.roles = roles;
+    SET_ROLES(state, payload) {
+      state.roles = payload;
     },
-    SET_STATES(state, states) {
-      state.states = states;
+    SET_STATES(state, payload) {
+      state.states = payload;
     },
-    SET_SITES(state, sites) {
-      state.sites = sites;
+    SET_SITES(state, payload) {
+      state.sites = payload;
     },
     REMOVE_APPS(state) {
       state.apps = [];
@@ -329,7 +329,7 @@ export default {
 
     removeUserDetails2(context) {
       sessionStorage.removeItem("access_token");
-      context.commit("REMOVE_TOKEM");
+      context.commit("REMOVE_TOKEN");
       context.commit("REMOVE_APPS");
       context.commit("REMOVE_ROLES");
       context.commit("REMOVE_STATES");
