@@ -8,16 +8,16 @@
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
-                        <div v-if="!isLoaded" class="spinner">
+                        <div v-if="!isEKTLoaded" class="spinner">
                             <div class="bounce1"></div>
                             <div class="bounce2"></div>
                             <div class="bounce3"></div>
                         </div>
-                        <div v-if="isLoaded" class="col mr-2">
+                        <div v-if="isEKTLoaded" class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Sales Value (Monthly)</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ getSMTKPITotal[0].SVALUE | toDollar }}</div>
                         </div>
-                        <div v-if="isLoaded" class="col-auto">
+                        <div v-if="isEKTLoaded" class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                         </div>
                     </div>
@@ -29,16 +29,16 @@
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
-                        <div v-if="!isLoaded" class="spinner">
+                        <div v-if="!isEKTLoaded" class="spinner">
                             <div class="bounce1"></div>
                             <div class="bounce2"></div>
                             <div class="bounce3"></div>
                         </div>
-                        <div v-if="isLoaded" class="col mr-2">
+                        <div v-if="isEKTLoaded" class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Quotes Value (Monthly)</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ getSMTKPITotal[0].QVALUE | toDollar }}</div>
                         </div>
-                        <div v-if="isLoaded" class="col-auto">
+                        <div v-if="isEKTLoaded" class="col-auto">
                             <i class="fas fa-book fa-2x text-gray-300"></i>
                         </div>
                     </div>
@@ -50,16 +50,16 @@
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
-                        <div v-if="!isLoaded" class="spinner">
+                        <div v-if="!isEKTLoaded" class="spinner">
                             <div class="bounce1"></div>
                             <div class="bounce2"></div>
                             <div class="bounce3"></div>
                         </div>
-                        <div v-if="isLoaded" class="col mr-2">
+                        <div v-if="isEKTLoaded" class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Revisions Value (Monthly)</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ getSMTKPITotal[0].RVALUE | toDollar }}</div>
                         </div>
-                        <div v-if="isLoaded" class="col-auto">
+                        <div v-if="isEKTLoaded" class="col-auto">
                             <i class="fas fa-redo fa-2x text-gray-300"></i>
                         </div>
                     </div>
@@ -71,16 +71,16 @@
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
-                        <div v-if="!isLoaded" class="spinner">
+                        <div v-if="!isEKTLoaded" class="spinner">
                             <div class="bounce1"></div>
                             <div class="bounce2"></div>
                             <div class="bounce3"></div>
                         </div>
-                        <div v-if="isLoaded" class="col mr-2">
+                        <div v-if="isEKTLoaded" class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Quotes Value (Monthly)</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ getSMTKPITotal[0].DLVALUE | toDollar }}</div>
                         </div>
-                        <div v-if="isLoaded" class="col-auto">
+                        <div v-if="isEKTLoaded" class="col-auto">
                             <i class="fas fa-clipboard-check fa-2x text-gray-300"></i>
                         </div>
                     </div>
@@ -98,12 +98,12 @@
                 </div>
                 <div class="card-body">
                     <div class="card-body table-responsive p-0">
-                        <div v-if="!isLoaded" class="spinner">
+                        <div v-if="!isEKTLoaded" class="spinner">
                             <div class="bounce1"></div>
                             <div class="bounce2"></div>
                             <div class="bounce3"></div>
                         </div>
-                        <totalValueBar v-if="isLoaded" />
+                        <totalValueBar v-if="isEKTLoaded" />
                     </div>
                 </div>
             </div>
@@ -116,12 +116,12 @@
                 </div>
                 <div class="card-body">
                     <div class="card-body table-responsive p-0">
-                        <div v-if="!isLoaded" class="spinner">
+                        <div v-if="!isEKTLoaded" class="spinner">
                             <div class="bounce1"></div>
                             <div class="bounce2"></div>
                             <div class="bounce3"></div>
                         </div>
-                        <totalQuantityBar v-if="isLoaded" />
+                        <totalQuantityBar v-if="isEKTLoaded" />
                     </div>
                 </div>
             </div>
@@ -133,12 +133,12 @@
                     <h6 class="m-0 font-weight-bold text-success">Estimating KPIs (Last 30 Days)</h6>
                 </div>
                 <div class="card-body">
-                    <div v-if="!isLoaded" class="spinner">
+                    <div v-if="!isEKLoaded" class="spinner">
                         <div class="bounce1"></div>
                         <div class="bounce2"></div>
                         <div class="bounce3"></div>
                     </div>
-                    <div v-if="isLoaded" class="table-responsive">
+                    <div v-if="isEKLoaded" class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -232,8 +232,11 @@ export default {
         }
     },
     computed: {
-        isLoaded() {
-            return this.$store.getters.smtLoaded
+        isEKLoaded() {
+            return this.$store.getters.smtEKLoaded
+        },
+        isEKTLoaded() {
+            return this.$store.getters.smtEKTLoaded
         },
         loggedIn() {
             return this.$store.getters.loggedIn
@@ -260,7 +263,8 @@ export default {
         },
         getData() {
             if (this.loggedIn && this.isSMT) {
-                this.$store.dispatch('getSMTKPIData')
+                this.$store.dispatch('getSMTKPI')
+                this.$store.dispatch('getSMTKPITotal')
             }
         }
     }

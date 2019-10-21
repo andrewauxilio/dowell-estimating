@@ -2,9 +2,13 @@ import axios from "axios";
 
 export default {
   state: {
+    //Data 
     gbgEstimatorKPI: [],
     gbgTotalKPI: [],
-    gbgLoaded: false,
+
+    //Check if data is loaded
+    gbgEKLoaded: false,
+    gbgEKTLoaded: false,
   },
 
   getters: {
@@ -14,23 +18,28 @@ export default {
     getGBGKPITotal(state) {
       return state.gbgTotalKPI;
     },
-    gbgLoaded(state) {
-      return state.gbgLoaded;
+    gbgEKLoaded(state) {
+      return state.gbgEKLoaded;
+    },
+    gbgEKTLoaded(state) {
+      return state.gbgEKTLoaded;
     },
   },
 
   mutations: {
     SET_GBG_ESTIMATOR_KPI(state, payload) {
       state.gbgEstimatorKPI = payload;
+      state.gbgEKLoaded = true;
     },
     SET_GBG_ESTIMATOR_KPI_TOTAL(state, payload) {
       state.gbgTotalKPI = payload;
-      state.gbgLoaded = true;
+      state.gbgEKTLoaded = true;
     },
     REMOVE_GBG_DATA(state) {
       state.gbgEstimatorKPI = [];
       state.gbgTotalKPI = [];
-      state.gbgLoaded = false;
+      state.gbgEKLoaded = false;
+      state.gbgEKTLoaded = false;
     },
   },
 

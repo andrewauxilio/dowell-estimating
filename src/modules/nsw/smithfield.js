@@ -4,7 +4,9 @@ export default {
   state: {
     smtEstimatorKPI: [],
     smtTotalKPI: [],
-    smtLoaded: false,
+
+    smtEKLoaded: false,
+    smtEKTLoaded: false,
   },
 
   getters: {
@@ -14,25 +16,28 @@ export default {
     getSMTKPITotal(state) {
       return state.smtTotalKPI;
     },
-    smtLoaded(state) {
-      return state.smtLoaded;
+    smtEKLoaded(state) {
+      return state.smtEKLoaded;
+    },
+    smtEKTLoaded(state) {
+      return state.smtEKTLoaded;
     },
   },
 
   mutations: {
-    SET_SMT_ESTIMATOR_KPI(state, payload, payload2) {
+    SET_SMT_ESTIMATOR_KPI(state, payload) {
       state.smtEstimatorKPI = payload;
-      state.smtTotalKPI = payload2;
-      state.smtLoaded = true;
+      state.smtEKLoaded = true;
     },
-    // SET_SMT_ESTIMATOR_KPI_TOTAL(state, payload) {
-    //   state.smtTotalKPI = payload;
-    //   state.smtLoaded = true;
-    // },
+    SET_SMT_ESTIMATOR_KPI_TOTAL(state, payload) {
+      state.smtTotalKPI = payload;
+      state.smtEKTLoaded = true;
+    },
     REMOVE_SMT_DATA(state) {
       state.smtEstimatorKPI = [];
       state.smtTotalKPI = [];
-      state.smtLoaded = false;
+      state.smtEKLoaded = false;
+      state.smtEKTLoaded = false; 
     },
   },
 
@@ -40,42 +45,44 @@ export default {
     removeSMTData(context) {
       context.commit("REMOVE_SMT_DATA");
     },
-    getSMTKPIData(context) {
+    getSMTKPI(context) {
       axios.defaults.headers.common["Authorization"] =
         "Bearer " + context.state.token;
-
-      let _smtEstimatorKPI = []
-      let _smtTotalKPI = []
-
       return new Promise((resolve, reject) => {
         axios
           .get("/estimating/nsw/kpi/smt")
           .then(response => {
-            _smtEstimatorKPI = response.data
-            context.commit('SET_SMT_ESTIMATOR_KPI', _smtEstimatorKPI, _smtTotalKPI)
+            context.commit("SET_SMT_ESTIMATOR_KPI", response.data);
             resolve(response);
           })
           .catch(error => {
             reject(error);
             console.log(error);
           })
-
-          axios
+          .finally(() => {
+            this.loading = false;
+          });
+      });
+    },
+    getSMTKPITotal(context) {
+      axios.defaults.headers.common["Authorization"] =
+        "Bearer " + context.state.token;
+      return new Promise((resolve, reject) => {
+        axios
           .get("/estimating/nsw/kpi/smt-total")
           .then(response => {
-            _smtTotalKPI = response.data
-            context.commit('SET_SMT_ESTIMATOR_KPI', _smtEstimatorKPI, _smtTotalKPI)
+            context.commit("SET_SMT_ESTIMATOR_KPI_TOTAL", response.data);
             resolve(response);
           })
           .catch(error => {
             reject(error);
             console.log(error);
           })
-
-          
+          .finally(() => {
+            this.loading = false;
+          });
       });
-      context.commit('SET_SMT_ESTIMATOR_KPI', _smtEstimatorKPI, _smtTotalKPI)
-    },
+    }
   },
 
 };
