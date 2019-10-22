@@ -1,5 +1,5 @@
 <template>
-<div v-if="loggedIn && isGBG" class="container-fluid">
+<div v-if="isLoggedIn && isGBG" class="container-fluid">
 
     <div class="row">
 
@@ -172,8 +172,8 @@
     <div class="fab-container">
         <button class="buttons" tooltip="Past 7 Days" v-on:click="getDataWeek()">7</button>
         <button class="buttons" tooltip="Past 30 Days" v-on:click="getDataMonth()">30</button>
-        <button class="buttons" tooltip="Download Reports" data-toggle="modal" data-target=".report-modal"><i class="fas fa-download"></i></button>
-        <button class="buttons" tooltip="Actions" href="#"><i class="fas fa-cogs"></i></button>
+        <button class="buttons" tooltip="Download Reports" data-toggle="modal" data-target=".report-modal"><i class="fab fas fa-download"></i></button>
+        <button class="buttons" tooltip="Actions" href="#"><i class="fab fas fa-cogs"></i></button>
     </div>
 
     <!-- Report modal -->
@@ -223,12 +223,8 @@
 import totalValueBar from '../../chart-data/qld/gbg/totalValueBar';
 import totalQuantityBar from '../../chart-data/qld/gbg/totalQuantityBar';
 import axios from 'axios'
-import {
-    mapGetters
-} from 'vuex'
-import {
-    nextTick
-} from 'q';
+import { mapGetters } from 'vuex'
+import { nextTick } from 'q';
 
 export default {
     name: 'geebung',
@@ -244,12 +240,12 @@ export default {
     },
     computed: {
         ...mapGetters({
-            estimatorKPI: 'getGBGKPI',
-            totalKPI: 'getGBGKPITotal',
-            isGBG: 'isGBG',
-            loggedIn: 'loggedIn',
-            totalLoad: 'getTotalKPILoad',
-            KPILoad: 'getKPILoad'
+            isLoggedIn: 'isLoggedIn',       //module:auth: logged-in getter
+            isGBG: 'isGBG',                 //module:auth: geebung getter
+            estimatorKPI: 'getGBGKPI',      //module:gbg: specific estimator KPI data getter
+            totalKPI: 'getGBGKPITotal',     //module:gbg: total estimator KPI data getter
+            totalLoad: 'getTotalKPIStatus', //module:gbg: loading status getter
+            KPILoad: 'getKPIStatus'         //module:gbg: loading status getter
         }),
     },
     mounted() {
@@ -257,45 +253,58 @@ export default {
         this.getDataMonth();
     },
     methods: {
+        /**-------------------------------------------------------------------
+        ***                   Retrieve Weekly Data
+        ***-------------------------------------------------------------------
+        *** Function: Triggers actions from the geebung.js module. Updates
+        *** the gbgEstimatorKPI and gbgTotalKPI to Weekly.
+        ***-------------------------------------------------------------------
+        **/
         getDataWeek() {
-            if (this.totalLoad == true && this.KPILoad == true) {
-                this.$store.dispatch('toggle_gbg_total_KPI')
-                this.$store.dispatch('toggle_gbg_est_KPI')
+            if (this.totalLoad == true && this.KPILoad == true) {              //basically changes both loading status for total and specific estimator
+                this.$store.dispatch('toggle_gbg_total_KPI_status')            //data to false
+                this.$store.dispatch('toggle_gbg_est_KPI_status')
             }
-            this.time = ''
-            this.$store.dispatch('getGBGKPIWeek')
-            this.$store.dispatch('getGBGKPITotalWeek')
+            this.time = ''                                                     //clears time string (for card headers)
+            this.$store.dispatch('getGBGKPIWeek')                              //Triggers module:gbg:getGBGKPIWeek
+            this.$store.dispatch('getGBGKPITotalWeek')                         //Triggers module:gbg:getGBGKPITotalWeek
                 .then(() => {
-                    if (this.totalLoad == false && this.KPILoad == false) {
-                        this.$store.dispatch('toggle_gbg_total_KPI')
-                        this.$store.dispatch('toggle_gbg_est_KPI')
+                    if (this.totalLoad == false && this.KPILoad == false) {    //once data is loaded change loading status to true 
+                        this.$store.dispatch('toggle_gbg_total_KPI_status')
+                        this.$store.dispatch('toggle_gbg_est_KPI_status')
                     }
-                    this.time = 'Last 7 Days'
-                    this.show = false
-                    nextTick(() => {
+                    this.time = 'Last 7 Days'                                  //change time string to 'Last 7 Days' (for card headers)
+                    this.show = false                                          //hides charts components
+                    nextTick(() => {                                           //reloads charts components with new data
                         this.show = true
                     })
                 })
-                .finally(() => {
+                .finally(() => {                                               //Fires a notification toast on top right of screen
                     toast.fire({
                         type: "info",
                         title: "Showing data for the past 7 days"
                     })
                 })
         },
-
+        /**-------------------------------------------------------------------
+        ***                   Retrieve Monthly Data
+        ***-------------------------------------------------------------------
+        *** Function: Triggers actions from the geebung.js module. Updates
+        *** the gbgEstimatorKPI and gbgTotalKPI to Monthly.
+        ***-------------------------------------------------------------------
+        **/
         getDataMonth() {
-            if (this.totalLoad == true && this.KPILoad == true) {
-                this.$store.dispatch('toggle_gbg_total_KPI')
-                this.$store.dispatch('toggle_gbg_est_KPI')
+            if (this.totalLoad == true && this.KPILoad == true) {              
+                this.$store.dispatch('toggle_gbg_total_KPI_status')            //See comments from getDataWeekly()
+                this.$store.dispatch('toggle_gbg_est_KPI_status')
             }
             this.time = ''
             this.$store.dispatch('getGBGKPIMonth')
             this.$store.dispatch('getGBGKPITotalMonth')
                 .then(() => {
                     if (this.totalLoad == false && this.KPILoad == false) {
-                        this.$store.dispatch('toggle_gbg_total_KPI')
-                        this.$store.dispatch('toggle_gbg_est_KPI')
+                        this.$store.dispatch('toggle_gbg_total_KPI_status')
+                        this.$store.dispatch('toggle_gbg_est_KPI_status')
                     }
                     this.time = 'Last 30 Days'
                     this.show = false
@@ -310,163 +319,18 @@ export default {
                     })
                 })
         },
-
+        /**-------------------------------------------------------------------
+        ***                   Double Check User Permission
+        ***-------------------------------------------------------------------
+        *** Function: Check if the user is both logged in and a Geebung user
+        ***-------------------------------------------------------------------
+        **/
         permissionCheck() {
-            if (!this.isGBG || !this.loggedIn) {
-                this.$router.push('/404')
+            if (!this.isGBG || !this.isLoggedIn) {                              //if the user is not a geebung or not logged in
+                this.$router.push('/404')                                       //redirect to 404 page
             }
         },
     }
 }
 </script>
 
-<style scoped>
-@-webkit-keyframes bounce {
-    0% {
-        transform: scale(1, 1) translate(0px, 0px);
-    }
-
-    30% {
-        transform: scale(1, 0.8) translate(0px, 5px);
-    }
-
-    75% {
-        transform: scale(1, 1.1) translate(0px, -15px);
-    }
-
-    100% {
-        transform: scale(1, 1) translate(0px, 0px);
-    }
-}
-
-#fixedbutton {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    /* -webkit-animation: bounce 1s infinite; */
-}
-
-#fixedbutton2 {
-    position: fixed;
-    bottom: 70px;
-    right: 10px;
-    /* -webkit-animation: bounce 1s infinite; */
-}
-
-#fixedbutton3 {
-    position: fixed;
-    bottom: 130px;
-    right: 10px;
-    /* -webkit-animation: bounce 1s infinite; */
-}
-
-.fas {
-    color: white;
-    text-align: center;
-}
-
-.fab-container {
-    bottom: 0;
-    position: fixed;
-    margin: 1em;
-    right: 0px;
-    align-content: center;
-}
-
-.buttons {
-    box-shadow: 0px 5px 11px -2px rgba(0, 0, 0, 0.18),
-        0px 4px 12px -7px rgba(0, 0, 0, 0.15);
-    border: none;
-    border-radius: 50%;
-    display: block;
-    width: 56px;
-    height: 56px;
-    margin: 20px auto 0;
-    position: relative;
-    -webkit-transition: all .1s ease-out;
-    transition: all .1s ease-out;
-    color: white;
-    font-weight: 700;
-}
-
-.buttons:active,
-.buttons:focus,
-.buttons:hover {
-    box-shadow: 0 0 4px rgba(0, 0, 0, .14),
-        0 4px 8px rgba(0, 0, 0, .28);
-}
-
-.buttons:not(:last-child) {
-    width: 40px;
-    height: 40px;
-    margin: 20px auto 0;
-    opacity: 0;
-    -webkit-transform: translateY(50px);
-    -ms-transform: translateY(50px);
-    transform: translateY(50px);
-}
-
-.fab-container:hover .buttons:not(:last-child) {
-    opacity: 1;
-    -webkit-transform: none;
-    -ms-transform: none;
-    transform: none;
-    margin: 15px auto 0;
-}
-
-/* Unessential styling for sliding up buttons at differnt speeds */
-
-.buttons:nth-last-child(1) {
-    -webkit-transition-delay: 25ms;
-    transition-delay: 25ms;
-    background-color: #e74a3b;
-}
-
-.buttons:not(:last-child):nth-last-child(2) {
-    -webkit-transition-delay: 50ms;
-    transition-delay: 20ms;
-    background-color: #4e73df;
-}
-
-.buttons:not(:last-child):nth-last-child(3) {
-    -webkit-transition-delay: 75ms;
-    transition-delay: 40ms;
-    background-color: #1cc88a;
-}
-
-.buttons:not(:last-child):nth-last-child(4) {
-    -webkit-transition-delay: 100ms;
-    transition-delay: 60ms;
-    background-color: #1cc88a
-}
-
-/* Show tooltip content on hover */
-
-[tooltip]:before {
-    bottom: 25%;
-    font-family: arial;
-    font-weight: 600;
-    border-radius: 2px;
-    background: #585858;
-    color: #fff;
-    content: attr(tooltip);
-    font-size: 12px;
-    visibility: hidden;
-    opacity: 0;
-    padding: 5px 7px;
-    margin-right: 12px;
-    position: absolute;
-    right: 100%;
-    white-space: nowrap;
-}
-
-[tooltip]:hover:before,
-[tooltip]:hover:after {
-    visibility: visible;
-    opacity: 1;
-}
-
-.fas {
-    margin: auto;
-}
-</style>

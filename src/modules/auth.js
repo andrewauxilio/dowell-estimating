@@ -10,7 +10,7 @@ export default {
   },
 
   getters: {
-    loggedIn(state) {
+    isLoggedIn(state) {
       return state.token !== null;
     },
 

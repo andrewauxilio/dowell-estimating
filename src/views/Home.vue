@@ -12,20 +12,20 @@
         </router-link>
 
         <!-- Divider -->
-        <hr v-if="loggedIn && isEstimating" class="sidebar-divider my-0">
-        <li v-if="loggedIn && isEstimating" class="nav-item active">
+        <hr v-if="isLoggedIn && isEstimating" class="sidebar-divider my-0">
+        <li v-if="isLoggedIn && isEstimating" class="nav-item active">
             <router-link class="nav-link" to="/">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </router-link>
         </li>
       
-        <hr v-if="loggedIn && isEstimating" class="sidebar-divider">
-        <div v-if="loggedIn && isEstimating" class="sidebar-heading">
+        <hr v-if="isLoggedIn && isEstimating" class="sidebar-divider">
+        <div v-if="isLoggedIn && isEstimating" class="sidebar-heading">
             Analytics
         </div>
 
-        <li v-if="loggedIn && isEstimating && isNAT" class="nav-item">
+        <li v-if="isLoggedIn && isEstimating && isNAT" class="nav-item">
             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseNAT" aria-expanded="true" aria-controls="collapseNAT">
                 <i class="fas fa-fw fa-flag"></i>
                 <span>National</span>
@@ -38,7 +38,7 @@
             </div>
         </li>
 
-        <li v-if="loggedIn && isEstimating && isVIC" class="nav-item">
+        <li v-if="isLoggedIn && isEstimating && isVIC" class="nav-item">
             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseVIC" aria-expanded="true" aria-controls="collapseVIC">
                 <i class="fas fa-fw fa-map-marked"></i>
                 <span>Victoria</span>
@@ -60,7 +60,7 @@
             </div>
         </li>
 
-        <li v-if="loggedIn && isEstimating && isQLD" class="nav-item">
+        <li v-if="isLoggedIn && isEstimating && isQLD" class="nav-item">
             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseQLD" aria-expanded="true" aria-controls="collapseQLD">
                 <i class="fas fa-fw fa-map-marked"></i>
                 <span>Queensland</span>
@@ -74,7 +74,7 @@
             </div>
         </li>
 
-        <li v-if="loggedIn && isEstimating && isNSW" class="nav-item">
+        <li v-if="isLoggedIn && isEstimating && isNSW" class="nav-item">
             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseNSW" aria-expanded="true" aria-controls="collapseNSW">
                 <i class="fas fa-fw fa-map-marked"></i>
                 <span>New South Wales</span>
@@ -90,7 +90,7 @@
             </div>
         </li>
 
-        <!-- <li v-if="loggedIn && isEstimating" class="nav-item">
+        <!-- <li v-if="isLoggedIn && isEstimating" class="nav-item">
             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseWA" aria-expanded="true" aria-controls="collapseWA">
                 <i class="fas fa-fw fa-map-marked"></i>
                 <span>Western Australia</span>
@@ -105,18 +105,18 @@
         </li> -->
         
         <hr class="sidebar-divider d-none d-md-block">
-        <div v-if="loggedIn" class="sidebar-heading">
+        <div v-if="isLoggedIn" class="sidebar-heading">
             Account Controls
         </div>
 
-        <li v-if="loggedIn" class="nav-item">
+        <li v-if="isLoggedIn" class="nav-item">
             <router-link class="nav-link" to="/logout">
                 <i class="fas fa-fw fa-power-off"></i>
                 <span>Logout</span>
             </router-link>
         </li>
 
-        <hr v-if="loggedIn" class="sidebar-divider d-none d-md-block">
+        <hr v-if="isLoggedIn" class="sidebar-divider d-none d-md-block">
 
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
@@ -149,48 +149,59 @@
 
 <script>
 import axios from "axios";
-axios.defaults.baseURL = "http://127.0.0.1:8000/api/auth";
+import {
+    mapGetters
+} from 'vuex'
 
 export default {
     name: 'home',
     data() {
         return {
             isCollapsed: false,
-            name: '',
-            sites: this.$store.state.sites,
         }
     },
     computed: {
-        loggedIn() {
-            return this.$store.getters.loggedIn
-        },
-        isEstimating() {
-            return this.$store.getters.isEstimating
-        },
-        isNAT() {
-            return this.$store.getters.isNAT
-        },
-        isVIC() {
-            return this.$store.getters.isVIC
-        },
-        isBAY() {
-            return this.$store.getters.isBAY
-        },
-        //QLD Getters (State and Sites)
-        isQLD() {
-            return this.$store.getters.isQLD
-        },
-        isGBG() {
-            return this.$store.getters.isGBG
-        },
-        isNSW() {
-            return this.$store.getters.isNSW
-        },
+         ...mapGetters({
+            //Account Getters
+            isLoggedIn: 'isLoggedIn',
+            isEstimating: 'isEstimating',
+            //State Getters
+            isNAT: 'isNAT',
+            isVIC: 'isVIC',
+            isQLD: 'isQLD',
+            isNSW: 'isNSW',
+            isTAS: 'isTAS',
+            isACT: 'isACT',
+            isSA: 'isSA',
+            isWA: 'isWA',
+            isNT: 'isNT',
+            //Site Getters
+            isGBG: 'isGBG',
+            isQBN: 'isQBN',
+            isHOB: 'isHOB',
+            isNOW: 'isNOW',
+            isNEW: 'isNEW',
+            isSMT: 'isSMT',
+            isELI: 'isELI',
+            isLON: 'isLON',
+            isEDI: 'isEDI',
+            isBAY: 'isBAY',
+            isSHP: 'isSHP',
+            isWOD: 'isWOD',
+            isBEN: 'isBEN',
+            isBAL: 'isBAL',
+            isEPP: 'isEPP',
+            isGEE: 'isGEE',
+            isWAR: 'isWAR',
+            isTRA: 'isTRA'
+        }),
     },
     methods: {
+        //Sidebar open/close (Sidebar)
         sideBarToggle() {
             this.isCollapsed = !this.isCollapsed
         },
+        //Sidebar open/close (Topbar)
         sidebarToggleTop() {
             this.isCollapsed = !this.isCollapsed
         }

@@ -8,7 +8,7 @@ import axios from 'axios'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/css/sb-admin-2.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css"
-import "./assets/css/spinner.css";
+import "./assets/css/custom.css";
 
 //Bootstrap, Jquery, Popper.js JS
 import 'jquery/dist/jquery.min.js'
