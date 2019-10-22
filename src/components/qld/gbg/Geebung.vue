@@ -130,7 +130,7 @@
         <div class="col-xl-12 col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-success">Estimating KPIs (Last 30 Days)</h6>
+                    <h6 class="m-0 font-weight-bold text-success">Estimating KPIs - {{ time }}</h6>
                 </div>
                 <div class="card-body">
                     <div v-if="!KPILoad" class="spinner">
@@ -168,15 +168,13 @@
             </div>
         </div>
     </div>
-    <button button type="button" class="btn btn-danger btn-lg" id="fixedbutton" data-toggle="modal" data-target=".report-modal">
-        <i class="fas fa-file-download" style="margin-right: 10px;"></i>Download Reports
-    </button>
-    <button button type="button" class="btn btn-danger btn-lg" id="fixedbutton2" v-on:click="getDataWeek()">
-        <i class="fas fa-file-download" style="margin-right: 10px;"></i>7 Days
-    </button>
-    <button button type="button" class="btn btn-danger btn-lg" id="fixedbutton3" v-on:click="getDataMonth()">
-        <i class="fas fa-file-download" style="margin-right: 10px;"></i>30 Days
-    </button>
+
+    <div class="fab-container">
+        <button class="buttons" tooltip="Past 7 Days" v-on:click="getDataWeek()">7</button>
+        <button class="buttons" tooltip="Past 30 Days" v-on:click="getDataMonth()">30</button>
+        <button class="buttons" tooltip="Download Reports" data-toggle="modal" data-target=".report-modal"><i class="fas fa-download"></i></button>
+        <button class="buttons" tooltip="Actions" href="#"><i class="fas fa-cogs"></i></button>
+    </div>
 
     <!-- Report modal -->
     <div class="modal fade report-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -225,8 +223,12 @@
 import totalValueBar from '../../chart-data/qld/gbg/totalValueBar';
 import totalQuantityBar from '../../chart-data/qld/gbg/totalQuantityBar';
 import axios from 'axios'
-import { mapGetters } from 'vuex'
-import { nextTick } from 'q';
+import {
+    mapGetters
+} from 'vuex'
+import {
+    nextTick
+} from 'q';
 
 export default {
     name: 'geebung',
@@ -268,10 +270,16 @@ export default {
                         this.$store.dispatch('toggle_gbg_total_KPI')
                         this.$store.dispatch('toggle_gbg_est_KPI')
                     }
-                    this.time = 'Weekly'
+                    this.time = 'Last 7 Days'
                     this.show = false
                     nextTick(() => {
                         this.show = true
+                    })
+                })
+                .finally(() => {
+                    toast.fire({
+                        type: "info",
+                        title: "Showing data for the past 7 days"
                     })
                 })
         },
@@ -289,10 +297,16 @@ export default {
                         this.$store.dispatch('toggle_gbg_total_KPI')
                         this.$store.dispatch('toggle_gbg_est_KPI')
                     }
-                    this.time = 'Monthly'
+                    this.time = 'Last 30 Days'
                     this.show = false
                     nextTick(() => {
                         this.show = true
+                    })
+                })
+                .finally(() => {
+                    toast.fire({
+                        type: "info",
+                        title: "Showing data for the past 30 days"
                     })
                 })
         },
@@ -334,15 +348,125 @@ export default {
 
 #fixedbutton2 {
     position: fixed;
-    bottom: 10px;
-    right: 250px;
+    bottom: 70px;
+    right: 10px;
     /* -webkit-animation: bounce 1s infinite; */
 }
 
 #fixedbutton3 {
     position: fixed;
-    bottom: 10px;
-    right: 385px;
+    bottom: 130px;
+    right: 10px;
     /* -webkit-animation: bounce 1s infinite; */
+}
+
+.fas {
+    color: white;
+    text-align: center;
+}
+
+.fab-container {
+    bottom: 0;
+    position: fixed;
+    margin: 1em;
+    right: 0px;
+    align-content: center;
+}
+
+.buttons {
+    box-shadow: 0px 5px 11px -2px rgba(0, 0, 0, 0.18),
+        0px 4px 12px -7px rgba(0, 0, 0, 0.15);
+    border: none;
+    border-radius: 50%;
+    display: block;
+    width: 56px;
+    height: 56px;
+    margin: 20px auto 0;
+    position: relative;
+    -webkit-transition: all .1s ease-out;
+    transition: all .1s ease-out;
+    color: white;
+    font-weight: 700;
+}
+
+.buttons:active,
+.buttons:focus,
+.buttons:hover {
+    box-shadow: 0 0 4px rgba(0, 0, 0, .14),
+        0 4px 8px rgba(0, 0, 0, .28);
+}
+
+.buttons:not(:last-child) {
+    width: 40px;
+    height: 40px;
+    margin: 20px auto 0;
+    opacity: 0;
+    -webkit-transform: translateY(50px);
+    -ms-transform: translateY(50px);
+    transform: translateY(50px);
+}
+
+.fab-container:hover .buttons:not(:last-child) {
+    opacity: 1;
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none;
+    margin: 15px auto 0;
+}
+
+/* Unessential styling for sliding up buttons at differnt speeds */
+
+.buttons:nth-last-child(1) {
+    -webkit-transition-delay: 25ms;
+    transition-delay: 25ms;
+    background-color: #e74a3b;
+}
+
+.buttons:not(:last-child):nth-last-child(2) {
+    -webkit-transition-delay: 50ms;
+    transition-delay: 20ms;
+    background-color: #4e73df;
+}
+
+.buttons:not(:last-child):nth-last-child(3) {
+    -webkit-transition-delay: 75ms;
+    transition-delay: 40ms;
+    background-color: #1cc88a;
+}
+
+.buttons:not(:last-child):nth-last-child(4) {
+    -webkit-transition-delay: 100ms;
+    transition-delay: 60ms;
+    background-color: #1cc88a
+}
+
+/* Show tooltip content on hover */
+
+[tooltip]:before {
+    bottom: 25%;
+    font-family: arial;
+    font-weight: 600;
+    border-radius: 2px;
+    background: #585858;
+    color: #fff;
+    content: attr(tooltip);
+    font-size: 12px;
+    visibility: hidden;
+    opacity: 0;
+    padding: 5px 7px;
+    margin-right: 12px;
+    position: absolute;
+    right: 100%;
+    white-space: nowrap;
+}
+
+[tooltip]:hover:before,
+[tooltip]:hover:after {
+    visibility: visible;
+    opacity: 1;
+}
+
+.fas {
+    margin: auto;
 }
 </style>
