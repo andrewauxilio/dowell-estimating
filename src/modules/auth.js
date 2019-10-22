@@ -297,37 +297,37 @@ export default {
      *** user and their user details
      ***-------------------------------------------------------------------
      **/
+    // removeUserDetails(context) {
+    //   axios.defaults.headers.common["Authorization"] =
+    //     "Bearer " + context.state.token;
+
+    //   if (context.getters.loggedIn) {
+    //     return new Promise((resolve, reject) => {
+    //       axios
+    //         .post("/auth/logout")
+    //         .then(response => {
+    //           sessionStorage.removeItem("access_token");
+    //           context.commit("REMOVE_TOKEN");
+    //           context.commit("REMOVE_APPS");
+    //           context.commit("REMOVE_ROLES");
+    //           context.commit("REMOVE_STATES");
+    //           context.commit("REMOVE_SITES");
+    //           resolve(response);
+    //         })
+    //         .catch(error => {
+    //           sessionStorage.removeItem("access_token");
+    //           context.commit("REMOVE_TOKEN");
+    //           context.commit("REMOVE_APPS");
+    //           context.commit("REMOVE_ROLES");
+    //           context.commit("REMOVE_STATES");
+    //           context.commit("REMOVE_SITES");
+    //           reject(error);
+    //         });
+    //     });
+    //   }
+    // },
+
     removeUserDetails(context) {
-      axios.defaults.headers.common["Authorization"] =
-        "Bearer " + context.state.token;
-
-      if (context.getters.loggedIn) {
-        return new Promise((resolve, reject) => {
-          axios
-            .post("/auth/logout")
-            .then(response => {
-              sessionStorage.removeItem("access_token");
-              context.commit("REMOVE_TOKEN");
-              context.commit("REMOVE_APPS");
-              context.commit("REMOVE_ROLES");
-              context.commit("REMOVE_STATES");
-              context.commit("REMOVE_SITES");
-              resolve(response);
-            })
-            .catch(error => {
-              sessionStorage.removeItem("access_token");
-              context.commit("REMOVE_TOKEN");
-              context.commit("REMOVE_APPS");
-              context.commit("REMOVE_ROLES");
-              context.commit("REMOVE_STATES");
-              context.commit("REMOVE_SITES");
-              reject(error);
-            });
-        });
-      }
-    },
-
-    removeUserDetails2(context) {
       sessionStorage.removeItem("access_token");
       context.commit("REMOVE_TOKEN");
       context.commit("REMOVE_APPS");
