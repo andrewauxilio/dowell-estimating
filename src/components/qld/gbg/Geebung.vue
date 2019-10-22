@@ -261,8 +261,8 @@ export default {
                 this.$store.dispatch('toggle_gbg_est_KPI')
             }
             this.time = ''
-            this.$store.dispatch('getGBGKPI7')
-            this.$store.dispatch('getGBGKPITotal7')
+            this.$store.dispatch('getGBGKPIWeek')
+            this.$store.dispatch('getGBGKPITotalWeek')
                 .then(() => {
                     if (this.totalLoad == false && this.KPILoad == false) {
                         this.$store.dispatch('toggle_gbg_total_KPI')
@@ -282,8 +282,8 @@ export default {
                 this.$store.dispatch('toggle_gbg_est_KPI')
             }
             this.time = ''
-            this.$store.dispatch('getGBGKPI')
-            this.$store.dispatch('getGBGKPITotal')
+            this.$store.dispatch('getGBGKPIMonth')
+            this.$store.dispatch('getGBGKPITotalMonth')
                 .then(() => {
                     if (this.totalLoad == false && this.KPILoad == false) {
                         this.$store.dispatch('toggle_gbg_total_KPI')

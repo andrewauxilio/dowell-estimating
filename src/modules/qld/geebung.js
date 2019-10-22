@@ -59,12 +59,12 @@ export default {
       context.commit("TOGGLE_GBG_KPI_TOTAL_LOAD")
     },
 
-    getGBGKPI(context) {
+    getGBGKPIMonth(context) {
       axios.defaults.headers.common["Authorization"] =
         "Bearer " + context.state.token;
       return new Promise((resolve, reject) => {
         axios
-          .get("/estimating/qld/kpi/gbg")
+          .get("/estimating/qld/kpi/gbg-month")
           .then(response => {
             context.commit("SET_GBG_ESTIMATOR_KPI", response.data);
             resolve(response);
@@ -76,12 +76,12 @@ export default {
       });
     },
 
-    getGBGKPITotal(context) {
+    getGBGKPITotalMonth(context) {
       axios.defaults.headers.common["Authorization"] =
         "Bearer " + context.state.token;
       return new Promise((resolve, reject) => {
         axios
-          .get("/estimating/qld/kpi/gbg-total")
+          .get("/estimating/qld/kpi/gbg-total-month")
           .then(response => {
             context.commit("SET_GBG_ESTIMATOR_KPI_TOTAL", response.data);
             resolve(response);
@@ -93,12 +93,12 @@ export default {
       });
     },
 
-    getGBGKPI7(context) {
+    getGBGKPIWeek(context) {
       axios.defaults.headers.common["Authorization"] =
         "Bearer " + context.state.token;
       return new Promise((resolve, reject) => {
         axios
-          .get("/estimating/qld/kpi/gbg7")
+          .get("/estimating/qld/kpi/gbg-week")
           .then(response => {
             context.commit("SET_GBG_ESTIMATOR_KPI", response.data);
             resolve(response);
@@ -110,12 +110,12 @@ export default {
       });
     },
 
-    getGBGKPITotal7(context) {
+    getGBGKPITotalWeek(context) {
       axios.defaults.headers.common["Authorization"] =
         "Bearer " + context.state.token;
       return new Promise((resolve, reject) => {
         axios
-          .get("/estimating/qld/kpi/gbg-total7")
+          .get("/estimating/qld/kpi/gbg-total-week")
           .then(response => {
             context.commit("SET_GBG_ESTIMATOR_KPI_TOTAL", response.data);
             resolve(response);
