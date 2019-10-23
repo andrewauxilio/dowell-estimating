@@ -197,7 +197,7 @@
                         <tbody>
                             <tr>
                                 <th>Report 1</th>
-                                <td><a href="http://uat.website.dowell.com.au/" target="_blank">http://uat.website.dowell.com.au/</a></td>
+                                <td><a href="http://dweqxsql04/Reports/report/CustomerInvoice/report_Customer_Invoice" target="_blank">Test Report</a></td>
                             </tr>
                             <tr>
                                 <th>Report 2</th>
@@ -280,10 +280,12 @@ export default {
                     })
                 })
                 .finally(() => {                                               //Fires a notification toast on top right of screen
-                    toast.fire({
-                        type: "info",
-                        title: "Showing data for the past 7 days"
-                    })
+                    if (this.isGBG && this.isLoggedIn) {                              
+                        toast.fire({
+                            type: "info",
+                            title: "Showing data for the past 7 days"
+                        })                                       
+                    }
                 })
         },
         /**-------------------------------------------------------------------
@@ -313,10 +315,12 @@ export default {
                     })
                 })
                 .finally(() => {
-                    toast.fire({
-                        type: "info",
-                        title: "Showing data for the past 30 days"
-                    })
+                    if (this.isGBG && this.isLoggedIn) {                              
+                        toast.fire({
+                            type: "info",
+                            title: "Showing data for the past 30 days"
+                        })                                       
+                    }
                 })
         },
         /**-------------------------------------------------------------------
