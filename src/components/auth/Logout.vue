@@ -8,6 +8,7 @@ export default {
         this.$store.dispatch('removeUserDetails')
             .then(response => {
                 this.$store.dispatch('removeGBGData')
+                this.$store.dispatch('removeELIData')
                 this.$router.push('/')
                 toast.fire({
                     type: "success",
