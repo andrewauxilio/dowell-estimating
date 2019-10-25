@@ -30,12 +30,17 @@ export default new Router({
     {
       path: '/gbg',
       name: 'gbg',
-      component: () => import('./components/qld/gbg/Geebung.vue')
+      component: () => import('./components/qld/Geebung.vue')
     },
     {
       path: '/smt',
       name: 'smt',
-      component: () => import('./components/nsw/smt/Smithfield.vue')
+      component: () => import('./components/nsw/Smithfield.vue')
+    },
+    {
+      path: '/eli',
+      name: 'eli',
+      component: () => import('./components/sa/Elizabeth.vue')
     },
     {
       path: '/404',

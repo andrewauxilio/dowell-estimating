@@ -3,82 +3,82 @@ import axios from "axios";
 export default {
   state: {
     //Specific Estimator KPI Data
-    gbgEstimatorKPI: [],
+    eliEstimatorKPI: [],
     //Total Estimator KPI Data
-    gbgTotalKPI: [],
+    eliTotalKPI: [],
     //Specific Estimator Data Loading Status
-    gbgEstKPILoaded: false,
+    eliEstKPILoaded: false,
     //Total Estimator Data Loading Status
-    gbgTotalKPILoaded: false 
+    eliTotalKPILoaded: false 
   },
 
   getters: {
     //Returns Specific Estimator Data
-    getGBGKPI(state) {
-      return state.gbgEstimatorKPI;
+    getELIKPI(state) {
+      return state.eliEstimatorKPI;
     },
     //Returns Total Estimator Data
-    getGBGKPITotal(state) {
-      return state.gbgTotalKPI;
+    getELIKPITotal(state) {
+      return state.eliTotalKPI;
     },
     //Returns Total Specific Estimator Data Loading Status
-    getGBGTotalKPIStatus(state) {
-      return state.gbgTotalKPILoaded;
+    getELITotalKPIStatus(state) {
+      return state.eliTotalKPILoaded;
     },
     //Returns Total Estimator Data Loading Status
-    getGBGKPIStatus(state) {
-      return state.gbgEstKPILoaded;
+    getELIKPIStatus(state) {
+      return state.eliEstKPILoaded;
     },
   },
 
   mutations: {
     //Assign the specific estimator data into state
-    SET_GBG_ESTIMATOR_KPI(state, payload) {
-      state.gbgEstimatorKPI = payload;
+    SET_ELI_ESTIMATOR_KPI(state, payload) {
+      state.eliEstimatorKPI = payload;
     },
     //Assign the total estimator data into state
-    SET_GBG_ESTIMATOR_KPI_TOTAL(state, payload) {
-      state.gbgTotalKPI = payload;
+    SET_ELI_ESTIMATOR_KPI_TOTAL(state, payload) {
+      state.eliTotalKPI = payload;
     },
-    //Remove all GBG state data
-    REMOVE_GBG_DATA(state) {
-      state.gbgEstimatorKPI = [];
-      state.gbgTotalKPI = [];
-      state.gbgTotalKPILoaded = false;
-      state.gbgEstKPILoaded = false;
+    //Remove all ELI state data
+    REMOVE_ELI_DATA(state) {
+      state.eliEstimatorKPI = [];
+      state.eliTotalKPI = [];
+      state.eliTotalKPILoaded = false;
+      state.eliEstKPILoaded = false;
     },
     //Toggles the specific estimator loading status
-    TOGGLE_GBG_EST_KPI_STATUS(state) {
-      state.gbgEstKPILoaded = !state.gbgEstKPILoaded
+    TOGGLE_ELI_EST_KPI_STATUS(state) {
+      state.eliEstKPILoaded = !state.eliEstKPILoaded
     },
     //Toggles the total estimator loading status
-    TOGGLE_GBG_KPI_TOTAL_STATUS(state) {
-      state.gbgTotalKPILoaded = !state.gbgTotalKPILoaded
+    TOGGLE_ELI_KPI_TOTAL_STATUS(state) {
+      state.eliTotalKPILoaded = !state.eliTotalKPILoaded
     }
   },
 
   actions: {
-    //Removes GBG Data
-    removeGBGData(context) {
-      context.commit("REMOVE_GBG_DATA");
+    //Removes ELI Data
+    removeELIData(context) {
+      context.commit("REMOVE_ELI_DATA");
     },
     //Toggles KPI Data Loading Status
-    toggle_gbg_est_KPI_status(context) {
-      context.commit("TOGGLE_GBG_EST_KPI_STATUS")
+    toggle_eli_est_KPI_status(context) {
+      context.commit("TOGGLE_ELI_EST_KPI_STATUS")
     },
     //Toggles Total KPI Data Loading Status
-    toggle_gbg_total_KPI_status(context) {
-      context.commit("TOGGLE_GBG_KPI_TOTAL_STATUS")
+    toggle_eli_total_KPI_status(context) {
+      context.commit("TOGGLE_ELI_KPI_TOTAL_STATUS")
     },
     //Fetch Monthly Estimator KPI Data from API
-    getGBGKPIMonth(context) {
+    getELIKPIMonth(context) {
       axios.defaults.headers.common["Authorization"] =
         "Bearer " + context.state.token;
       return new Promise((resolve, reject) => {
         axios
-          .get("/estimating/qld/kpi/gbg-month")
+          .get("/estimating/sa/kpi/eli-month")
           .then(response => {
-            context.commit("SET_GBG_ESTIMATOR_KPI", response.data);
+            context.commit("SET_ELI_ESTIMATOR_KPI", response.data);
             resolve(response);
           })
           .catch(error => {
@@ -88,14 +88,14 @@ export default {
       });
     },
     //Fetch Monthly Estimator Total KPI Data from API
-    getGBGKPITotalMonth(context) {
+    getELIKPITotalMonth(context) {
       axios.defaults.headers.common["Authorization"] =
         "Bearer " + context.state.token;
       return new Promise((resolve, reject) => {
         axios
-          .get("/estimating/qld/kpi/gbg-total-month")
+          .get("/estimating/sa/kpi/eli-total-month")
           .then(response => {
-            context.commit("SET_GBG_ESTIMATOR_KPI_TOTAL", response.data);
+            context.commit("SET_ELI_ESTIMATOR_KPI_TOTAL", response.data);
             resolve(response);
           })
           .catch(error => {
@@ -105,14 +105,14 @@ export default {
       });
     },
     //Fetch Monthly Estimator KPI Data from API
-    getGBGKPIWeek(context) {
+    getELIKPIWeek(context) {
       axios.defaults.headers.common["Authorization"] =
         "Bearer " + context.state.token;
       return new Promise((resolve, reject) => {
         axios
-          .get("/estimating/qld/kpi/gbg-week")
+          .get("/estimating/sa/kpi/eli-week")
           .then(response => {
-            context.commit("SET_GBG_ESTIMATOR_KPI", response.data);
+            context.commit("SET_ELI_ESTIMATOR_KPI", response.data);
             resolve(response);
           })
           .catch(error => {
@@ -122,14 +122,14 @@ export default {
       });
     },
     //Fetch Weekly Estimator Total KPI Data from API
-    getGBGKPITotalWeek(context) {
+    getELIKPITotalWeek(context) {
       axios.defaults.headers.common["Authorization"] =
         "Bearer " + context.state.token;
       return new Promise((resolve, reject) => {
         axios
-          .get("/estimating/qld/kpi/gbg-total-week")
+          .get("/estimating/sa/kpi/eli-total-week")
           .then(response => {
-            context.commit("SET_GBG_ESTIMATOR_KPI_TOTAL", response.data);
+            context.commit("SET_ELI_ESTIMATOR_KPI_TOTAL", response.data);
             resolve(response);
           })
           .catch(error => {

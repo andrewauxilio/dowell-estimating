@@ -25,7 +25,7 @@
             Analytics
         </div>
 
-        <li v-if="isLoggedIn && isEstimating && isNAT" class="nav-item">
+        <!-- <li v-if="isLoggedIn && isEstimating && isNAT" class="nav-item">
             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseNAT" aria-expanded="true" aria-controls="collapseNAT">
                 <i class="fas fa-fw fa-flag"></i>
                 <span>National</span>
@@ -36,9 +36,9 @@
                     <router-link class="collapse-item" to="/national-totals">Totals</router-link>
                 </div>
             </div>
-        </li>
+        </li> -->
 
-        <li v-if="isLoggedIn && isEstimating && isVIC" class="nav-item">
+        <!-- <li v-if="isLoggedIn && isEstimating && isVIC" class="nav-item">
             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseVIC" aria-expanded="true" aria-controls="collapseVIC">
                 <i class="fas fa-fw fa-map-marked"></i>
                 <span>Victoria</span>
@@ -58,7 +58,7 @@
                     <router-link class="collapse-item" to="/">Warnambool</router-link>
                 </div>
             </div>
-        </li>
+        </li> -->
 
         <li v-if="isLoggedIn && isEstimating && isQLD" class="nav-item">
             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseQLD" aria-expanded="true" aria-controls="collapseQLD">
@@ -68,13 +68,26 @@
             <div id="collapseQLD" class="collapse">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Sites:</h6>
-                    <router-link v-if="isNAT" class="collapse-item" to="/">Totals</router-link>
+                    <!-- <router-link v-if="isNAT" class="collapse-item" to="/">Totals</router-link> -->
                     <router-link v-if="isGBG" class="collapse-item" to="/gbg">Geebung</router-link>
                 </div>
             </div>
         </li>
 
-        <li v-if="isLoggedIn && isEstimating && isNSW" class="nav-item">
+        <li v-if="isLoggedIn && isEstimating && isSA" class="nav-item">
+            <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseSA" aria-expanded="true" aria-controls="collapseSA">
+                <i class="fas fa-fw fa-map-marked"></i>
+                <span>South Australia</span>
+            </a>
+            <div id="collapseSA" class="collapse">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Sites:</h6>
+                    <router-link v-if="isELI" class="collapse-item" to="/eli">Elizabeth</router-link>
+                </div>
+            </div>
+        </li>
+
+        <!-- <li v-if="isLoggedIn && isEstimating && isNSW" class="nav-item">
             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseNSW" aria-expanded="true" aria-controls="collapseNSW">
                 <i class="fas fa-fw fa-map-marked"></i>
                 <span>New South Wales</span>
@@ -88,7 +101,7 @@
                     <router-link class="collapse-item" to="/">Newcastle</router-link>
                 </div>
             </div>
-        </li>
+        </li> -->
 
         <!-- <li v-if="isLoggedIn && isEstimating" class="nav-item">
             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseWA" aria-expanded="true" aria-controls="collapseWA">

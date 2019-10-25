@@ -1,5 +1,5 @@
 <template>
-<div v-if="isLoggedIn && isGBG" class="container-fluid">
+<div v-if="isLoggedIn && isELI" class="container-fluid">
 
     <div class="row">
 
@@ -220,8 +220,8 @@
 </template>
 
 <script>
-import totalValueBar from '../../chart-data/qld/gbg/totalValueBar';
-import totalQuantityBar from '../../chart-data/qld/gbg/totalQuantityBar';
+import totalValueBar from '../chart-data/sa/eli/totalValueBar';
+import totalQuantityBar from '../chart-data/sa/eli/totalQuantityBar';
 import axios from 'axios'
 import { mapGetters } from 'vuex'
 import { nextTick } from 'q';
@@ -241,11 +241,11 @@ export default {
     computed: {
         ...mapGetters({
             isLoggedIn: 'isLoggedIn',       //module:auth: logged-in getter
-            isGBG: 'isGBG',                 //module:auth: geebung getter
-            estimatorKPI: 'getGBGKPI',      //module:gbg: specific estimator KPI data getter
-            totalKPI: 'getGBGKPITotal',     //module:gbg: total estimator KPI data getter
-            totalLoad: 'getTotalKPIStatus', //module:gbg: loading status getter
-            KPILoad: 'getKPIStatus'         //module:gbg: loading status getter
+            isELI: 'isELI',                 //module:auth: geebung getter
+            estimatorKPI: 'getELIKPI',      //module:eli: specific estimator KPI data getter
+            totalKPI: 'getELIKPITotal',     //module:eli: total estimator KPI data getter
+            totalLoad: 'getELITotalKPIStatus', //module:eli: loading status getter
+            KPILoad: 'getELIKPIStatus'         //module:eli: loading status getter
         }),
     },
     mounted() {
@@ -257,21 +257,21 @@ export default {
         ***                   Retrieve Weekly Data
         ***-------------------------------------------------------------------
         *** Function: Triggers actions from the geebung.js module. Updates
-        *** the gbgEstimatorKPI and gbgTotalKPI to Weekly.
+        *** the eliEstimatorKPI and eliTotalKPI to Weekly.
         ***-------------------------------------------------------------------
         **/
         getDataWeek() {
             if (this.totalLoad == true && this.KPILoad == true) {              //basically changes both loading status for total and specific estimator
-                this.$store.dispatch('toggle_gbg_total_KPI_status')            //data to false
-                this.$store.dispatch('toggle_gbg_est_KPI_status')
+                this.$store.dispatch('toggle_eli_total_KPI_status')            //data to false
+                this.$store.dispatch('toggle_eli_est_KPI_status')
             }
             this.time = ''                                                     //clears time string (for card headers)
-            this.$store.dispatch('getGBGKPIWeek')                              //Triggers module:gbg:getGBGKPIWeek
-            this.$store.dispatch('getGBGKPITotalWeek')                         //Triggers module:gbg:getGBGKPITotalWeek
+            this.$store.dispatch('getELIKPIWeek')                              //Triggers module:eli:getELIKPIWeek
+            this.$store.dispatch('getELIKPITotalWeek')                         //Triggers module:eli:getELIKPITotalWeek
                 .then(() => {
                     if (this.totalLoad == false && this.KPILoad == false) {    //once data is loaded change loading status to true 
-                        this.$store.dispatch('toggle_gbg_total_KPI_status')
-                        this.$store.dispatch('toggle_gbg_est_KPI_status')
+                        this.$store.dispatch('toggle_eli_total_KPI_status')
+                        this.$store.dispatch('toggle_eli_est_KPI_status')
                     }
                     this.time = 'Last 7 Days'                                  //change time string to 'Last 7 Days' (for card headers)
                     this.show = false                                          //hides charts components
@@ -280,7 +280,7 @@ export default {
                     })
                 })
                 .finally(() => {                                               //Fires a notification toast on top right of screen
-                    if (this.isGBG && this.isLoggedIn) {                              
+                    if (this.isELI && this.isLoggedIn) {                              
                         toast.fire({
                             type: "info",
                             title: "Showing data for the past 7 days"
@@ -292,21 +292,21 @@ export default {
         ***                   Retrieve Monthly Data
         ***-------------------------------------------------------------------
         *** Function: Triggers actions from the geebung.js module. Updates
-        *** the gbgEstimatorKPI and gbgTotalKPI to Monthly.
+        *** the eliEstimatorKPI and eliTotalKPI to Monthly.
         ***-------------------------------------------------------------------
         **/
         getDataMonth() {
             if (this.totalLoad == true && this.KPILoad == true) {              
-                this.$store.dispatch('toggle_gbg_total_KPI_status')            //See comments from getDataWeekly()
-                this.$store.dispatch('toggle_gbg_est_KPI_status')
+                this.$store.dispatch('toggle_eli_total_KPI_status')            //See comments from getDataWeekly()
+                this.$store.dispatch('toggle_eli_est_KPI_status')
             }
             this.time = ''
-            this.$store.dispatch('getGBGKPIMonth')
-            this.$store.dispatch('getGBGKPITotalMonth')
+            this.$store.dispatch('getELIKPIMonth')
+            this.$store.dispatch('getELIKPITotalMonth')
                 .then(() => {
                     if (this.totalLoad == false && this.KPILoad == false) {
-                        this.$store.dispatch('toggle_gbg_total_KPI_status')
-                        this.$store.dispatch('toggle_gbg_est_KPI_status')
+                        this.$store.dispatch('toggle_eli_total_KPI_status')
+                        this.$store.dispatch('toggle_eli_est_KPI_status')
                     }
                     this.time = 'Last 30 Days'
                     this.show = false
@@ -315,7 +315,7 @@ export default {
                     })
                 })
                 .finally(() => {
-                    if (this.isGBG && this.isLoggedIn) {                              
+                    if (this.isELI && this.isLoggedIn) {                              
                         toast.fire({
                             type: "info",
                             title: "Showing data for the past 30 days"
@@ -330,7 +330,7 @@ export default {
         ***-------------------------------------------------------------------
         **/
         permissionCheck() {
-            if (!this.isGBG || !this.isLoggedIn) {                              //if the user is not a geebung or not logged in
+            if (!this.isELI || !this.isLoggedIn) {                              //if the user is not a geebung or not logged in
                 this.$router.push('/404')                                       //redirect to 404 page
             }
         },

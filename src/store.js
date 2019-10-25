@@ -5,6 +5,7 @@ import createPersistedState from "vuex-persistedstate";
 import auth from './modules/auth'
 import gbg from './modules/qld/geebung'
 import smt from './modules/nsw/smithfield'
+import eli from './modules/sa/elizabeth'
 
 Vue.use(Vuex)
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
   modules: {
       auth,
       gbg,
-      smt
+      smt,
+      eli
   },
 });
