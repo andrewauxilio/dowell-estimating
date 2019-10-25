@@ -3,6 +3,7 @@ import axios from "axios";
 export default {
   state: {
     token: sessionStorage.getItem("access_token") || null,
+    user_name: '',
     apps: [],
     roles: [],
     states: [],
@@ -12,6 +13,10 @@ export default {
   getters: {
     isLoggedIn(state) {
       return state.token !== null;
+    },
+
+    getUserName(state) {
+      return state.user_name;
     },
 
     /**---------------------------------------
@@ -179,6 +184,9 @@ export default {
     REMOVE_TOKEN(state) {
       state.token = null;
     },
+    SET_USER_NAME(state, payload) {
+      state.user_name = payload;
+    },
     SET_APPS(state, payload) {
       state.apps = payload;
     },
@@ -249,6 +257,7 @@ export default {
             });
 
             //Save each array in state
+            context.commit("SET_USER_NAME", response.data.name);
             context.commit("SET_APPS", apps);
             context.commit("SET_ROLES", roles);
             context.commit("SET_STATES", states);

@@ -148,6 +148,13 @@
                 <button @click="sideBarToggle()" id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                     <i class="fa fa-bars text-success"></i>
                 </button>
+                <ul class="navbar-nav ml-auto">
+                <li v-if="isLoggedIn" class="nav-item dropdown no-arrow">
+                   
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Welcome, {{ userName }}!</span>
+                
+                </li>
+                </ul>
             </nav>
             <div class="container-fluid">
                 <transition name="fade">
@@ -176,6 +183,7 @@ export default {
     computed: {
          ...mapGetters({
             //Account Getters
+            userName: 'getUserName',
             isLoggedIn: 'isLoggedIn',
             isEstimating: 'isEstimating',
             //State Getters

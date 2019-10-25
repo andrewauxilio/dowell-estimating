@@ -80,7 +80,7 @@ export default {
                                 title: "You have logged in successfully"
                             })
                         } else {
-                            this.$store.dispatch('destroyUserDetails2')
+                            this.$store.dispatch('removeUserDetails')
                             swal.fire(
                                 "Login Failed",
                                 "There was an error logging in. Please try again.",
@@ -90,7 +90,7 @@ export default {
                     }) 
                 })
                 .catch(() => {
-                    this.$store.dispatch('removeUserDetails2')
+                    this.$store.dispatch('removeUserDetails')
                     swal.fire(
                         "Login Failed",
                         "There was an error logging in. Please try again.",
