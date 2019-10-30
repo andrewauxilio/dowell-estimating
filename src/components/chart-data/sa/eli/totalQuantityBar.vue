@@ -45,7 +45,11 @@ export default {
                             drawBorder: false,
                             borderDash: [2],
                             zeroLineBorderDash: [2]
-                        }
+                        },
+                        ticks: {
+                            display: true,
+                            beginAtZero: true
+                        },
                     }],
                 },
                 legend: {

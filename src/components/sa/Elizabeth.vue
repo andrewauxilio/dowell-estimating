@@ -121,7 +121,7 @@
                         </div>
                         <div v-if="totalLoad" class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">No. of Orders</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ totalKPI[0].DLQTY }} live jobs</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ totalKPI[0].DLQTY }} Live Jobs</div>
                         </div>
                         <div v-if="totalLoad" class="col-auto">
                             <i class="fas fa-truck fa-2x text-gray-300"></i>
@@ -142,7 +142,7 @@
                         </div>
                         <div v-if="totalLoad" class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">No. of Revisions</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ totalKPI[0].RQTY }} quote revisions</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ totalKPI[0].RQTY }} Quote Revisions</div>
                         </div>
                         <div v-if="totalLoad" class="col-auto">
                             <i class="fas fa-redo fa-2x text-gray-300"></i>
@@ -163,7 +163,7 @@
                         </div>
                         <div v-if="totalLoad" class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Quotes and Orders</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ quotes_orders_total }} quotes and jobs</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ quotes_orders_total }} Quotes and Jobs</div>
                         </div>
                         <div v-if="totalLoad" class="col-auto">
                             <i class="fas fa-equals fa-2x text-gray-300"></i>
@@ -315,7 +315,7 @@ import { mapGetters } from 'vuex'
 import { nextTick } from 'q';
 
 export default {
-    name: 'geebung',
+    name: 'elizabeth',
     components: {
         totalValueBar,
         totalQuantityBar
@@ -338,6 +338,8 @@ export default {
         }),
     },
     mounted() {
+        this.$store.dispatch('getELIKPITotalMonth2')
+        this.$store.dispatch('getELIKPITotalMonth3')
         this.permissionCheck();
         this.getDataMonth();
     },
