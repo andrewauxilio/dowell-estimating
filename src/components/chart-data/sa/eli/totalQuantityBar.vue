@@ -75,15 +75,32 @@ export default {
     },
     methods: {
         fillData() {
-            let quantity = this.$store.getters.getELIKPITotal;
+            let quantity_m1 = this.$store.getters.getELIKPITotal;
+            let quantity_m2 = this.$store.getters.getELIKPITotalMonth2;
+            let quantity_m3 = this.$store.getters.getELIKPITotalMonth3;
+            let quoteOrder_m1 = parseInt(quantity_m1[0].QTEQTY) + parseInt(quantity_m1[0].DLQTY)
+            let quoteOrder_m2 = parseInt(quantity_m2[0].QTEQTY) + parseInt(quantity_m2[0].DLQTY)
+            let quoteOrder_m3 = parseInt(quantity_m3[0].QTEQTY) + parseInt(quantity_m3[0].DLQTY)
 
             this.datacollection = {
-                labels: ['No. of Quotes', 'No. of Revisions', 'No. of Orders'],
-                datasets: [{
-                    label: "Quantity",
-                    backgroundColor: "rgba(75, 192, 192, 0.7)",
-                    data: [quantity[0].QTEQTY, quantity[0].RQTY, quantity[0].DLQTY]
-                }]
+                labels: ['No. of Quotes', 'No. of Orders', 'No. of Revisions', 'Total (Quotes and Orders)'],
+                datasets: [
+                    {
+                        label: "Month 3",
+                        backgroundColor: "rgba(75, 192, 192, 0.25)",
+                        data: [quantity_m3[0].QTEQTY, quantity_m3[0].DLQTY, quantity_m3[0].RQTY, quoteOrder_m3]
+                    },
+                                        {
+                        label: "Month 2",
+                        backgroundColor: "rgba(75, 192, 192, 0.50)",
+                        data: [quantity_m2[0].QTEQTY,  quantity_m2[0].DLQTY, quantity_m2[0].RQTY, quoteOrder_m2]
+                    },
+                                        {
+                        label: "Month 1",
+                        backgroundColor: "rgba(75, 192, 192, 1)",
+                        data: [quantity_m1[0].QTEQTY, quantity_m1[0].DLQTY, quantity_m1[0].RQTY, quoteOrder_m1]
+                    }
+                ]
             }
         }
     }

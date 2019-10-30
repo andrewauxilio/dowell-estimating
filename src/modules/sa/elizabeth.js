@@ -6,10 +6,12 @@ export default {
     eliEstimatorKPI: [],
     //Total Estimator KPI Data
     eliTotalKPI: [],
+    eliTotalKPIMonth2: [],
+    eliTotalKPIMonth3: [],
     //Specific Estimator Data Loading Status
     eliEstKPILoaded: false,
     //Total Estimator Data Loading Status
-    eliTotalKPILoaded: false 
+    eliTotalKPILoaded: false
   },
 
   getters: {
@@ -21,6 +23,12 @@ export default {
     getELIKPITotal(state) {
       return state.eliTotalKPI;
     },
+    getELIKPITotalMonth2(state) {
+      return state.eliTotalKPIMonth2;
+    },
+    getELIKPITotalMonth3(state) {
+      return state.eliTotalKPIMonth3;
+    },
     //Returns Total Specific Estimator Data Loading Status
     getELITotalKPIStatus(state) {
       return state.eliTotalKPILoaded;
@@ -28,7 +36,7 @@ export default {
     //Returns Total Estimator Data Loading Status
     getELIKPIStatus(state) {
       return state.eliEstKPILoaded;
-    },
+    }
   },
 
   mutations: {
@@ -40,20 +48,28 @@ export default {
     SET_ELI_ESTIMATOR_KPI_TOTAL(state, payload) {
       state.eliTotalKPI = payload;
     },
+    SET_ELI_ESTIMATOR_KPI_TOTAL_MONTH2(state, payload) {
+      state.eliTotalKPIMonth2 = payload;
+    },
+    SET_ELI_ESTIMATOR_KPI_TOTAL_MONTH3(state, payload) {
+      state.eliTotalKPIMonth3 = payload;
+    },
     //Remove all ELI state data
     REMOVE_ELI_DATA(state) {
       state.eliEstimatorKPI = [];
       state.eliTotalKPI = [];
+      state.eliTotalKPIMonth2 = [];
+      state.eliTotalKPIMonth3 = [];
       state.eliTotalKPILoaded = false;
       state.eliEstKPILoaded = false;
     },
     //Toggles the specific estimator loading status
     TOGGLE_ELI_EST_KPI_STATUS(state) {
-      state.eliEstKPILoaded = !state.eliEstKPILoaded
+      state.eliEstKPILoaded = !state.eliEstKPILoaded;
     },
     //Toggles the total estimator loading status
     TOGGLE_ELI_KPI_TOTAL_STATUS(state) {
-      state.eliTotalKPILoaded = !state.eliTotalKPILoaded
+      state.eliTotalKPILoaded = !state.eliTotalKPILoaded;
     }
   },
 
@@ -64,11 +80,11 @@ export default {
     },
     //Toggles KPI Data Loading Status
     toggle_eli_est_KPI_status(context) {
-      context.commit("TOGGLE_ELI_EST_KPI_STATUS")
+      context.commit("TOGGLE_ELI_EST_KPI_STATUS");
     },
     //Toggles Total KPI Data Loading Status
     toggle_eli_total_KPI_status(context) {
-      context.commit("TOGGLE_ELI_KPI_TOTAL_STATUS")
+      context.commit("TOGGLE_ELI_KPI_TOTAL_STATUS");
     },
     //Fetch Monthly Estimator KPI Data from API
     getELIKPIMonth(context) {
@@ -84,7 +100,7 @@ export default {
           .catch(error => {
             reject(error);
             console.log(error);
-          })
+          });
       });
     },
     //Fetch Monthly Estimator Total KPI Data from API
@@ -101,9 +117,46 @@ export default {
           .catch(error => {
             reject(error);
             console.log(error);
-          })
+          });
       });
     },
+
+    //Fetch Monthly Estimator Total KPI Data from API
+    getELIKPITotalMonth2(context) {
+      axios.defaults.headers.common["Authorization"] =
+        "Bearer " + context.state.token;
+      return new Promise((resolve, reject) => {
+        axios
+          .get("/estimating/sa/kpi/eli-total-month2")
+          .then(response => {
+            context.commit("SET_ELI_ESTIMATOR_KPI_TOTAL_MONTH2", response.data);
+            resolve(response);
+          })
+          .catch(error => {
+            reject(error);
+            console.log(error);
+          });
+      });
+    },
+
+    //Fetch Monthly Estimator Total KPI Data from API
+    getELIKPITotalMonth3(context) {
+      axios.defaults.headers.common["Authorization"] =
+        "Bearer " + context.state.token;
+      return new Promise((resolve, reject) => {
+        axios
+          .get("/estimating/sa/kpi/eli-total-month3")
+          .then(response => {
+            context.commit("SET_ELI_ESTIMATOR_KPI_TOTAL_MONTH3", response.data);
+            resolve(response);
+          })
+          .catch(error => {
+            reject(error);
+            console.log(error);
+          });
+      });
+    },
+
     //Fetch Monthly Estimator KPI Data from API
     getELIKPIWeek(context) {
       axios.defaults.headers.common["Authorization"] =
@@ -118,7 +171,7 @@ export default {
           .catch(error => {
             reject(error);
             console.log(error);
-          })
+          });
       });
     },
     //Fetch Weekly Estimator Total KPI Data from API
@@ -135,8 +188,8 @@ export default {
           .catch(error => {
             reject(error);
             console.log(error);
-          })
+          });
       });
     }
-  },
+  }
 };

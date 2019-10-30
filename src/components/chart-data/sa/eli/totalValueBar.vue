@@ -74,15 +74,32 @@ export default {
     },
     methods: {
         fillData() {
-            let quantity = this.$store.getters.getELIKPITotal;
+               this.$store.dispatch('getELIKPITotalMonth2')
+        this.$store.dispatch('getELIKPITotalMonth3')
+            let quantity_m1 = this.$store.getters.getELIKPITotal;
+            let quantity_m2 = this.$store.getters.getELIKPITotalMonth2;
+            let quantity_m3 = this.$store.getters.getELIKPITotalMonth3;
 
             this.datacollection = {
                 labels: ['Sales', 'Quotes', 'Revisons', 'Orders'],
-                datasets: [{
-                    label: "Value in AUD",
-                    backgroundColor: "rgba(75, 192, 192, 0.7)",
-                    data: [quantity[0].SVALUE, quantity[0].QVALUE, quantity[0].RVALUE, quantity[0].DLVALUE]
-                }]
+                datasets: [
+                    {
+                        label: "Month 3",
+                        backgroundColor: "rgba(75, 192, 192, 0.25)",
+                        data: [quantity_m3[0].SVALUE, quantity_m3[0].QVALUE, quantity_m3[0].RVALUE, quantity_m3[0].DLVALUE]
+                    },
+                    {
+                        label: "Month 2",
+                        backgroundColor: "rgba(75, 192, 192, 0.5)",
+                        data: [quantity_m2[0].SVALUE, quantity_m2[0].QVALUE, quantity_m2[0].RVALUE, quantity_m2[0].DLVALUE]
+                    },
+                    {
+                        label: "Month 1",
+                        backgroundColor: "rgba(75, 192, 192, 1)",
+                        data: [quantity_m1[0].SVALUE, quantity_m1[0].QVALUE, quantity_m1[0].RVALUE, quantity_m1[0].DLVALUE]
+                    },
+                      
+                ]
             }
         }
     }

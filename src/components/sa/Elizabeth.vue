@@ -3,7 +3,7 @@
 
     <div class="row">
 
-        <!-- Sales Value ({{ time }}) -->
+        <!-- Values
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
@@ -86,12 +86,97 @@
                     </div>
                 </div>
             </div>
+        </div> -->
+
+        <!-- QUANTITY-->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div v-if="!totalLoad" class="spinner">
+                            <div class="bounce1"></div>
+                            <div class="bounce2"></div>
+                            <div class="bounce3"></div>
+                        </div>
+                        <div v-if="totalLoad" class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">No. of Quotes</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ totalKPI[0].QTEQTY }} quotes</div>
+                        </div>
+                        <div v-if="totalLoad" class="col-auto">
+                            <i class="fas fa-book fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div v-if="!totalLoad" class="spinner">
+                            <div class="bounce1"></div>
+                            <div class="bounce2"></div>
+                            <div class="bounce3"></div>
+                        </div>
+                        <div v-if="totalLoad" class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">No. of Orders</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ totalKPI[0].DLQTY }} live jobs</div>
+                        </div>
+                        <div v-if="totalLoad" class="col-auto">
+                            <i class="fas fa-truck fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div v-if="!totalLoad" class="spinner">
+                            <div class="bounce1"></div>
+                            <div class="bounce2"></div>
+                            <div class="bounce3"></div>
+                        </div>
+                        <div v-if="totalLoad" class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">No. of Revisions</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ totalKPI[0].RQTY }} quote revisions</div>
+                        </div>
+                        <div v-if="totalLoad" class="col-auto">
+                            <i class="fas fa-redo fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div v-if="!totalLoad" class="spinner">
+                            <div class="bounce1"></div>
+                            <div class="bounce2"></div>
+                            <div class="bounce3"></div>
+                        </div>
+                        <div v-if="totalLoad" class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Quotes and Orders</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ quotes_orders_total }} quotes and jobs</div>
+                        </div>
+                        <div v-if="totalLoad" class="col-auto">
+                            <i class="fas fa-equals fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
 
     <div class="row">
-        <div class="col-xl-6 col-lg-6">
+        <!-- <div class="col-xl-6 col-lg-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-success">Value ($) {{ time }}</h6>
@@ -107,7 +192,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="col-xl-6 col-lg-6">
             <div class="card shadow mb-4">
@@ -127,7 +212,7 @@
             </div>
         </div>
 
-        <div class="col-xl-12 col-lg-12">
+        <div class="col-xl-6 col-lg-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-success">Estimating KPIs - {{ time }}</h6>
@@ -143,24 +228,27 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Estimator</th>
-                                    <th scope="col" class="bg-success text-light">Sales</th>
-                                    <th scope="col" class="bg-secondary text-light">Quotes Value </th>
+                                    <!-- <th scope="col" class="bg-success text-light">Sales</th>
+                                    <th scope="col" class="bg-secondary text-light">Quotes Value </th> -->
                                     <th scope="col" class="bg-secondary text-light">No. of Quotes</th>
-                                    <th scope="col" class="bg-secondary text-light">Revisions Value</th>
-                                    <th scope="col" class="bg-secondary text-light">No. of Revision</th>
-                                    <th scope="col" class="bg-secondary text-light">Orders Value</th>
+                                    <!-- <th scope="col" class="bg-secondary text-light">Orders Value</th> -->
                                     <th scope="col" class="bg-secondary text-light">No. of Orders</th>
+                                    <th scope="col" class="bg-secondary text-light">No. of Revisions</th>
+                                    <!-- <th scope="col" class="bg-secondary text-light">Revisions Value</th> -->
+                                    <th scope="col" class="bg-secondary text-light">Total Quotes and Orders</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody v-for="estimatorKPI in estimatorKPI" :key="estimatorKPI.id">
                                 <td>{{ estimatorKPI.USER_NAME }}</td>
-                                <td>{{ estimatorKPI.SVALUE | toDollar }}</td>
-                                <td>{{ estimatorKPI.QVALUE | toDollar }}</td>
+                                <!-- <td>{{ estimatorKPI.SVALUE | toDollar }}</td>
+                                <td>{{ estimatorKPI.QVALUE | toDollar }}</td> -->
                                 <td>{{ estimatorKPI.QTEQTY }}</td>
-                                <td>{{ estimatorKPI.RVALUE | toDollar }}</td>
-                                <td>{{ estimatorKPI.RQTY }}</td>
-                                <td>{{ estimatorKPI.DLVALUE | toDollar }}</td>
                                 <td>{{ estimatorKPI.DLQTY }}</td>
+                                <!-- <td>{{ estimatorKPI.RVALUE | toDollar }}</td> -->
+                                <td>{{ estimatorKPI.RQTY }}</td>
+                                <!-- <td>{{ estimatorKPI.DLVALUE | toDollar }}</td> -->
+                                <td>{{ parseInt(estimatorKPI.QTEQTY) + parseInt(estimatorKPI.DLQTY) }}</td>
                             </tbody>
                         </table>
                     </div>
@@ -169,12 +257,12 @@
         </div>
     </div>
 
-    <div class="fab-container">
+    <!-- <div class="fab-container">
         <button class="buttons" tooltip="Past 7 Days" v-on:click="getDataWeek()">7</button>
         <button class="buttons" tooltip="Past 30 Days" v-on:click="getDataMonth()">30</button>
         <button class="buttons" tooltip="Download Reports" data-toggle="modal" data-target=".report-modal"><i class="fab fas fa-download"></i></button>
         <button class="buttons" tooltip="Actions" href="#"><i class="fab fas fa-cogs"></i></button>
-    </div>
+    </div> -->
 
     <!-- Report modal -->
     <div class="modal fade report-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -235,7 +323,8 @@ export default {
     data() {
         return {
             show: true,
-            time: ''
+            time: '',
+            quotes_orders_total: null
         }
     },
     computed: {
@@ -308,6 +397,7 @@ export default {
                         this.$store.dispatch('toggle_eli_total_KPI_status')
                         this.$store.dispatch('toggle_eli_est_KPI_status')
                     }
+                    this.quotes_orders_total =  parseInt(this.totalKPI[0].DLQTY) + parseInt(this.totalKPI[0].QTEQTY)
                     this.time = 'Last 30 Days'
                     this.show = false
                     nextTick(() => {
