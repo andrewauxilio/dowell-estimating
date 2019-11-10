@@ -86,17 +86,17 @@ export default {
                     {
                         label: "Month 3",
                         backgroundColor: "rgba(75, 192, 192, 0.25)",
-                        data: [quantity_m3[0].SVALUE, quantity_m3[0].QVALUE, quantity_m3[0].RVALUE, quantity_m3[0].DLVALUE]
+                        data: [quantity_m3[0].SALES_$, quantity_m3[0].QUOTES_$, quantity_m3[0].REVISIONS_$, quantity_m3[0].ORDERS_IN_$]
                     },
                     {
                         label: "Month 2",
                         backgroundColor: "rgba(75, 192, 192, 0.5)",
-                        data: [quantity_m2[0].SVALUE, quantity_m2[0].QVALUE, quantity_m2[0].RVALUE, quantity_m2[0].DLVALUE]
+                        data: [quantity_m2[0].SALES_$, quantity_m2[0].QUOTES_$, quantity_m2[0].REVISIONS_$, quantity_m2[0].ORDERS_IN_$]
                     },
                     {
                         label: "Month 1",
                         backgroundColor: "rgba(75, 192, 192, 1)",
-                        data: [quantity_m1[0].SVALUE, quantity_m1[0].QVALUE, quantity_m1[0].RVALUE, quantity_m1[0].DLVALUE]
+                        data: [quantity_m1[0].SALES_$, quantity_m1[0].QUOTES_$, quantity_m1[0].REVISIONS_$, quantity_m1[0].ORDERS_IN_$]
                     },
                       
                 ]

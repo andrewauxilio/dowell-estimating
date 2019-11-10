@@ -53,7 +53,7 @@ export default {
                     }],
                 },
                 legend: {
-                    display: false
+                    display: true
                 },
                 tooltips: {
                     backgroundColor: "rgb(255,255,255)",
@@ -82,27 +82,27 @@ export default {
             let quantity_m1 = this.$store.getters.getELIKPITotal;
             let quantity_m2 = this.$store.getters.getELIKPITotalMonth2;
             let quantity_m3 = this.$store.getters.getELIKPITotalMonth3;
-            let quoteOrder_m1 = parseInt(quantity_m1[0].QTEQTY) + parseInt(quantity_m1[0].DLQTY)
-            let quoteOrder_m2 = parseInt(quantity_m2[0].QTEQTY) + parseInt(quantity_m2[0].DLQTY)
-            let quoteOrder_m3 = parseInt(quantity_m3[0].QTEQTY) + parseInt(quantity_m3[0].DLQTY)
+            // let quoteOrder_m1 = parseInt(quantity_m1[0].QUOTES_NO) + parseInt(quantity_m1[0].ORDERS_IN_NO)
+            // let quoteOrder_m2 = parseInt(quantity_m2[0].QUOTES_NO) + parseInt(quantity_m2[0].ORDERS_IN_NO)
+            // let quoteOrder_m3 = parseInt(quantity_m3[0].QUOTES_NO) + parseInt(quantity_m3[0].ORDERS_IN_NO)
 
             this.datacollection = {
-                labels: ['No. of Quotes', 'No. of Orders', 'No. of Revisions', 'Total (Quotes and Orders)'],
+                labels: ['No. of Quotes', 'No. of Orders', 'No. of Revisions'],
                 datasets: [
                     {
-                        label: "Month 3",
+                        label: quantity_m3[0].DATE_FROM + " to " + quantity_m3[0].DATE_TO,
                         backgroundColor: "rgba(75, 192, 192, 0.25)",
-                        data: [quantity_m3[0].QTEQTY, quantity_m3[0].DLQTY, quantity_m3[0].RQTY, quoteOrder_m3]
+                        data: [quantity_m3[0].QUOTES_NO, quantity_m3[0].ORDERS_IN_NO, quantity_m3[0].REVISION_NO]
                     },
-                                        {
-                        label: "Month 2",
+                    {
+                        label: quantity_m2[0].DATE_FROM + " to " + quantity_m2[0].DATE_TO,
                         backgroundColor: "rgba(75, 192, 192, 0.50)",
-                        data: [quantity_m2[0].QTEQTY,  quantity_m2[0].DLQTY, quantity_m2[0].RQTY, quoteOrder_m2]
+                        data: [quantity_m2[0].QUOTES_NO,  quantity_m2[0].ORDERS_IN_NO, quantity_m2[0].REVISION_NO]
                     },
-                                        {
-                        label: "Month 1",
+                    {
+                        label: "Current Month",
                         backgroundColor: "rgba(75, 192, 192, 1)",
-                        data: [quantity_m1[0].QTEQTY, quantity_m1[0].DLQTY, quantity_m1[0].RQTY, quoteOrder_m1]
+                        data: [quantity_m1[0].QUOTES_NO, quantity_m1[0].ORDERS_IN_NO, quantity_m1[0].REVISION_NO]
                     }
                 ]
             }

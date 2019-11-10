@@ -109,7 +109,7 @@ export default {
         "Bearer " + context.state.token;
       return new Promise((resolve, reject) => {
         axios
-          .get("/estimating/sa/kpi/eli-total-month")
+          .get("/estimating/sa/kpi/eli-total-month1")
           .then(response => {
             context.commit("SET_ELI_ESTIMATOR_KPI_TOTAL", response.data);
             resolve(response);
