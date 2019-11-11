@@ -95,7 +95,7 @@
         <div class="col-xl-12 col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-success">3 Month Comparison - Quantity {{ time }}</h6>
+                    <h6 class="m-0 font-weight-bold text-success">3 Month Comparison</h6>
                 </div>
                 <div class="card-body">
                     <div class="card-body table-responsive p-0">

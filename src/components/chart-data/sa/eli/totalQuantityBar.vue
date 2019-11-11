@@ -87,22 +87,22 @@ export default {
             // let quoteOrder_m3 = parseInt(quantity_m3[0].QUOTES_NO) + parseInt(quantity_m3[0].ORDERS_IN_NO)
 
             this.datacollection = {
-                labels: ['No. of Quotes', 'No. of Orders', 'No. of Revisions'],
+                labels: [quantity_m3[0].DATE_FROM + " to " + quantity_m3[0].DATE_TO, quantity_m2[0].DATE_FROM + " to " + quantity_m2[0].DATE_TO, 'Current Month'],
                 datasets: [
                     {
-                        label: quantity_m3[0].DATE_FROM + " to " + quantity_m3[0].DATE_TO,
+                        label: 'No. of Quotes',
                         backgroundColor: "rgba(75, 192, 192, 0.25)",
-                        data: [quantity_m3[0].QUOTES_NO, quantity_m3[0].ORDERS_IN_NO, quantity_m3[0].REVISION_NO]
+                        data: [quantity_m3[0].QUOTES_NO, quantity_m2[0].QUOTES_NO, quantity_m1[0].QUOTES_NO]
                     },
                     {
-                        label: quantity_m2[0].DATE_FROM + " to " + quantity_m2[0].DATE_TO,
+                        label: 'No. of Orders',
                         backgroundColor: "rgba(75, 192, 192, 0.50)",
-                        data: [quantity_m2[0].QUOTES_NO,  quantity_m2[0].ORDERS_IN_NO, quantity_m2[0].REVISION_NO]
+                        data: [quantity_m3[0].ORDERS_IN_NO,  quantity_m2[0].ORDERS_IN_NO,  quantity_m1[0].ORDERS_IN_NO]
                     },
                     {
-                        label: "Current Month",
+                        label: "No. of Revisions",
                         backgroundColor: "rgba(75, 192, 192, 1)",
-                        data: [quantity_m1[0].QUOTES_NO, quantity_m1[0].ORDERS_IN_NO, quantity_m1[0].REVISION_NO]
+                        data: [quantity_m3[0].REVISION_NO, quantity_m2[0].REVISION_NO, quantity_m1[0].REVISION_NO]
                     }
                 ]
             }
