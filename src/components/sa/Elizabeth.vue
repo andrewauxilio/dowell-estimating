@@ -141,9 +141,9 @@
                                     <th>KPI Report</th>
                                     <td><a href="http://dweqxsql04/reports/report/Quoting/KPIEstimator?POO=GBG&DateStart=20191001&DateEnd=20191001" target="_blank">View Report</a></td>
                                     <td>
-                                        <a style="color:red; margin:2px;" href="http://dweqxsql04/reports/report/Quoting/KPIEstimator?POO=GBG&DateStart=20191001&DateEnd=20191001" target="_blank"><i class="fas fa-file-pdf fa-3x"></i></a>
-                                        <a style="color:green; margin:2px;" href="http://dweqxsql04/reports/report/Quoting/KPIEstimator?POO=GBG&DateStart=20191001&DateEnd=20191001" target="_blank"><i class="fas fa-file-excel fa-3x"></i></a>
-                                        <a style="color:blue; margin:2px;" href="http://dweqxsql04/reports/report/Quoting/KPIEstimator?POO=GBG&DateStart=20191001&DateEnd=20191001" target="_blank"><i class="fas fa-file-csv fa-3x"></i></a>
+                                        <a style="color:red; margin:2px;" href="http://dweqxsql04/Reportserver?%2fQuoting%2fKPIEstimator&rs:Command=Render&rs:Format=PDF&POO=GBG&DateStart=20191001&DateEnd=20191001" target="_blank"><i class="fas fa-file-pdf fa-3x"></i></a>
+                                        <a style="color:green; margin:2px;" href="http://dweqxsql04/Reportserver?%2fQuoting%2fKPIEstimator&rs:Command=Render&rs:Format=EXCEL&POO=GBG&DateStart=20191001&DateEnd=20191001" target="_blank"><i class="fas fa-file-excel fa-3x"></i></a>
+                                        <a style="color:blue; margin:2px;" href="http://dweqxsql04/Reportserver?%2fQuoting%2fKPIEstimator&rs:Command=Render&rs:Format=CSV&POO=GBG&DateStart=20191001&DateEnd=20191001" target="_blank"><i class="fas fa-file-csv fa-3x"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
