@@ -218,6 +218,7 @@ export default {
                 nextTick(() => {
                     this.show = true
                 })
+                this.getReportData()
                 this.fireToast()
             })
         },
