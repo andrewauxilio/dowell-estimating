@@ -180,7 +180,6 @@ export default {
             reporteDateStart: '',
             reportDateEnd: '',
             show: true,
-            time: '',
             quotes_orders_total: null
         }
     },
@@ -194,58 +193,41 @@ export default {
             KPILoad: 'getELIKPIStatus'          //module:eli: loading status getter
         }),
     },
-    mounted() {
+    async created() {
         this.permissionCheck()
-        this.get3MonthData()
-   
+        this.getMonthTwo();
+        this.getMonthThree();
+        await this.getMonthOne()
     },
     methods: {
-        /**-------------------------------------------------------------------
-        ***                   Retrieve Monthly Data
-        ***-------------------------------------------------------------------
-        *** Function: Triggers actions from the geebung.js module. Updates
-        *** the eliEstimatorKPI and eliTotalKPI to Monthly.
-        ***-------------------------------------------------------------------
-        **/
-        getCurrentMonth() {
+ 
+        getMonthOne() {
             if (this.totalLoad == true && this.KPILoad == true) {              
                 this.$store.dispatch('toggle_eli_total_KPI_status')            
                 this.$store.dispatch('toggle_eli_est_KPI_status')
             }
-            this.time = ''
             this.$store.dispatch('getELIKPIMonth')
             this.$store.dispatch('getELIKPITotalMonth')
-                .then(() => {
-                    if (this.totalLoad == false && this.KPILoad == false) {
-                        this.$store.dispatch('toggle_eli_total_KPI_status')
-                        this.$store.dispatch('toggle_eli_est_KPI_status')
-                    }
-                    this.quotes_orders_total =  parseInt(this.totalKPI[0].ORDERS_IN_NO) + parseInt(this.totalKPI[0].QUOTES_NO)
-                    this.time = 'Last 30 Days'
-                    this.show = false
-                    nextTick(() => {
-                        this.show = true
-                    })
-
-                    this.getReportData()
+            .then(() => {
+                if (this.totalLoad == false && this.KPILoad == false) {
+                    this.$store.dispatch('toggle_eli_total_KPI_status')
+                    this.$store.dispatch('toggle_eli_est_KPI_status')
+                }
+                this.quotes_orders_total =  parseInt(this.totalKPI[0].ORDERS_IN_NO) + parseInt(this.totalKPI[0].QUOTES_NO)
+                this.show = false
+                nextTick(() => {
+                    this.show = true
                 })
-                .finally(() => {
-                    if (this.isELI && this.isLoggedIn) {                              
-                        toast.fire({
-                            type: "info",
-                            title: "Showing data for Elizabeth"
-                        })                                       
-                    }
-                })
+                this.fireToast()
+            })
         },
 
-        get3MonthData() {
-            this.$store.dispatch('toggle_eli_total_KPI_status')            
-            this.$store.dispatch('toggle_eli_est_KPI_status')
-            this.$store.dispatch('getELIKPITotalMonth2')                        //Previous month
-            this.$store.dispatch('getELIKPITotalMonth3').then(() => {           //2 months prior
-                this.getCurrentMonth()                                          //Current Month                        
-            })                        
+        getMonthTwo() {
+            this.$store.dispatch('getELIKPITotalMonth2') 
+        },
+
+        getMonthThree() {
+            this.$store.dispatch('getELIKPITotalMonth3')
         },
 
         getReportData() {
@@ -256,12 +238,15 @@ export default {
             this.reportDateEnd = '&DateEnd=' + reportDateEnd.format('YYYYMMDD')
         },
 
-        /**-------------------------------------------------------------------
-        ***                   Double Check User Permission
-        ***-------------------------------------------------------------------
-        *** Function: Check if the user is both logged in and a Geebung user
-        ***-------------------------------------------------------------------
-        **/
+        fireToast() {
+            if (this.isELI && this.isLoggedIn) {                              
+                toast.fire({
+                    type: "info",
+                    title: "Showing data for Elizabeth"
+                })                                       
+            }
+        },
+
         permissionCheck() {
             if (!this.isELI || !this.isLoggedIn) {                              //if the user is not a geebung or not logged in
                 this.$router.push('/404')                                       //redirect to 404 page
