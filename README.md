@@ -1,29 +1,25 @@
-# dowell-pulse
+# Dowell Estimating Dashboard Application
 
 ## Project setup
+#### Clone repository
+```
+git clone https://github.com/andrewauxilio/dowell-estimating.git
+```
+#### Install all dependencies
 ```
 npm install
 ```
-
-### Compiles and hot-reloads for development
+#### Copy .env file and adjust accordingly
 ```
-npm run serve
+cp .env.example .env
+```
+#### Start in development mode
+```
+npm run start
 ```
 
-### Compiles and minifies for production
+#### Build for production
 ```
 npm run build
 ```
 
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
