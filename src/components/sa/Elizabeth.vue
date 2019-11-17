@@ -127,7 +127,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" v-if="totalLoad">
                         <table class="table">
                             <thead>
                                 <tr>
@@ -139,11 +139,11 @@
                             <tbody>
                                 <tr>
                                     <th>KPI Report</th>
-                                    <td><a href="http://dweqxsql04/reports/report/Quoting/KPIEstimator?POO=GBG&DateStart=20191001&DateEnd=20191001" target="_blank">View Report</a></td>
+                                    <td><a :href="'http://dweqxsql04/reports/report/Quoting/KPIEstimator?' + reportSite + reporteDateStart + reportDateEnd" target="_blank">View Report</a></td>
                                     <td>
-                                        <a style="color:red; margin:2px;" href="http://dweqxsql04/Reportserver?%2fQuoting%2fKPIEstimator&rs:Command=Render&rs:Format=PDF&POO=GBG&DateStart=20191001&DateEnd=20191001" target="_blank"><i class="fas fa-file-pdf fa-3x"></i></a>
-                                        <a style="color:green; margin:2px;" href="http://dweqxsql04/Reportserver?%2fQuoting%2fKPIEstimator&rs:Command=Render&rs:Format=EXCEL&POO=GBG&DateStart=20191001&DateEnd=20191001" target="_blank"><i class="fas fa-file-excel fa-3x"></i></a>
-                                        <a style="color:blue; margin:2px;" href="http://dweqxsql04/Reportserver?%2fQuoting%2fKPIEstimator&rs:Command=Render&rs:Format=CSV&POO=GBG&DateStart=20191001&DateEnd=20191001" target="_blank"><i class="fas fa-file-csv fa-3x"></i></a>
+                                        <a style="color:red; margin:2px;" :href="'http://dweqxsql04/Reportserver?%2fQuoting%2fKPIEstimator&rs:Command=Render&rs:Format=PDF&' + reportSite + reporteDateStart + reportDateEnd" target="_blank"><i class="fas fa-file-pdf fa-3x"></i></a>
+                                        <a style="color:green; margin:2px;" :href="'http://dweqxsql04/Reportserver?%2fQuoting%2fKPIEstimator&rs:Command=Render&rs:Format=EXCEL&' + reportSite + reporteDateStart + reportDateEnd" target="_blank"><i class="fas fa-file-excel fa-3x"></i></a>
+                                        <a style="color:blue; margin:2px;" :href="'http://dweqxsql04/Reportserver?%2fQuoting%2fKPIEstimator&rs:Command=Render&rs:Format=CSV&' + reportSite + reporteDateStart + reportDateEnd" target="_blank"><i class="fas fa-file-csv fa-3x"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -176,6 +176,9 @@ export default {
     },
     data() {
         return {
+            reportSite: '',
+            reporteDateStart: '',
+            reportDateEnd: '',
             show: true,
             time: '',
             quotes_orders_total: null
@@ -223,6 +226,8 @@ export default {
                     nextTick(() => {
                         this.show = true
                     })
+
+                    this.getReportData()
                 })
                 .finally(() => {
                     if (this.isELI && this.isLoggedIn) {                              
@@ -235,10 +240,20 @@ export default {
         },
 
         get3MonthData() {
+            this.$store.dispatch('toggle_eli_total_KPI_status')            
+            this.$store.dispatch('toggle_eli_est_KPI_status')
             this.$store.dispatch('getELIKPITotalMonth2')                        //Previous month
             this.$store.dispatch('getELIKPITotalMonth3').then(() => {           //2 months prior
                 this.getCurrentMonth()                                          //Current Month                        
             })                        
+        },
+
+        getReportData() {
+            let reportDateStart =  moment(this.totalKPI[0].DATE_FROM)
+            let reportDateEnd =  moment(this.totalKPI[0].DATE_TO)
+            this.reportSite = 'POO=' + this.totalKPI[0].POO
+            this.reporteDateStart = '&DateStart=' + reportDateStart.format('YYYYMMDD')
+            this.reportDateEnd = '&DateEnd=' + reportDateEnd.format('YYYYMMDD')
         },
 
         /**-------------------------------------------------------------------

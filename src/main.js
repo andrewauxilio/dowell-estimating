@@ -15,6 +15,10 @@ import 'jquery/dist/jquery.min.js'
 import 'popper.js/dist/umd/popper.min.js'
 import 'bootstrap/dist/js/bootstrap.min.js'
 
+//MomentJS
+import moment from 'moment'
+window.moment = moment
+
 // SweetAlert
 import swal from 'sweetalert2'
 window.swal = swal
