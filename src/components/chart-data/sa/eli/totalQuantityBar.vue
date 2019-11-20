@@ -79,33 +79,35 @@ export default {
     },
     methods: {
         fillData() {
-            let quantity_m1 = this.$store.getters.getELIKPITotal;
-            let quantity_m2 = this.$store.getters.getELIKPITotalMonth2;
-            let quantity_m3 = this.$store.getters.getELIKPITotalMonth3;
-            // let quoteOrder_m1 = parseInt(quantity_m1[0].QUOTES_NO) + parseInt(quantity_m1[0].ORDERS_IN_NO)
-            // let quoteOrder_m2 = parseInt(quantity_m2[0].QUOTES_NO) + parseInt(quantity_m2[0].ORDERS_IN_NO)
-            // let quoteOrder_m3 = parseInt(quantity_m3[0].QUOTES_NO) + parseInt(quantity_m3[0].ORDERS_IN_NO)
+            if (this.$store.getters.getELITotalKPIStatus) {
+                let quantity_m1 = this.$store.getters.getELIKPITotal;
+                let quantity_m2 = this.$store.getters.getELIKPITotalMonth2;
+                let quantity_m3 = this.$store.getters.getELIKPITotalMonth3;
+                // let quoteOrder_m1 = parseInt(quantity_m1[0].QUOTES_NO) + parseInt(quantity_m1[0].ORDERS_IN_NO)
+                // let quoteOrder_m2 = parseInt(quantity_m2[0].QUOTES_NO) + parseInt(quantity_m2[0].ORDERS_IN_NO)
+                // let quoteOrder_m3 = parseInt(quantity_m3[0].QUOTES_NO) + parseInt(quantity_m3[0].ORDERS_IN_NO)
 
-            this.datacollection = {
-                labels: [quantity_m3[0].DATE_FROM + " to " + quantity_m3[0].DATE_TO, quantity_m2[0].DATE_FROM + " to " + quantity_m2[0].DATE_TO, 'Current Month'],
-                datasets: [
-                    {
-                        label: 'No. of Quotes',
-                        backgroundColor: "rgba(75, 192, 192, 0.25)",
-                        data: [quantity_m3[0].QUOTES_NO, quantity_m2[0].QUOTES_NO, quantity_m1[0].QUOTES_NO]
-                    },
-                    {
-                        label: 'No. of Orders',
-                        backgroundColor: "rgba(75, 192, 192, 0.50)",
-                        data: [quantity_m3[0].ORDERS_IN_NO,  quantity_m2[0].ORDERS_IN_NO,  quantity_m1[0].ORDERS_IN_NO]
-                    },
-                    {
-                        label: "No. of Revisions",
-                        backgroundColor: "rgba(75, 192, 192, 1)",
-                        data: [quantity_m3[0].REVISION_NO, quantity_m2[0].REVISION_NO, quantity_m1[0].REVISION_NO]
-                    }
-                ]
-            }
+                this.datacollection = {
+                    labels: [quantity_m3[0].DATE_FROM + " to " + quantity_m3[0].DATE_TO, quantity_m2[0].DATE_FROM + " to " + quantity_m2[0].DATE_TO, 'Current Month'],
+                    datasets: [
+                        {
+                            label: 'No. of Quotes',
+                            backgroundColor: "rgba(75, 192, 192, 0.25)",
+                            data: [quantity_m3[0].QUOTES_NO, quantity_m2[0].QUOTES_NO, quantity_m1[0].QUOTES_NO]
+                        },
+                        {
+                            label: 'No. of Orders',
+                            backgroundColor: "rgba(75, 192, 192, 0.50)",
+                            data: [quantity_m3[0].ORDERS_IN_NO,  quantity_m2[0].ORDERS_IN_NO,  quantity_m1[0].ORDERS_IN_NO]
+                        },
+                        {
+                            label: "No. of Revisions",
+                            backgroundColor: "rgba(75, 192, 192, 1)",
+                            data: [quantity_m3[0].REVISION_NO, quantity_m2[0].REVISION_NO, quantity_m1[0].REVISION_NO]
+                        }
+                    ]
+                }
+            }   
         }
     }
 };
