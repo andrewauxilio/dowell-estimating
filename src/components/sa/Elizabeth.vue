@@ -193,45 +193,92 @@ export default {
             KPILoad: 'getELIKPIStatus'          //module:eli: loading status getter
         }),
     },
-    async created() {
+    created() {
         this.permissionCheck()
-        this.getMonthTwo();
-        this.getMonthThree();
-        await this.getMonthOne()
+        this.initEliData()
     },
     methods: {
+
+        initEliData() {
+            return new Promise((resolve, reject) => {
+                this.show = false
+                if(this.totalLoad == true) {
+                    this.toggleLoadStatus()
+                }
+                this.getMonthOne()
+                this.getMonthTwo()
+                this.getMonthThree()
+                .then(() => {
+                    this.getReportData()
+                    this.toggleLoadStatus()
+                    console.log("ELI Data Initialized");
+                    resolve();
+                })
+                .finally(() => {
+                     nextTick(() => {
+                        this.show = true
+                    })
+                    this.fireToast()
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject(error);
+                });
+            });
+        },
  
         getMonthOne() {
-            if (this.totalLoad == true && this.KPILoad == true) {              
-                this.$store.dispatch('toggle_eli_total_KPI_status')            
-                this.$store.dispatch('toggle_eli_est_KPI_status')
-            }
-            this.$store.dispatch('getELIKPIMonth')
-            this.$store.dispatch('getELIKPITotalMonth')
-            .then(() => {
-                if (this.totalLoad == false && this.KPILoad == false) {
-                    this.$store.dispatch('toggle_eli_total_KPI_status')
-                    this.$store.dispatch('toggle_eli_est_KPI_status')
-                }
-                this.quotes_orders_total =  parseInt(this.totalKPI[0].ORDERS_IN_NO) + parseInt(this.totalKPI[0].QUOTES_NO)
-                this.show = false
-                nextTick(() => {
-                    this.show = true
+            return new Promise((resolve, reject) => {
+                this.$store.dispatch('getELIKPIMonth')
+                .then(() => {
+                    this.$store.dispatch('getELIKPITotalMonth') 
                 })
-                this.getReportData()
-                this.fireToast()
-            })
+                .then(() => {
+                    console.log("Month 1 KPI Total Resolved.");
+                    resolve();
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject(error);
+                });
+            });
+        },
+
+        toggleLoadStatus() {
+            this.$store.dispatch('toggle_eli_total_KPI_status')            
+            this.$store.dispatch('toggle_eli_est_KPI_status')
         },
 
         getMonthTwo() {
-            this.$store.dispatch('getELIKPITotalMonth2') 
+            return new Promise((resolve, reject) => {
+                this.$store.dispatch('getELIKPITotalMonth2') 
+                .then(() => {
+                    console.log("Month 2 KPI Total Resolved.");
+                    resolve();
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject(error);
+                });
+            });    
         },
 
         getMonthThree() {
-            this.$store.dispatch('getELIKPITotalMonth3')
+            return new Promise((resolve, reject) => {
+                this.$store.dispatch('getELIKPITotalMonth3') 
+                .then(() => {
+                    console.log("Month 3 KPI Total Resolved.");
+                    resolve();
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject(error);
+                });
+            });  
         },
 
         getReportData() {
+            this.quotes_orders_total =  parseInt(this.totalKPI[0].ORDERS_IN_NO) + parseInt(this.totalKPI[0].QUOTES_NO)
             let reportDateStart =  moment(this.totalKPI[0].DATE_FROM)
             let reportDateEnd =  moment(this.totalKPI[0].DATE_TO)
             this.reportSite = 'POO=' + this.totalKPI[0].POO
