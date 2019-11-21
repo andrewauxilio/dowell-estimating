@@ -195,13 +195,16 @@ export default {
     },
     created() {
         this.permissionCheck()
-        this.initEliData()
+        this.initEliData().then(() => {
+            if(this.totalKPI) {
+                this.getReportData()
+            }
+        })
     },
     methods: {
 
         initEliData() {
             return new Promise((resolve, reject) => {
-                this.show = false
                 if(this.totalLoad == true) {
                     this.toggleLoadStatus()
                 }
@@ -209,16 +212,9 @@ export default {
                 this.getMonthTwo()
                 this.getMonthThree()
                 .then(() => {
-                    this.getReportData()
                     this.toggleLoadStatus()
                     console.log("ELI Data Initialized");
                     resolve();
-                })
-                .finally(() => {
-                     nextTick(() => {
-                        this.show = true
-                    })
-                    this.fireToast()
                 })
                 .catch(error => {
                     console.log(error);
@@ -229,6 +225,10 @@ export default {
  
         getMonthOne() {
             return new Promise((resolve, reject) => {
+                //this.show = false
+                // nextTick(() => {
+                //     this.show = true
+                // })
                 this.$store.dispatch('getELIKPIMonth')
                 .then(() => {
                     this.$store.dispatch('getELIKPITotalMonth') 
@@ -278,12 +278,14 @@ export default {
         },
 
         getReportData() {
-            this.quotes_orders_total =  parseInt(this.totalKPI[0].ORDERS_IN_NO) + parseInt(this.totalKPI[0].QUOTES_NO)
-            let reportDateStart =  moment(this.totalKPI[0].DATE_FROM)
-            let reportDateEnd =  moment(this.totalKPI[0].DATE_TO)
-            this.reportSite = 'POO=' + this.totalKPI[0].POO
-            this.reporteDateStart = '&DateStart=' + reportDateStart.format('YYYYMMDD')
-            this.reportDateEnd = '&DateEnd=' + reportDateEnd.format('YYYYMMDD')
+            if(this.totalKPI) {
+                this.quotes_orders_total =  parseInt(this.totalKPI[0].ORDERS_IN_NO) + parseInt(this.totalKPI[0].QUOTES_NO)
+                let reportDateStart =  moment(this.totalKPI[0].DATE_FROM)
+                let reportDateEnd =  moment(this.totalKPI[0].DATE_TO)
+                this.reportSite = 'POO=' + this.totalKPI[0].POO
+                this.reporteDateStart = '&DateStart=' + reportDateStart.format('YYYYMMDD')
+                this.reportDateEnd = '&DateEnd=' + reportDateEnd.format('YYYYMMDD')
+            }
         },
 
         fireToast() {
