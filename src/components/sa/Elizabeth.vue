@@ -113,7 +113,7 @@
         <!--  -->
 
         <div class="fab-container">
-            <button class="buttons" tooltip="Download Reports" data-toggle="modal" data-target=".report-modal"><i class="fab fas fa-download"></i></button>
+            <button class="buttons" @click="getReportData" tooltip="Download Reports" data-toggle="modal" data-target=".report-modal"><i class="fab fas fa-download"></i></button>
             <button class="buttons" tooltip="Actions" href="#"><i class="fab fas fa-cogs"></i></button>
         </div>
 
@@ -195,11 +195,7 @@ export default {
     },
     created() {
         this.permissionCheck()
-        this.initEliData().then(() => {
-            if(this.totalKPI) {
-                this.getReportData()
-            }
-        })
+        this.initEliData()
     },
     methods: {
 
