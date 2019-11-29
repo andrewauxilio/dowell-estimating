@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import createPersistedState from "vuex-persistedstate";
 
 import auth from './modules/auth'
+import dates from './modules/dates'
 import gbg from './modules/qld/geebung'
 import smt from './modules/nsw/smithfield'
 import eli from './modules/sa/elizabeth'
@@ -14,6 +15,7 @@ export default new Vuex.Store({
 
   modules: {
       auth,
+      dates,
       gbg,
       smt,
       eli

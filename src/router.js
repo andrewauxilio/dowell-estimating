@@ -4,6 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
+
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -23,24 +24,10 @@ export default new Router({
       component: () => import('./components/auth/Logout.vue')
     },
     {
-      path: '/national-totals',
-      name: 'national-totals',
-      component: () => import('./components/national/NationalTotals.vue')
-    },
-    {
-      path: '/gbg',
-      name: 'gbg',
-      component: () => import('./components/qld/Geebung.vue')
-    },
-    {
-      path: '/smt',
-      name: 'smt',
-      component: () => import('./components/nsw/Smithfield.vue')
-    },
-    {
-      path: '/eli',
-      name: 'eli',
-      component: () => import('./components/sa/Elizabeth.vue')
+      path: '/dashboard/:site',
+      props: true,
+      name: 'dashboard',
+      component: () => import('./components/Dashboard.vue')
     },
     {
       path: '/404',

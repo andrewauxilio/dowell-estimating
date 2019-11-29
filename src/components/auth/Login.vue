@@ -75,6 +75,7 @@ export default {
                     .then(response => {
                         if (this.$store.getters.isEstimating) {
                             this.$router.push('/landing')
+                            this.$store.dispatch('getDates')
                             toast.fire({
                                 type: "success",
                                 title: "You have logged in successfully"
