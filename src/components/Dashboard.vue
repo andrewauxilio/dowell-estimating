@@ -122,28 +122,28 @@
                   <th>KPI Report</th>
                   <td>
                     <a
-                      :href="report_url + 'POO=' + site + '&DateStart=' + startDate + '&DateStart=' + endDate"
+                      :href="report_url + 'POO=' + site + '&DateStart=' + startDate + '&DateEnd=' + endDate"
                       target="_blank"
                     >View Report</a>
                   </td>
                   <td>
                     <a
                       style="color:red; margin:2px;"
-                      :href="report_pdf + 'POO=' + site + '&DateStart=' + startDate + '&DateStart=' + endDate"
+                      :href="report_pdf + 'POO=' + site + '&DateStart=' + startDate + '&DateEnd=' + endDate"
                       target="_blank"
                     >
                       <i class="fas fa-file-pdf fa-3x"></i>
                     </a>
                     <a
                       style="color:green; margin:2px;"
-                      :href=" report_excel + 'POO=' + site + '&DateStart=' + startDate + '&DateStart=' + endDate"
+                      :href=" report_excel + 'POO=' + site + '&DateStart=' + startDate + '&DateEnd=' + endDate"
                       target="_blank"
                     >
                       <i class="fas fa-file-excel fa-3x"></i>
                     </a>
                     <a
                       style="color:blue; margin:2px;"
-                      :href="report_csv + 'POO=' + site + '&DateStart=' + startDate + '&DateStart=' + endDate"
+                      :href="report_csv + 'POO=' + site + '&DateStart=' + startDate + '&DateEnd=' + endDate"
                       target="_blank"
                     >
                       <i class="fas fa-file-csv fa-3x"></i>
