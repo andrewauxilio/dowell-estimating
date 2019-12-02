@@ -10,7 +10,6 @@
             </div>
             <div class="sidebar-brand-text mx-3">Dowell Estimating</div>
         </router-link>
-
         <!-- Divider -->
         <hr v-if="isLoggedIn && isEstimating" class="sidebar-divider my-0">
         <li v-if="isLoggedIn && isEstimating" class="nav-item active">
@@ -34,6 +33,19 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Sites:</h6>
                     <router-link v-if="isGBG" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'GBG' } }">Geebung</router-link>
+                </div>
+            </div>
+        </li>
+
+        <li v-if="isLoggedIn && isEstimating && isNSW" class="nav-item">
+            <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseNSW" aria-expanded="true" aria-controls="collapseNSW">
+                <i class="fas fa-fw fa-map-marked"></i>
+                <span>New South Wales</span>
+            </a>
+            <div id="collapseNSW" class="collapse">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Sites:</h6>
+                    <router-link v-if="isSMT" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'SMT' } }">Smithfield</router-link>
                 </div>
             </div>
         </li>
