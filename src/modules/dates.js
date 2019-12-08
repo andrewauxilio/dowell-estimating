@@ -31,6 +31,14 @@ export default {
         //let start = moment().subtract(30, 'days').format("YYYYMMDD");
         context.commit("SET_START_DATE", start);
         context.commit("SET_END_DATE", end);
+    },
+
+    changeDates(context, dates) {
+        let end = moment(dates.end).format("YYYYMMDD");
+        let start = moment(dates.start).format("YYYYMMDD");
+        //let start = moment().subtract(30, 'days').format("YYYYMMDD");
+        context.commit("SET_START_DATE", start);
+        context.commit("SET_END_DATE", end);
     }
   }
 };
