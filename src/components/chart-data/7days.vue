@@ -162,7 +162,11 @@ export default {
             let day2 = this.siteData2;
             let day3 = this.siteData3;
             this.datacollection = {
-                labels: [moment(day3[0].DATE_TO).format('MMMM Do YYYY'), moment(day2[0].DATE_TO).format('MMMM Do YYYY'), moment(day1[0].DATE_TO).format('MMMM Do YYYY')],
+                labels: [   
+                            moment(day3[0].DATE_FROM).format('MMM DD YY') + " - " + moment(day3[0].DATE_TO).format('MMM DD YY'), 
+                            moment(day2[0].DATE_FROM).format('MMM DD YY') + " - " + moment(day2[0].DATE_TO).format('MMM DD YY'),
+                            moment(day1[0].DATE_FROM).format('MMM DD YY') + " - " + moment(day1[0].DATE_TO).format('MMM DD YY'),  
+                        ],
                 datasets: [{
                         label: "Quotes",
                         backgroundColor: "rgba(75, 192, 192, 0.7)",
