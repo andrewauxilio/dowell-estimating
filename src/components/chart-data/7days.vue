@@ -6,7 +6,7 @@
         <div class="bounce3"></div>
     </div>
     <!-- <transition name="fade"> -->
-        <bar-chart v-if="!loading" :chart-data="datacollection" :options="options"></bar-chart>
+    <bar-chart v-if="!loading" :chart-data="datacollection" :options="options"></bar-chart>
     <!-- </transition> -->
 </div>
 </template>
@@ -31,6 +31,10 @@ export default {
             siteData1: [],
             siteData2: [],
             siteData3: [],
+            siteData4: [],
+            siteData5: [],
+            siteData6: [],
+            siteData7: [],
             loading: true,
             datacollection: {},
             options: {
@@ -107,97 +111,97 @@ export default {
 
     methods: {
         async fetchData() {
-            let checkDate = moment().format("YYYYMMDD")
-            console.log(checkDate)
-            console.log(this.endDate)
-            if (!(this.endDate == checkDate)) {
-                let dateDifference = this.endDate - this.startDate
-                let endDate2 = moment(this.startDate).subtract(1, "days").format("YYYYMMDD")
-                let startDate2 = moment(endDate2).subtract(dateDifference, "days").format("YYYYMMDD")
-                let endDate3 = moment(startDate2).subtract(1, "days").format("YYYYMMDD")
-                let startDate3 = moment(endDate3).subtract(dateDifference, "days").format("YYYYMMDD")
 
-                console.log(dateDifference)
-                this.loading = true;
-                await axios
-                    .all([
-                        axios.post("/estimating/kpis", {
-                            end: this.endDate,
-                            start: this.startDate,
-                            site: this.site,
-                            grouped: 0
-                        }),
+            let dateDifference = this.endDate - this.startDate
 
-                        axios.post("/estimating/kpis", {
-                            end: endDate2,
-                            start: startDate2,
-                            site: this.site,
-                            grouped: 0
-                        }),
+            let endDate2 = moment(this.startDate).subtract(1, "days").format("YYYYMMDD")
+            let startDate2 = moment(endDate2).subtract(dateDifference, "days").format("YYYYMMDD")
 
-                        axios.post("/estimating/kpis", {
-                            end: endDate3,
-                            start: startDate3,
-                            site: this.site,
-                            grouped: 0
-                        })
-                    ])
-                    .then(responseArr => {
-                        this.siteData1 = responseArr[0].data;
-                        this.siteData2 = responseArr[1].data;
-                        this.siteData3 = responseArr[2].data;
+            let endDate3 = moment(startDate2).subtract(1, "days").format("YYYYMMDD")
+            let startDate3 = moment(endDate3).subtract(dateDifference, "days").format("YYYYMMDD")
 
-                        console.log(this.siteData1);
-                        console.log(this.siteData2);
-                        console.log(this.siteData3);
+            let endDate4 = moment(startDate3).subtract(1, "days").format("YYYYMMDD")
+            let startDate4 = moment(endDate4).subtract(dateDifference, "days").format("YYYYMMDD")
 
-                        this.fillData();
-                        this.loading = false;
-                    });
-            } else {
-                this.loading = true;
-                await axios
-                    .all([
-                        axios.post("/estimating/kpis", {
-                            end: this.endDate,
-                            start: this.startDate,
-                            site: this.site,
-                            grouped: 0
-                        }),
-                        axios.post("/estimating/kpis", {
-                            end: moment(this.endDate)
-                                .subtract(4, "days")
-                                .format("YYYYMMDD"),
-                            start: moment(this.startDate)
-                                .subtract(4, "days")
-                                .format("YYYYMMDD"),
-                            site: this.site,
-                            grouped: 0
-                        }),
-                        axios.post("/estimating/kpis", {
-                            end: moment(this.endDate)
-                                .subtract(5, "days")
-                                .format("YYYYMMDD"),
-                            start: moment(this.startDate)
-                                .subtract(5, "days")
-                                .format("YYYYMMDD"),
-                            site: this.site,
-                            grouped: 0
-                        })
-                    ])
-                    .then(responseArr => {
-                        this.siteData1 = responseArr[0].data;
-                        this.siteData2 = responseArr[1].data;
-                        this.siteData3 = responseArr[2].data;
+            let endDate5 = moment(startDate4).subtract(1, "days").format("YYYYMMDD")
+            let startDate5 = moment(endDate5).subtract(dateDifference, "days").format("YYYYMMDD")
 
-                        console.log(this.siteData1);
-                        console.log(this.siteData2);
-                        console.log(this.siteData3);
+            let endDate6 = moment(startDate5).subtract(1, "days").format("YYYYMMDD")
+            let startDate6 = moment(endDate6).subtract(dateDifference, "days").format("YYYYMMDD")
 
-                        this.fillData();
-                        this.loading = false;
-                    });
-            }
+            let endDate7 = moment(startDate6).subtract(1, "days").format("YYYYMMDD")
+            let startDate7 = moment(endDate7).subtract(dateDifference, "days").format("YYYYMMDD")
+
+            console.log(dateDifference)
+            this.loading = true;
+            await axios
+                .all([
+                    axios.post("/estimating/kpis", {
+                        end: this.endDate,
+                        start: this.startDate,
+                        site: this.site,
+                        grouped: 0
+                    }),
+
+                    axios.post("/estimating/kpis", {
+                        end: endDate2,
+                        start: startDate2,
+                        site: this.site,
+                        grouped: 0
+                    }),
+
+                    axios.post("/estimating/kpis", {
+                        end: endDate3,
+                        start: startDate3,
+                        site: this.site,
+                        grouped: 0
+                    }),
+
+                    axios.post("/estimating/kpis", {
+                        end: endDate4,
+                        start: startDate4,
+                        site: this.site,
+                        grouped: 0
+                    }),
+
+                    axios.post("/estimating/kpis", {
+                        end: endDate5,
+                        start: startDate5,
+                        site: this.site,
+                        grouped: 0
+                    }),
+
+                    axios.post("/estimating/kpis", {
+                        end: endDate6,
+                        start: startDate6,
+                        site: this.site,
+                        grouped: 0
+                    }),
+
+                    axios.post("/estimating/kpis", {
+                        end: endDate7,
+                        start: startDate7,
+                        site: this.site,
+                        grouped: 0
+                    })
+                ])
+                .then(responseArr => {
+                    this.siteData1 = responseArr[0].data;
+                    this.siteData2 = responseArr[1].data;
+                    this.siteData3 = responseArr[2].data;
+                    this.siteData4 = responseArr[3].data;
+                    this.siteData5 = responseArr[4].data;
+                    this.siteData6 = responseArr[5].data;
+                    this.siteData7 = responseArr[6].data;
+
+                    console.log(this.siteData1);
+                    console.log(this.siteData2);
+                    console.log(this.siteData3);
+
+                    this.fillData();
+                    this.loading = false;
+
+                });
 
         },
 
@@ -205,8 +209,17 @@ export default {
             let day1 = this.siteData1;
             let day2 = this.siteData2;
             let day3 = this.siteData3;
+            let day4 = this.siteData4;
+            let day5 = this.siteData5;
+            let day6 = this.siteData6;
+            let day7 = this.siteData7;
+
             this.datacollection = {
                 labels: [
+                    moment(day7[0].DATE_FROM).format('MMM DD YY') + " - " + moment(day7[0].DATE_TO).format('MMM DD YY'),
+                    moment(day6[0].DATE_FROM).format('MMM DD YY') + " - " + moment(day6[0].DATE_TO).format('MMM DD YY'),
+                    moment(day5[0].DATE_FROM).format('MMM DD YY') + " - " + moment(day5[0].DATE_TO).format('MMM DD YY'),
+                    moment(day4[0].DATE_FROM).format('MMM DD YY') + " - " + moment(day4[0].DATE_TO).format('MMM DD YY'),
                     moment(day3[0].DATE_FROM).format('MMM DD YY') + " - " + moment(day3[0].DATE_TO).format('MMM DD YY'),
                     moment(day2[0].DATE_FROM).format('MMM DD YY') + " - " + moment(day2[0].DATE_TO).format('MMM DD YY'),
                     moment(day1[0].DATE_FROM).format('MMM DD YY') + " - " + moment(day1[0].DATE_TO).format('MMM DD YY'),
@@ -215,6 +228,10 @@ export default {
                         label: "Quotes",
                         backgroundColor: "rgba(75, 192, 192, 0.7)",
                         data: [
+                            day7[0].QUOTES_NO,
+                            day6[0].QUOTES_NO,
+                            day5[0].QUOTES_NO,
+                            day4[0].QUOTES_NO,
                             day3[0].QUOTES_NO,
                             day2[0].QUOTES_NO,
                             day1[0].QUOTES_NO
@@ -224,6 +241,10 @@ export default {
                         label: "Revisions",
                         backgroundColor: "rgba(75, 192, 192, 0.7)",
                         data: [
+                            day7[0].REVISION_NO,
+                            day6[0].REVISION_NO,
+                            day5[0].REVISION_NO,
+                            day4[0].REVISION_NO,
                             day3[0].REVISION_NO,
                             day2[0].REVISION_NO,
                             day1[0].REVISION_NO
@@ -233,6 +254,10 @@ export default {
                         label: "Orders",
                         backgroundColor: "rgba(75, 192, 192, 0.7)",
                         data: [
+                            day7[0].ORDERS_IN_NO,
+                            day6[0].ORDERS_IN_NO,
+                            day5[0].ORDERS_IN_NO,
+                            day4[0].ORDERS_IN_NO,
                             day3[0].ORDERS_IN_NO,
                             day2[0].ORDERS_IN_NO,
                             day1[0].ORDERS_IN_NO

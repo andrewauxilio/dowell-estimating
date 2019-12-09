@@ -1,84 +1,152 @@
 <template>
 <div v-if="isLoggedIn" class="container-fluid">
-    <div v-if="loading" class="spinner">
-        <div class="bounce1"></div>
-        <div class="bounce2"></div>
-        <div class="bounce3"></div>
-    </div>
-    <div v-if="!loading" class="row">
-        <div class="col-lg-12 mb-4 animated fadeInUp">
+    <div class="row">
+        <div class="col-lg-12 mb-4">
             <div class="card bg-success text-white shadow">
                 <div class="card-body">
-                    <div>
-                        <small>Page Last Updated: {{ lastUpdate }}</small>
+                    <div v-if="d_loading" class="spinner-white">
+                        <div class="bounce1"></div>
+                        <div class="bounce2"></div>
+                        <div class="bounce3"></div>
+                    </div>
+                    <div v-if="!d_loading">
                         <h5 class="mt-1">Current Date Range:</h5>
                         <span class="mt-1">From: {{ startDate | toPrettyDate }} to: {{ endDate | toPrettyDate }}</span>
-                        <button type="submit" class="btn btn-danger float-right" @click="fetchData">Update Page</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div v-if="!loading" class="row">
-        <div class="col-xl-4 col-md-6 mb-4 animated fadeInUp delay-1s">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Quotes</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ siteData[0].QUOTES_NO }} Quotes</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Value: ${{ siteData[0].QUOTES_$ }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-book fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 col-md-6 mb-4 animated fadeInUp delay-1s">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Orders</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ siteData[0].ORDERS_IN_NO }} Orders</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Value: ${{ siteData[0].ORDERS_IN_$ }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-truck fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 col-md-6 mb-4 animated fadeInUp delay-1s">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Revisions</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ siteData[0].REVISION_NO }} Revisions</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Value: ${{ siteData[0].REVISION_$ }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-redo fa-2x text-gray-300"></i>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div v-if="!loading" class="row">
-        <div class="col-xl-12 col-lg-12 animated fadeInUp delay-2s">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-success">Past 3 Days Statistics</h6>
+                    <h6 class="m-0 font-weight-bold text-success">Past 7 Days</h6>
+                    <small>Page Last Updated: {{ c_lastUpdate }}</small>
+                    <button type="submit" class="btn btn-danger float-right" @click="updateChart">Refresh</button>
                 </div>
-                <div class="card-body">
+                <div v-if="c_loading" class="spinner">
+                    <div class="bounce1"></div>
+                    <div class="bounce2"></div>
+                    <div class="bounce3"></div>
+                </div>
+                <div v-if="!c_loading" class="card-body">
                     <div class="card-body table-responsive p-0">
                         <dailyChart v-if="show" :site="site" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-success">Estimator</h6>
+                    <small>Page Last Updated: {{ lastUpdate }}</small>
+                    <button type="submit" class="btn btn-danger float-right" @click="updateEstData">Refresh</button>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div v-if="loading" class="spinner">
+                                            <div class="bounce1"></div>
+                                            <div class="bounce2"></div>
+                                            <div class="bounce3"></div>
+                                        </div>
+                                        <div v-if="!loading" class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Quotes</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ siteData[0].QUOTES_NO }} Quotes</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Value: ${{ siteData[0].QUOTES_$ }}</div>
+                                        </div>
+                                        <div v-if="!loading" class="col-auto">
+                                            <i class="fas fa-book fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div v-if="loading" class="spinner">
+                                            <div class="bounce1"></div>
+                                            <div class="bounce2"></div>
+                                            <div class="bounce3"></div>
+                                        </div>
+                                        <div v-if="!loading" class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Orders</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ siteData[0].ORDERS_IN_NO }} Orders</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Value: ${{ siteData[0].ORDERS_IN_$ }}</div>
+                                        </div>
+                                        <div v-if="!loading" class="col-auto">
+                                            <i class="fas fa-truck fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div v-if="loading" class="spinner">
+                                            <div class="bounce1"></div>
+                                            <div class="bounce2"></div>
+                                            <div class="bounce3"></div>
+                                        </div>
+                                        <div v-if="!loading" class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Revisions</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ siteData[0].REVISION_NO }} Revisions</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Value: ${{ siteData[0].REVISION_$ }}</div>
+                                        </div>
+                                        <div v-if="!loading" class="col-auto">
+                                            <i class="fas fa-redo fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div v-if="e_loading" class="spinner">
+                            <div class="bounce1"></div>
+                            <div class="bounce2"></div>
+                            <div class="bounce3"></div>
+                        </div>
+                        <div v-if="!e_loading" class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Estimator</th>
+                                        <th scope="col" class="bg-success text-light">Sales</th>
+                                        <th scope="col" class="bg-secondary text-light">Quotes Value </th>
+                                        <th scope="col" class="bg-secondary text-light">No. of Quotes</th>
+                                        <th scope="col" class="bg-secondary text-light">Revisions Value</th>
+                                        <th scope="col" class="bg-secondary text-light">No. of Revision</th>
+                                        <th scope="col" class="bg-secondary text-light">Orders Value</th>
+                                        <th scope="col" class="bg-secondary text-light">No. of Orders</th>
+                                    </tr>
+                                </thead>
+                                <tbody v-for="estimatorKPI in estData" :key="estimatorKPI.id">
+                                    <td>{{ estimatorKPI.ESTIMATOR }}</td>
+                                    <td>{{ estimatorKPI.SALES_$ | toDollar }}</td>
+                                    <td>{{ estimatorKPI.QUOTES_NO }}</td>
+                                    <td>{{ estimatorKPI.QUOTES_$ | toDollar }}</td>
+                                    <td>{{ estimatorKPI.REVISION_NO }}</td>
+                                    <td>{{ estimatorKPI.REVISION_$ | toDollar }}</td>
+                                    <td>{{ estimatorKPI.ORDERS_IN_NO }}</td>
+                                    <td>{{ estimatorKPI.ORDERS_IN_$ | toDollar }}</td>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -205,9 +273,14 @@ export default {
     data() {
         return {
             siteData: [],
-            loading: true,
+            estData: [],
+            loading: true, //estimator total loading
+            c_loading: true, //chart loading
+            d_loading: true, //date loading
+            e_loading: true, //estimator loading
             visible: false,
             show: true,
+            c_lastUpdate: "",
             lastUpdate: "",
             c_startDate: "",
             c_endDate: "",
@@ -228,6 +301,7 @@ export default {
     mounted() {
         this.permissionCheck();
         this.fetchData();
+        this.fetchData_2();
     },
 
     methods: {
@@ -245,7 +319,82 @@ export default {
 
         async fetchData() {
             this.lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
+            this.c_lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
             this.show = false;
+            this.loading = true;
+            this.c_loading = true;
+            this.d_loading = true
+            try {
+                await axios
+                    .post("/estimating/kpis", {
+                        end: this.endDate,
+                        start: this.startDate,
+                        site: this.site,
+                        grouped: 0
+                    })
+                    .then(response => {
+                        this.siteData = response.data;
+                        this.loading = false;
+                        this.c_loading = false;
+                        this.d_loading = false;
+                        nextTick(() => {
+                            this.show = true
+                        })
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            } catch (e) {
+                console.log(e);
+            }
+        },
+
+        async fetchData_2() {
+            this.e_loading = true;
+            try {
+                await axios
+                    .post("/estimating/kpis", {
+                        end: this.endDate,
+                        start: this.startDate,
+                        site: this.site,
+                        grouped: 1
+                    })
+                    .then(response => {
+                        this.estData = response.data;
+                        this.e_loading = false;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            } catch (e) {
+                console.log(e);
+            }
+        },
+
+        async updateEst() {
+            this.e_loading = true;
+            try {
+                await axios
+                    .post("/estimating/kpis", {
+                        end: this.endDate,
+                        start: this.startDate,
+                        site: this.site,
+                        grouped: 1
+                    })
+                    .then(response => {
+                        this.estData = response.data;
+                        this.e_loading = false;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            } catch (e) {
+                console.log(e);
+            }
+        },
+
+        async updateEstTotal() {
+            this.lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
             this.loading = true;
             try {
                 await axios
@@ -256,13 +405,8 @@ export default {
                         grouped: 0
                     })
                     .then(response => {
-
                         this.siteData = response.data;
                         this.loading = false;
-                        nextTick(() => {
-                            this.show = true
-                        })
-
                     })
                     .catch(err => {
                         console.log(err);
@@ -272,14 +416,29 @@ export default {
             }
         },
 
+        updateEstData() {
+            this.updateEst();
+            this.updateEstTotal();
+        },
+
+        updateChart() {
+            this.c_lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
+            this.show = false;
+            nextTick(() => {
+                this.show = true
+            })
+        },
+
         changeDate() {
             this.show = false
             this.loading = true;
+            this.e_loading = true;
             this.$store.dispatch('changeDates', {
                 start: this.c_startDate,
                 end: this.c_endDate
             }).then((response) => {
                 this.fetchData();
+                this.fetchData_2();
             });
         }
     }
