@@ -200,6 +200,10 @@ export default {
 
                     this.fillData();
                     this.loading = false;
+                    toast.fire({
+                        type: "success",
+                        title: "Chart data loaded"
+                    })
 
                 });
 

@@ -311,12 +311,6 @@ export default {
             }
         },
 
-        pageLoader() {
-            let loader = this.$loading.show({
-                loader: 'dots'
-            });
-        },
-
         async fetchData() {
             this.lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
             this.c_lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
@@ -340,6 +334,10 @@ export default {
                         nextTick(() => {
                             this.show = true
                         })
+                        toast.fire({
+                            type: "success",
+                            title: "Site data loaded"
+                        })
                     })
                     .catch(err => {
                         console.log(err);
@@ -362,6 +360,10 @@ export default {
                     .then(response => {
                         this.estData = response.data;
                         this.e_loading = false;
+                        toast.fire({
+                            type: "success",
+                            title: "Estimator KPI loaded"
+                        })
                     })
                     .catch(err => {
                         console.log(err);
@@ -384,6 +386,10 @@ export default {
                     .then(response => {
                         this.estData = response.data;
                         this.e_loading = false;
+                        toast.fire({
+                            type: "success",
+                            title: "Site data loaded"
+                        })
                     })
                     .catch(err => {
                         console.log(err);
@@ -407,6 +413,10 @@ export default {
                     .then(response => {
                         this.siteData = response.data;
                         this.loading = false;
+                        toast.fire({
+                            type: "success",
+                            title: "Estimator KPI updated"
+                        })
                     })
                     .catch(err => {
                         console.log(err);
@@ -427,6 +437,11 @@ export default {
             nextTick(() => {
                 this.show = true
             })
+            toast.fire({
+                type: "success",
+                title: "Chart updating"
+            })
+
         },
 
         changeDate() {
@@ -439,42 +454,13 @@ export default {
             }).then((response) => {
                 this.fetchData();
                 this.fetchData_2();
+            }).finally(() => {
+                toast.fire({
+                    type: "success",
+                    title: "Dates changed (from: " + this.c_startDate + " to: " + this.c_endDate + ")"
+                })
             });
         }
     }
 };
 </script>
-
-<style scoped>
-.loader {
-    border: 16px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 16px solid #3498db;
-    width: 120px;
-    height: 120px;
-    -webkit-animation: spin 2s linear infinite;
-    /* Safari */
-    animation: spin 2s linear infinite;
-}
-
-/* Safari */
-@-webkit-keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-    }
-
-    100% {
-        -webkit-transform: rotate(360deg);
-    }
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-</style>
