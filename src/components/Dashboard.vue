@@ -23,7 +23,7 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-success">Past 7 Days</h6>
-                    <small>Page Last Updated: {{ c_lastUpdate }}</small>
+                    <small>Last Updated: {{ c_lastUpdate }}</small>
                     <button type="submit" class="btn btn-danger float-right" @click="updateChart">Refresh</button>
                 </div>
                 <div v-if="c_loading" class="spinner">
@@ -45,7 +45,7 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-success">Estimator</h6>
-                    <small>Page Last Updated: {{ lastUpdate }}</small>
+                    <small>Last Updated: {{ lastUpdate }}</small>
                     <button type="submit" class="btn btn-danger float-right" @click="updateEstData">Refresh</button>
                 </div>
                 <div class="card-body">
