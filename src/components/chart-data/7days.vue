@@ -5,9 +5,9 @@
         <div class="bounce2"></div>
         <div class="bounce3"></div>
     </div>
-    <transition name="fade">
+    <!-- <transition name="fade"> -->
         <bar-chart v-if="!loading" :chart-data="datacollection" :options="options"></bar-chart>
-    </transition>
+    <!-- </transition> -->
 </div>
 </template>
 
@@ -91,7 +91,7 @@ export default {
     },
 
     props: {
-        site: String
+        site: String,
     },
 
     mounted() {

@@ -1,15 +1,15 @@
 <template>
 <div v-if="isLoggedIn" class="container-fluid">
-    <div class="row">
-        <div class="col-lg-12 mb-4">
+    <div v-if="loading" class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+    </div>
+    <div v-if="!loading" class="row">
+        <div class="col-lg-12 mb-4 animated fadeInUp">
             <div class="card bg-success text-white shadow">
                 <div class="card-body">
-                    <div v-if="loading" class="spinner">
-                        <div class="bounce1"></div>
-                        <div class="bounce2"></div>
-                        <div class="bounce3"></div>
-                    </div>
-                    <div v-if="!loading">
+                    <div>
                         <small>Page Last Updated: {{ lastUpdate }}</small>
                         <h5 class="mt-1">Current Date Range:</h5>
                         <span class="mt-1">From: {{ startDate | toPrettyDate }} to: {{ endDate | toPrettyDate }}</span>
@@ -19,17 +19,12 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-xl-4 col-md-6 mb-4">
+    <div v-if="!loading" class="row">
+        <div class="col-xl-4 col-md-6 mb-4 animated fadeInUp delay-1s">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
-                        <div v-if="loading" class="spinner">
-                            <div class="bounce1"></div>
-                            <div class="bounce2"></div>
-                            <div class="bounce3"></div>
-                        </div>
-                        <div v-if="!loading" class="col mr-2">
+                        <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Quotes</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ siteData[0].QUOTES_NO }} Quotes</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">Value: ${{ siteData[0].QUOTES_$ }}</div>
@@ -41,16 +36,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-6 mb-4">
+        <div class="col-xl-4 col-md-6 mb-4 animated fadeInUp delay-1s">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
-                        <div v-if="loading" class="spinner">
-                            <div class="bounce1"></div>
-                            <div class="bounce2"></div>
-                            <div class="bounce3"></div>
-                        </div>
-                        <div v-if="!loading" class="col mr-2">
+                        <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Orders</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ siteData[0].ORDERS_IN_NO }} Orders</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">Value: ${{ siteData[0].ORDERS_IN_$ }}</div>
@@ -62,16 +52,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-6 mb-4">
+        <div class="col-xl-4 col-md-6 mb-4 animated fadeInUp delay-1s">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
-                        <div v-if="loading" class="spinner">
-                            <div class="bounce1"></div>
-                            <div class="bounce2"></div>
-                            <div class="bounce3"></div>
-                        </div>
-                        <div v-if="!loading" class="col mr-2">
+                        <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Revisions</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ siteData[0].REVISION_NO }} Revisions</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">Value: ${{ siteData[0].REVISION_$ }}</div>
@@ -85,19 +70,14 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xl-12 col-lg-12">
+    <div v-if="!loading" class="row">
+        <div class="col-xl-12 col-lg-12 animated fadeInUp delay-2s">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-success">Past 3 Days Statistics</h6>
                 </div>
                 <div class="card-body">
                     <div class="card-body table-responsive p-0">
-                        <div v-if="!show" class="spinner">
-                            <div class="bounce1"></div>
-                            <div class="bounce2"></div>
-                            <div class="bounce3"></div>
-                        </div>
                         <dailyChart v-if="show" :site="site" />
                     </div>
                 </div>
@@ -209,11 +189,13 @@ import {
     nextTick
 } from 'q';
 import dailyChart from './chart-data/7days';
+import loading from 'vue-loading-overlay';
 
 export default {
     name: "dashboard",
     components: {
         dailyChart,
+        loading
     },
 
     props: {
@@ -224,6 +206,7 @@ export default {
         return {
             siteData: [],
             loading: true,
+            visible: false,
             show: true,
             lastUpdate: "",
             c_startDate: "",
@@ -254,6 +237,12 @@ export default {
             }
         },
 
+        pageLoader() {
+            let loader = this.$loading.show({
+                loader: 'dots'
+            });
+        },
+
         async fetchData() {
             this.lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
             this.show = false;
@@ -267,11 +256,13 @@ export default {
                         grouped: 0
                     })
                     .then(response => {
+
                         this.siteData = response.data;
                         this.loading = false;
                         nextTick(() => {
                             this.show = true
                         })
+
                     })
                     .catch(err => {
                         console.log(err);
