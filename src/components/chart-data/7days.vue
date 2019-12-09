@@ -107,6 +107,15 @@ export default {
 
     methods: {
         async fetchData() {
+            let dateDifference = this.endDate - this.startDate
+
+            let endDate2 = moment(this.startDate).subtract(1, "days").format("YYYYMMDD")
+            let startDate2 =  moment(endDate2).subtract(dateDifference, "days").format("YYYYMMDD")
+
+            let endDate3 = moment(startDate2).subtract(1, "days").format("YYYYMMDD")
+            let startDate3 = moment(endDate3).subtract(dateDifference, "days").format("YYYYMMDD")
+
+            console.log(dateDifference) 
             this.loading = true;
             await axios
                 .all([
@@ -118,23 +127,15 @@ export default {
                     }),
 
                     axios.post("/estimating/kpis", {
-                        end: moment(this.endDate)
-                            .subtract(4, "days")
-                            .format("YYYYMMDD"),
-                        start: moment(this.startDate)
-                            .subtract(4, "days")
-                            .format("YYYYMMDD"),
+                        end: endDate2,
+                        start: startDate2,
                         site: this.site,
                         grouped: 0
                     }),
 
                     axios.post("/estimating/kpis", {
-                        end: moment(this.endDate)
-                            .subtract(5, "days")
-                            .format("YYYYMMDD"),
-                        start: moment(this.startDate)
-                            .subtract(5, "days")
-                            .format("YYYYMMDD"),
+                        end: endDate3,
+                        start: startDate3,
                         site: this.site,
                         grouped: 0
                     })
