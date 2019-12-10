@@ -32,7 +32,7 @@
             <div id="collapseQLD" class="collapse">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Sites:</h6>
-                    <router-link v-if="isGBG" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'GBG' } }">Geebung</router-link>
+                    <router-link v-if="isGBG" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'GBG', perm: isGBG } }">Geebung</router-link>
                 </div>
             </div>
         </li>
@@ -45,7 +45,7 @@
             <div id="collapseNSW" class="collapse">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Sites:</h6>
-                    <router-link v-if="isSMT" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'SMT' } }">Smithfield</router-link>
+                    <router-link v-if="isSMT" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'SMT', perm: isSMT } }">Smithfield</router-link>
                 </div>
             </div>
         </li>
@@ -58,7 +58,7 @@
             <div id="collapseSA" class="collapse">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Sites:</h6>
-                    <router-link v-if="isELI" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'ELI' } }">Elizabeth</router-link>
+                    <router-link v-if="isELI" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'ELI', perm: isELI } }">Elizabeth</router-link>
                 </div>
             </div>
         </li>

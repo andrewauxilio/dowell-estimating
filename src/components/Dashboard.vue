@@ -1,5 +1,5 @@
 <template>
-<div v-if="isLoggedIn" class="container-fluid">
+<div v-if="isLoggedIn && perm" class="container-fluid">
     <div class="row">
         <div class="col-lg-12 mb-4">
             <div class="card bg-success text-white shadow">
@@ -267,7 +267,8 @@ export default {
     },
 
     props: {
-        site: String
+        site: String,
+        perm: Boolean
     },
 
     data() {
@@ -295,9 +296,10 @@ export default {
         ...mapGetters({
             isLoggedIn: "isLoggedIn",
             startDate: "getStartDate",
-            endDate: "getEndDate"
+            endDate: "getEndDate",
         })
     },
+
     mounted() {
         this.permissionCheck();
         this.fetchData();
@@ -306,71 +308,76 @@ export default {
 
     methods: {
         permissionCheck() {
-            if (!this.isLoggedIn) {
+            if (!this.isLoggedIn || !this.perm) {
                 this.$router.push("/404");
             }
         },
 
         async fetchData() {
-            this.lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
-            this.c_lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
-            this.show = false;
-            this.loading = true;
-            this.c_loading = true;
-            this.d_loading = true
-            try {
-                await axios
-                    .post("/estimating/kpis", {
-                        end: this.endDate,
-                        start: this.startDate,
-                        site: this.site,
-                        grouped: 0
-                    })
-                    .then(response => {
-                        this.siteData = response.data;
-                        this.loading = false;
-                        this.c_loading = false;
-                        this.d_loading = false;
-                        nextTick(() => {
-                            this.show = true
+            if (this.isLoggedIn && this.perm) {
+                this.lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
+                this.c_lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
+                this.show = false;
+                this.loading = true;
+                this.c_loading = true;
+                this.d_loading = true
+                try {
+                    await axios
+                        .post("/estimating/kpis", {
+                            end: this.endDate,
+                            start: this.startDate,
+                            site: this.site,
+                            grouped: 0
                         })
-                        toast.fire({
-                            type: "success",
-                            title: "Site data loaded"
+                        .then(response => {
+                            this.siteData = response.data;
+                            this.loading = false;
+                            this.c_loading = false;
+                            this.d_loading = false;
+                            nextTick(() => {
+                                this.show = true
+                            })
+                            toast.fire({
+                                type: "success",
+                                title: "Site data loaded"
+                            })
                         })
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
-            } catch (e) {
-                console.log(e);
+                        .catch(err => {
+                            console.log(err);
+                        });
+                } catch (e) {
+                    console.log(e);
+                }
             }
         },
 
         async fetchData_2() {
-            this.e_loading = true;
-            try {
-                await axios
-                    .post("/estimating/kpis", {
-                        end: this.endDate,
-                        start: this.startDate,
-                        site: this.site,
-                        grouped: 1
-                    })
-                    .then(response => {
-                        this.estData = response.data;
-                        this.e_loading = false;
-                        toast.fire({
-                            type: "success",
-                            title: "Estimator KPI loaded"
+            if (this.isLoggedIn && this.perm) {
+                this.e_loading = true;
+                try {
+                    await axios
+                        .post("/estimating/kpis", {
+                            end: this.endDate,
+                            start: this.startDate,
+                            site: this.site,
+                            grouped: 1
                         })
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
-            } catch (e) {
-                console.log(e);
+                        .then(response => {
+                            this.estData = response.data;
+                            this.e_loading = false;
+                            toast.fire({
+                                type: "success",
+                                title: "Estimator KPI loaded"
+                            })
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                } catch (e) {
+                    console.log(e);
+                }
             }
+
         },
 
         async updateEst() {
