@@ -127,12 +127,12 @@
                                     <tr>
                                         <th scope="col">Estimator</th>
                                         <th scope="col" class="bg-success text-light">Sales</th>
-                                        <th scope="col" class="bg-secondary text-light">Quotes Value </th>
                                         <th scope="col" class="bg-secondary text-light">No. of Quotes</th>
+                                        <th scope="col" class="bg-secondary text-light">Quotes Value</th>
+                                        <th scope="col" class="bg-secondary text-light">No. of Revisions</th>
                                         <th scope="col" class="bg-secondary text-light">Revisions Value</th>
-                                        <th scope="col" class="bg-secondary text-light">No. of Revision</th>
-                                        <th scope="col" class="bg-secondary text-light">Orders Value</th>
                                         <th scope="col" class="bg-secondary text-light">No. of Orders</th>
+                                        <th scope="col" class="bg-secondary text-light">Orders Value</th>
                                     </tr>
                                 </thead>
                                 <tbody v-for="estimatorKPI in estData" :key="estimatorKPI.id">
