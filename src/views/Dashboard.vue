@@ -4,11 +4,7 @@
         <div class="col-lg-12 mb-4">
             <div class="card bg-success text-white shadow">
                 <div class="card-body">
-                    <div v-if="d_loading" class="spinner-white">
-                        <div class="bounce1"></div>
-                        <div class="bounce2"></div>
-                        <div class="bounce3"></div>
-                    </div>
+                    <spinnerw v-if="d_loading" />
                     <div v-if="!d_loading">
                         <h5 class="mt-1">{{ site }}</h5>
                         <span class="mt-1">Date Range: {{ startDate | toPrettyDate }} - {{ endDate | toPrettyDate }}</span>
@@ -26,11 +22,7 @@
                     <small>Last Updated: {{ c_lastUpdate }}</small>
                     <button type="submit" class="btn btn-danger float-right" @click="updateChart">Refresh</button>
                 </div>
-                <div v-if="c_loading" class="spinner">
-                    <div class="bounce1"></div>
-                    <div class="bounce2"></div>
-                    <div class="bounce3"></div>
-                </div>
+                <spinner v-if="c_loading" />
                 <div v-if="!c_loading" class="card-body">
                     <div class="card-body table-responsive p-0">
                         <dailyChart v-if="show" :site="site" />
@@ -54,11 +46,7 @@
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
-                                        <div v-if="loading" class="spinner">
-                                            <div class="bounce1"></div>
-                                            <div class="bounce2"></div>
-                                            <div class="bounce3"></div>
-                                        </div>
+                                        <spinner v-if="loading" />
                                         <div v-if="!loading" class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Quotes</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ siteData[0].QUOTES_NO }} Quotes</div>
@@ -75,11 +63,7 @@
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
-                                        <div v-if="loading" class="spinner">
-                                            <div class="bounce1"></div>
-                                            <div class="bounce2"></div>
-                                            <div class="bounce3"></div>
-                                        </div>
+                                        <spinner v-if="loading" />
                                         <div v-if="!loading" class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Orders</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ siteData[0].ORDERS_IN_NO }} Orders</div>
@@ -96,11 +80,7 @@
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
-                                        <div v-if="loading" class="spinner">
-                                            <div class="bounce1"></div>
-                                            <div class="bounce2"></div>
-                                            <div class="bounce3"></div>
-                                        </div>
+                                        <spinner v-if="loading" />
                                         <div v-if="!loading" class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Revisions</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ siteData[0].REVISION_NO }} Revisions</div>
@@ -115,155 +95,54 @@
                         </div>
                     </div>
 
+                    <!-- Estimator KPI Table-->
                     <div class="row">
-                        <div v-if="e_loading" class="spinner">
-                            <div class="bounce1"></div>
-                            <div class="bounce2"></div>
-                            <div class="bounce3"></div>
-                        </div>
-                        <div v-if="!e_loading" class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Estimator</th>
-                                        <th scope="col" class="bg-success text-light">Sales</th>
-                                        <th scope="col" class="bg-secondary text-light">No. of Quotes</th>
-                                        <th scope="col" class="bg-secondary text-light">Quotes Value</th>
-                                        <th scope="col" class="bg-secondary text-light">No. of Revisions</th>
-                                        <th scope="col" class="bg-secondary text-light">Revisions Value</th>
-                                        <th scope="col" class="bg-secondary text-light">No. of Orders</th>
-                                        <th scope="col" class="bg-secondary text-light">Orders Value</th>
-                                    </tr>
-                                </thead>
-                                <tbody v-for="estimatorKPI in estData" :key="estimatorKPI.id">
-                                    <td>{{ estimatorKPI.ESTIMATOR }}</td>
-                                    <td>{{ estimatorKPI.SALES_$ | toDollar }}</td>
-                                    <td>{{ estimatorKPI.QUOTES_NO }}</td>
-                                    <td>{{ estimatorKPI.QUOTES_$ | toDollar }}</td>
-                                    <td>{{ estimatorKPI.REVISION_NO }}</td>
-                                    <td>{{ estimatorKPI.REVISION_$ | toDollar }}</td>
-                                    <td>{{ estimatorKPI.ORDERS_IN_NO }}</td>
-                                    <td>{{ estimatorKPI.ORDERS_IN_$ | toDollar }}</td>
-                                </tbody>
-                            </table>
-                        </div>
+                        <spinner v-if="e_loading" />
+                        <estTable v-if="!e_loading" :estData="estData" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div v-if="!loading" class="fab-container">
-        <button class="buttons" tooltip="Download Reports" data-toggle="modal" data-target=".report-modal">
-            <i class="fab fas fa-download"></i>
-        </button>
-        <button class="buttons" tooltip="Change Dates" data-toggle="modal" data-target=".date-modal">
-            <i class="fab fas fa-calendar-alt"></i>
-        </button>
-        <button class="buttons" tooltip="Actions">
-            <i class="fab fas fa-cogs"></i>
-        </button>
-    </div>
+    <!-- Action Button -->
+    <actionBtn v-if="!loading" />
 
     <!-- Report modal -->
-    <div class="modal fade report-modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-dark font-weight-bold">Download Reports</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Report Name</th>
-                                <th>Link</th>
-                                <th>Download Report</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>KPI Report</th>
-                                <td>
-                                    <a :href="report_url + 'POO=' + site + '&DateStart=' + startDate + '&DateEnd=' + endDate" target="_blank">View Report</a>
-                                </td>
-                                <td>
-                                    <a style="color:red; margin:2px;" :href="report_pdf + 'POO=' + site + '&DateStart=' + startDate + '&DateEnd=' + endDate" target="_blank">
-                                        <i class="fas fa-file-pdf fa-3x"></i>
-                                    </a>
-                                    <a style="color:green; margin:2px;" :href=" report_excel + 'POO=' + site + '&DateStart=' + startDate + '&DateEnd=' + endDate" target="_blank">
-                                        <i class="fas fa-file-excel fa-3x"></i>
-                                    </a>
-                                    <a style="color:blue; margin:2px;" :href="report_csv + 'POO=' + site + '&DateStart=' + startDate + '&DateEnd=' + endDate" target="_blank">
-                                        <i class="fas fa-file-csv fa-3x"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <p class="mr-auto">
-                        IMPORTANT: Please make sure you are logged in to Dowell's citrix desktop.
-                        The reports are only accessible inside the Dowell's citrix desktop.
-                    </p>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <reportModal
+        :site="site" :startDate="startDate" :endDate="endDate" 
+    />
 
-    <div class="modal fade date-modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-dark font-weight-bold">Change Dates</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Start Date</label>
-                            <input type="date" class="form-control" v-model="c_startDate">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">End Date</label>
-                            <input type="date" class="form-control" v-model="c_endDate">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="changeDate">Submit</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Change Date Modal -->
+    <changeDateModal @change="changeDate" />
 
 </div>
 </template>
 
 <script>
 import axios from "axios";
-import {
-    mapGetters
-} from "vuex";
-import {
-    nextTick
-} from 'q';
-import dailyChart from './chart-data/7days';
+import { mapGetters } from "vuex";
+import { nextTick } from 'q';
+import dailyChart from '../components/charts/7units';
 import loading from 'vue-loading-overlay';
+import spinner from '../components/plugins/Spinner';
+import spinnerw from '../components/plugins/SpinnerWhite';
+import actionBtn from '../components/buttons/ActionButton';
+import reportModal from '../components/modals/ReportModal';
+import changeDateModal from '../components/modals/ChangeDateModal';
+import estTable from '../components/tables/EstimatorKPITable';
 
 export default {
     name: "dashboard",
     components: {
         dailyChart,
-        loading
+        loading,
+        spinner,
+        spinnerw,
+        actionBtn,
+        reportModal,
+        changeDateModal,
+        estTable
     },
 
     props: {
@@ -273,22 +152,15 @@ export default {
 
     data() {
         return {
-            siteData: [],
-            estData: [],
-            loading: true, //estimator total loading
-            c_loading: true, //chart loading
-            d_loading: true, //date loading
-            e_loading: true, //estimator loading
-            visible: false,
-            show: true,
-            c_lastUpdate: "",
-            lastUpdate: "",
-            c_startDate: "",
-            c_endDate: "",
-            report_url: "http://dweqxsql04/reports/report/Quoting/KPIEstimator?",
-            report_pdf: "http://dweqxsql04/Reportserver?%2fQuoting%2fKPIEstimator&rs:Command=Render&rs:Format=PDF&",
-            report_excel: "http://dweqxsql04/Reportserver?%2fQuoting%2fKPIEstimator&rs:Command=Render&rs:Format=EXCEL&",
-            report_csv: "http://dweqxsql04/Reportserver?%2fQuoting%2fKPIEstimator&rs:Command=Render&rs:Format=CSV&"
+            siteData: [],       //total data
+            estData: [],        //estimator KPI data
+            loading: true,      //total loading
+            c_loading: true,    //chart loading
+            d_loading: true,    //date loading
+            e_loading: true,    //estimator loading
+            show: true,         //chart reload
+            c_lastUpdate: "",   //chart last updated
+            lastUpdate: "",     //total and est last updated
         };
     },
 
@@ -302,8 +174,8 @@ export default {
 
     mounted() {
         this.permissionCheck();
-        this.fetchData();
-        this.fetchData_2();
+        this.fetchDataTotal();
+        this.fetchDataEst();
     },
 
     methods: {
@@ -313,7 +185,7 @@ export default {
             }
         },
 
-        async fetchData() {
+        async fetchDataTotal() {
             if (this.isLoggedIn && this.perm) {
                 this.lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
                 this.c_lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
@@ -351,7 +223,7 @@ export default {
             }
         },
 
-        async fetchData_2() {
+        async fetchDataEst() {
             if (this.isLoggedIn && this.perm) {
                 this.e_loading = true;
                 try {
@@ -377,7 +249,6 @@ export default {
                     console.log(e);
                 }
             }
-
         },
 
         async updateEst() {
@@ -455,19 +326,10 @@ export default {
             this.show = false
             this.loading = true;
             this.e_loading = true;
-            this.$store.dispatch('changeDates', {
-                start: this.c_startDate,
-                end: this.c_endDate
-            }).then((response) => {
-                this.fetchData();
-                this.fetchData_2();
-            }).finally(() => {
-                toast.fire({
-                    type: "success",
-                    title: "Dates changed (from: " + this.c_startDate + " to: " + this.c_endDate + ")"
-                })
-            });
-        }
+            this.fetchDataTotal();
+            this.fetchDataEst();
+        },
     }
+
 };
 </script>

@@ -16,7 +16,7 @@ export default new Router({
     {
       path: '/landing',
       name: 'landing',
-      component: () => import('./components/Landing.vue')
+      component: () => import('./views/Landing.vue')
     },
     {
       path: '/logout',
@@ -27,7 +27,7 @@ export default new Router({
       path: '/dashboard/:site',
       props: true,
       name: 'dashboard',
-      component: () => import('./components/Dashboard.vue')
+      component: () => import('./views/Dashboard.vue')
     },
     {
       path: '/404',
