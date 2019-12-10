@@ -10,8 +10,8 @@
                         <div class="bounce3"></div>
                     </div>
                     <div v-if="!d_loading">
-                        <h5 class="mt-1">Current Date Range:</h5>
-                        <span class="mt-1">From: {{ startDate | toPrettyDate }} to: {{ endDate | toPrettyDate }}</span>
+                        <h5 class="mt-1">{{ site }}</h5>
+                        <span class="mt-1">Date Range: {{ startDate | toPrettyDate }} - {{ endDate | toPrettyDate }}</span>
                     </div>
                 </div>
             </div>
@@ -22,7 +22,7 @@
         <div class="col-xl-12 col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-success">Past 7 Days</h6>
+                    <h6 class="m-0 font-weight-bold text-success">Past 7 Units</h6>
                     <small>Last Updated: {{ c_lastUpdate }}</small>
                     <button type="submit" class="btn btn-danger float-right" @click="updateChart">Refresh</button>
                 </div>
@@ -44,7 +44,7 @@
         <div class="col-xl-12 col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-success">Estimator</h6>
+                    <h6 class="m-0 font-weight-bold text-success">Totals and KPIs</h6>
                     <small>Last Updated: {{ lastUpdate }}</small>
                     <button type="submit" class="btn btn-danger float-right" @click="updateEstData">Refresh</button>
                 </div>
