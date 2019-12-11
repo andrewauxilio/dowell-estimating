@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <spinnerw v-if="d_loading" />
                     <div v-if="!d_loading">
-                        <h5 class="mt-1">{{ site }}</h5>
+                        <h5 class="mt-1">{{ site | toLongName }} Dashboard</h5>
                         <span class="mt-1">Date Range: {{ startDate | toPrettyDate }} - {{ endDate | toPrettyDate }}</span>
                         <button type="submit" class="btn btn-danger float-right" @click="updateAll">Reload All</button>
                     </div>
@@ -193,6 +193,8 @@ export default {
         this.permissionCheck();
         this.fetchDataTotal();
         this.fetchDataEst();
+        this.autoUpdate();
+        
     },
 
     methods: {
@@ -200,6 +202,13 @@ export default {
             if (!this.isLoggedIn || !this.perm) {
                 this.$router.push("/404");
             }
+        },
+
+        autoUpdate() {
+            setInterval(() => {
+                console.log('10 minute update!')
+                this.updateAll()
+            }, 600000)
         },
 
         updateAll() {

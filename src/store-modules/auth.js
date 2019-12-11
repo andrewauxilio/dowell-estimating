@@ -91,9 +91,21 @@ export default {
       const sites = state.sites;
       return sites.includes("gbg") ? true : false;
     },
+    isCRN(state) {
+      const sites = state.sites;
+      return sites.includes("crn") ? true : false;
+    },
+    isKNP(state) {
+      const sites = state.sites;
+      return sites.includes("knp") ? true : false;
+    },
+    isTVL(state) {
+      const sites = state.sites;
+      return sites.includes("tvl") ? true : false;
+    },
 
     //Western Australia
-    isWA(state) {
+    isPER(state) {
       const sites = state.sites;
       return sites.includes("per") ? true : false;
     },
@@ -105,9 +117,13 @@ export default {
     },
 
     //Tasmania
-    isHOB(state) {
+    isLAU(state) {
       const sites = state.sites;
-      return sites.includes("hob") ? true : false;
+      return sites.includes("lau") ? true : false;
+    },
+    isMOO(state) {
+      const sites = state.sites;
+      return sites.includes("moo") ? true : false;
     },
 
     // New South Wales
@@ -133,10 +149,6 @@ export default {
       const sites = state.sites;
       return sites.includes("lon") ? true : false;
     },
-    isEDI(state) {
-      const sites = state.sites;
-      return sites.includes("edi") ? true : false;
-    },
 
     //Victoria
     isBAY(state) {
@@ -159,21 +171,25 @@ export default {
       const sites = state.sites;
       return sites.includes("bal") ? true : false;
     },
-    isEPP(state) {
+    isCRG(state) {
       const sites = state.sites;
-      return sites.includes("epp") ? true : false;
+      return sites.includes("crg") ? true : false;
     },
-    isGEE(state) {
+    isGEL(state) {
       const sites = state.sites;
-      return sites.includes("gee") ? true : false;
+      return sites.includes("gel") ? true : false;
     },
-    isWAR(state) {
+    isWBL(state) {
       const sites = state.sites;
-      return sites.includes("war") ? true : false;
+      return sites.includes("wbl") ? true : false;
     },
     isTRA(state) {
       const sites = state.sites;
       return sites.includes("tra") ? true : false;
+    },
+    isMLD(state) {
+      const sites = state.sites;
+      return sites.includes("mld") ? true : false;
     }
   },
 

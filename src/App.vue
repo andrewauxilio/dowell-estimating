@@ -33,6 +33,9 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Sites:</h6>
                     <router-link v-if="isGBG" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'GBG', perm: isGBG } }">Geebung</router-link>
+                    <router-link v-if="isCRN" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'CRN', perm: isCRN } }">Cairns</router-link>
+                    <router-link v-if="isKNP" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'KNP', perm: isKNP } }">Kundra Park</router-link>
+                    <router-link v-if="isTVL" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'TVL', perm: isTVL } }">Townsville</router-link>
                 </div>
             </div>
         </li>
@@ -46,6 +49,8 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Sites:</h6>
                     <router-link v-if="isSMT" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'SMT', perm: isSMT } }">Smithfield</router-link>
+                    <router-link v-if="isNEW" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'NEW', perm: isNEW } }">Newcastle</router-link>
+                    <router-link v-if="isNOW" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'NOW', perm: isNOW } }">Nowra</router-link>
                 </div>
             </div>
         </li>
@@ -59,6 +64,57 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Sites:</h6>
                     <router-link v-if="isELI" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'ELI', perm: isELI } }">Elizabeth</router-link>
+                    <router-link v-if="isLON" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'LON', perm: isLON } }">Londsdale</router-link>
+                </div>
+            </div>
+        </li>
+
+        <li v-if="isLoggedIn && isEstimating && isTAS" class="nav-item">
+            <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTAS" aria-expanded="true" aria-controls="collapseTAS">
+                <i class="fas fa-fw fa-map-marked"></i>
+                <span>Tasmania</span>
+            </a>
+            <div id="collapseTAS" class="collapse">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Sites:</h6>
+                    <router-link v-if="isLAU" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'LAU', perm: isLAU } }">Launceston</router-link>
+                    <router-link v-if="isMOO" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'MOO', perm: isMOO } }">Moonah</router-link>
+                </div>
+            </div>
+        </li>
+
+        <li v-if="isLoggedIn && isEstimating && isVIC" class="nav-item">
+            <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseVIC" aria-expanded="true" aria-controls="collapseVIC">
+                <i class="fas fa-fw fa-map-marked"></i>
+                <span>Victoria</span>
+            </a>
+            <div id="collapseVIC" class="collapse">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Sites:</h6>
+                    <router-link v-if="isBAL" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'BAL', perm: isBAL } }">Ballarat</router-link>
+                    <router-link v-if="isBAY" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'BAY', perm: isBAY } }">Bayswater</router-link>
+                    <router-link v-if="isBEN" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'BEN', perm: isBEN } }">Bendigo</router-link>
+                    <router-link v-if="isCRG" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'CRG', perm: isCRG } }">Craigieburn</router-link>
+                    <router-link v-if="isGEL" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'GEL', perm: isGEL } }">Geelong</router-link>
+                    <router-link v-if="isMLD" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'MLD', perm: isMLD } }">Mildura</router-link>
+                    <router-link v-if="isQBN" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'QBN', perm: isQBN } }">Queanbeyan</router-link>
+                    <router-link v-if="isSHP" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'SHP', perm: isSHP } }">Shepparton</router-link>
+                    <router-link v-if="isTRA" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'TRA', perm: isTRA } }">Traralgon</router-link>
+                    <router-link v-if="isWBL" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'WBL', perm: isWBL } }">Warrnambol</router-link>
+                    <router-link v-if="isWOD" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'WOD', perm: isWOD } }">Wodonga</router-link>
+                </div>
+            </div>
+        </li>
+
+        <li v-if="isLoggedIn && isEstimating && isWA" class="nav-item">
+            <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseWA" aria-expanded="true" aria-controls="collapseWA">
+                <i class="fas fa-fw fa-map-marked"></i>
+                <span>Western Australia</span>
+            </a>
+            <div id="collapseWA" class="collapse">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Sites:</h6>
+                    <router-link v-if="isPER" class="collapse-item" :to="{ name: 'dashboard', params: { site: 'PER', perm: isPER } }">Perth</router-link>
                 </div>
             </div>
         </li>
@@ -93,11 +149,10 @@
                 <button @click="sideBarToggle()" id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                     <i class="fa fa-bars text-success"></i>
                 </button>
+                <p class="float-left">version: 0.17-B</p>
                 <ul class="navbar-nav ml-auto">
                     <li v-if="isLoggedIn" class="nav-item dropdown no-arrow">
-
                         <span class="mr-2 d-none d-lg-inline text-gray-600 small">Welcome, {{ userName }}!</span>
-
                     </li>
                 </ul>
             </nav>
@@ -146,25 +201,36 @@ export default {
             isSA: 'isSA',
             isWA: 'isWA',
             isNT: 'isNT',
+
             //Site Getters
             isGBG: 'isGBG',
-            isQBN: 'isQBN',
-            isHOB: 'isHOB',
+            isCRN: 'isCRN',
+            isKNP: 'isKNP',
+            isTVL: 'isTVL',
+
             isNOW: 'isNOW',
             isNEW: 'isNEW',
             isSMT: 'isSMT',
+
             isELI: 'isELI',
             isLON: 'isLON',
-            isEDI: 'isEDI',
+
+            isLAU: 'isLAU',
+            isMOO: 'isMOO',
+
+            isQBN: 'isQBN',
             isBAY: 'isBAY',
             isSHP: 'isSHP',
             isWOD: 'isWOD',
             isBEN: 'isBEN',
             isBAL: 'isBAL',
-            isEPP: 'isEPP',
-            isGEE: 'isGEE',
-            isWAR: 'isWAR',
-            isTRA: 'isTRA'
+            isCRG: 'isCRG',
+            isGEL: 'isGEL',
+            isWBL: 'isWBL',
+            isTRA: 'isTRA',
+            isMLD: 'isMLD',
+
+            isPER: 'isPER'
         }),
     },
     methods: {
