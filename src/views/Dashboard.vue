@@ -105,7 +105,7 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-success">KPIs</h6>
-                    <small>Last Updated: {{ lastUpdate }}</small>
+                    <small>Last Updated: {{ e_lastUpdate }}</small>
                     <button type="submit" class="btn btn-danger float-right" @click="updateEst">Refresh</button>
                 </div>
                 <div class="card-body">
@@ -175,6 +175,7 @@ export default {
             e_loading: true, //estimator loading
             show: true, //chart reload
             c_lastUpdate: "", //chart last updated
+            e_lastUpdate: "", //est last updated
             lastUpdate: "", //total and est last updated
         };
     },
@@ -202,8 +203,6 @@ export default {
 
         async fetchDataTotal() {
             if (this.isLoggedIn && this.perm) {
-                this.lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
-                this.c_lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
                 this.show = false;
                 this.loading = true;
                 this.c_loading = true;
@@ -228,6 +227,9 @@ export default {
                                 type: "success",
                                 title: "Site data loaded"
                             })
+                            this.lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
+                            this.c_lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
+                            this.e_lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
                         })
                         .catch(err => {
                             console.log(err);
@@ -267,6 +269,7 @@ export default {
         },
 
         async updateEst() {
+            this.e_lastUpdate = "";
             this.e_loading = true;
             try {
                 await axios
@@ -283,6 +286,7 @@ export default {
                             type: "success",
                             title: "Site data loaded"
                         })
+                        this.e_lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
                     })
                     .catch(err => {
                         console.log(err);
@@ -293,7 +297,7 @@ export default {
         },
 
         async updateEstTotal() {
-            this.lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
+            this.lastUpdate = "";
             this.loading = true;
             try {
                 await axios
@@ -310,6 +314,7 @@ export default {
                             type: "success",
                             title: "Estimator KPI updated"
                         })
+                        this.lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
                     })
                     .catch(err => {
                         console.log(err);
@@ -320,10 +325,11 @@ export default {
         },
 
         updateChart() {
-            this.c_lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
+            this.c_lastUpdate = "";
             this.show = false;
             nextTick(() => {
                 this.show = true
+                this.c_lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
             })
         },
 
