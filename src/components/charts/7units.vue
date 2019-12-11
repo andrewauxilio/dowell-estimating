@@ -132,7 +132,6 @@ export default {
             let endDate7 = moment(startDate6).subtract(1, "days").format("YYYYMMDD")
             let startDate7 = moment(endDate7).subtract(dateDifference, "days").format("YYYYMMDD")
 
-            console.log(dateDifference)
             this.loading = true;
             await axios
                 .all([
@@ -193,10 +192,6 @@ export default {
                     this.siteData5 = responseArr[4].data;
                     this.siteData6 = responseArr[5].data;
                     this.siteData7 = responseArr[6].data;
-
-                    console.log(this.siteData1);
-                    console.log(this.siteData2);
-                    console.log(this.siteData3);
 
                     this.fillData();
                     this.loading = false;
