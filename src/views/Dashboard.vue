@@ -1,13 +1,7 @@
 <template>
 <div v-if="isLoggedIn && perm" class="container-fluid">
-    <!-- 
-    <ContentLoader v-if="loading && c_loading && d_loading && e_loading">
-        <rect x="0" y="0" rx="3" ry="3" width="400" height="70" />
-        <rect x="0" y="80" rx="3" ry="3" width="400" height="70" />
-        <rect x="0" y="200" rx="3" ry="3" width="400" height="70" />
-    </ContentLoader> -->
 
-    <div class="row">
+    <div class="row animated fadeIn">
         <div class="col-lg-12 mb-4">
             <div class="card bg-success text-white shadow">
                 <div class="card-body">
@@ -21,7 +15,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row animated fadeIn delay-1s">
         <div class="col-xl-12 col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -39,7 +33,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row animated fadeIn delay-2s">
         <div class="col-xl-12 col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -106,7 +100,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row animated fadeIn delay-3s">
         <div class="col-xl-12 col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">

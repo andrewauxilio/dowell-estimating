@@ -1,42 +1,76 @@
 <template>
-<div class="container-fluid">
+<div v-if="isLoggedIn" class="container">
     <!-- Page Heading -->
-    <div class="row">
-        <div class="col-lg-6 mb-4">
-
-            <!-- Illustrations -->
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">About This Application</h6>
+    <div class="row justify-content-center animated fadeIn">
+        <h1 class="landing-text">Estimating Dashboard</h1>
+    </div>
+    <div class="row text-center mt-4">
+        <div class="col-lg-6 mb-4 animated fadeInUp">
+            <div class="animated infinite pulse slow">
+                <div class="text-center">
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 20rem; height: 15rem;" src="../assets/images/data_vis.svg" alt="">
                 </div>
-                <div class="card-body">
-                    <div class="text-center">
-                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="../assets/images/undraw_analytics_5pgy.svg" alt="">
-                    </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                </div>
+                <h4 class="landing-text">Data Visualization</h4>
             </div>
-
         </div>
 
-        <div class="col-lg-6 mb-4">
-
-            <!-- Illustrations -->
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Data Source</h6>
+        <div class="col-lg-6 mb-4 animated fadeInUp">
+            <div class="animated infinite pulse slow">
+                <div class="text-center">
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 20rem; height: 15rem;" src="../assets/images/real_time.svg" alt="">
                 </div>
-                <div class="card-body">
-                    <div class="text-center">
-                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="../assets/images/undraw_setup_analytics_8qkl.svg" alt="">
-                    </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                </div>
+                <h4 class="landing-text">Real-Time Data</h4>
             </div>
+        </div>
 
+        <div class="col-lg-6 mb-4 animated fadeInUp delay-1s">
+            <div class="animated infinite pulse slow">
+                <div class="text-center">
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 20rem; height: 15rem;" src="../assets/images/data_report.svg" alt="">
+                </div>
+                <h4 class="landing-text">Data Reports</h4>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4 animated fadeInUp delay-1s">
+            <div class="animated infinite pulse slow">
+                <div class="text-center ">
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 20rem; height: 15rem;" src="../assets/images/date_selec.svg" alt="">
+                </div>
+                <h4 class="landing-text">Flexible Date Selection</h4>
+            </div>
         </div>
     </div>
 </div>
 </template>
+
+<script>
+import {
+    mapGetters
+} from "vuex";
+
+export default {
+    computed: {
+        ...mapGetters({
+            isLoggedIn: "isLoggedIn",
+        })
+    },
+
+    mounted() {
+        this.permissionCheck();
+    },
+
+    methods: {
+        permissionCheck() {
+            if (!this.isLoggedIn) {
+                this.$router.push("/404");
+            }
+        }
+    }
+}
+</script>
+
+<style scoped>
+.landing-text {
+    color: #505254;
+}
+</style>

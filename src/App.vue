@@ -4,7 +4,7 @@
                              Main Navigation
     --------------------------------------------------------------------->
     <ul :class="{'toggled': isCollapsed}" class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
-        <router-link class="sidebar-brand d-flex align-items-center justify-content-center" to="/">
+        <router-link class="sidebar-brand d-flex align-items-center justify-content-center" to="/landing">
             <div class="sidebar-brand-icon">
                 <i class="fas fa-chart-area"></i>
             </div>
@@ -13,7 +13,7 @@
         <!-- Divider -->
         <hr v-if="isLoggedIn && isEstimating" class="sidebar-divider my-0">
         <li v-if="isLoggedIn && isEstimating" class="nav-item active">
-            <router-link class="nav-link" to="/">
+            <router-link class="nav-link" to="/landing">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </router-link>

@@ -1,5 +1,5 @@
 <template>
-<div class="fab-container">
+<div class="fab-container animated infinite pulse slow">
     <button class="buttons" tooltip="Download Reports" data-toggle="modal" data-target=".report-modal">
         <i class="fab fas fa-download"></i>
     </button>
