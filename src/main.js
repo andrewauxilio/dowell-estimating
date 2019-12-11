@@ -15,23 +15,10 @@ import "animate.css"
 import 'jquery/dist/jquery.min.js';
 import 'popper.js/dist/umd/popper.min.js';
 import 'bootstrap/dist/js/bootstrap.min.js';
+
 require ('./filters');
+require ('./plugins')
 
-//MomentJS
-import moment from 'moment';
-window.moment = moment;
-
-// SweetAlert
-import swal from 'sweetalert2';
-window.swal = swal
-const toast = swal.mixin({
-  toast: true,
-  position: 'top-end',
-  showConfirmButton: false,
-  timer: 3000
-});
-window.toast = toast;
-window.Fire = new Vue();
 
 Vue.config.productionTip = false
 

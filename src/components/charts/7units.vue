@@ -243,7 +243,7 @@ export default {
                     },
                     {
                         label: "Revisions",
-                        backgroundColor: "rgba(75, 192, 192, 0.7)",
+                        backgroundColor: "rgba(80, 222, 175, 0.7)",
                         data: [
                             day7[0].REVISION_NO,
                             day6[0].REVISION_NO,
@@ -256,7 +256,7 @@ export default {
                     },
                     {
                         label: "Orders",
-                        backgroundColor: "rgba(75, 192, 192, 0.7)",
+                        backgroundColor: "rgba(36, 255, 182, 0.7)",
                         data: [
                             day7[0].ORDERS_IN_NO,
                             day6[0].ORDERS_IN_NO,

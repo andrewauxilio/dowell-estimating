@@ -9,6 +9,7 @@
                     <div v-if="!d_loading">
                         <h5 class="mt-1">{{ site }}</h5>
                         <span class="mt-1">Date Range: {{ startDate | toPrettyDate }} - {{ endDate | toPrettyDate }}</span>
+                        <button type="submit" class="btn btn-danger float-right" @click="updateAll">Reload All</button>
                     </div>
                 </div>
             </div>
@@ -21,7 +22,7 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-success">Past 7 Units</h6>
                     <small>Last Updated: {{ c_lastUpdate }}</small>
-                    <button type="submit" class="btn btn-danger float-right" @click="updateChart">Refresh</button>
+                    <button type="submit" class="btn btn-success float-right" @click="updateChart">Reload</button>
                 </div>
                 <spinner v-if="c_loading" />
                 <div v-if="!c_loading" class="card-body">
@@ -39,7 +40,7 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-success">Totals</h6>
                     <small>Last Updated: {{ lastUpdate }}</small>
-                    <button type="submit" class="btn btn-danger float-right" @click="updateEstTotal">Refresh</button>
+                    <button type="submit" class="btn btn-success float-right" @click="updateEstTotal">Reload</button>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -106,7 +107,7 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-success">KPIs</h6>
                     <small>Last Updated: {{ e_lastUpdate }}</small>
-                    <button type="submit" class="btn btn-danger float-right" @click="updateEst">Refresh</button>
+                    <button type="submit" class="btn btn-success float-right" @click="updateEst">Reload</button>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -199,6 +200,12 @@ export default {
             if (!this.isLoggedIn || !this.perm) {
                 this.$router.push("/404");
             }
+        },
+
+        updateAll() {
+            this.updateEstTotal();
+            this.updateEst();
+            this.updateChart();
         },
 
         async fetchDataTotal() {
