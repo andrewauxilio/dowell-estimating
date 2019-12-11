@@ -1,5 +1,12 @@
 <template>
 <div v-if="isLoggedIn && perm" class="container-fluid">
+    <!-- 
+    <ContentLoader v-if="loading && c_loading && d_loading && e_loading">
+        <rect x="0" y="0" rx="3" ry="3" width="400" height="70" />
+        <rect x="0" y="80" rx="3" ry="3" width="400" height="70" />
+        <rect x="0" y="200" rx="3" ry="3" width="400" height="70" />
+    </ContentLoader> -->
+
     <div class="row">
         <div class="col-lg-12 mb-4">
             <div class="card bg-success text-white shadow">
@@ -36,9 +43,9 @@
         <div class="col-xl-12 col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-success">Totals and KPIs</h6>
+                    <h6 class="m-0 font-weight-bold text-success">Totals</h6>
                     <small>Last Updated: {{ lastUpdate }}</small>
-                    <button type="submit" class="btn btn-danger float-right" @click="updateEstData">Refresh</button>
+                    <button type="submit" class="btn btn-danger float-right" @click="updateEstTotal">Refresh</button>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -94,8 +101,20 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                    <!-- Estimator KPI Table-->
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-success">KPIs</h6>
+                    <small>Last Updated: {{ lastUpdate }}</small>
+                    <button type="submit" class="btn btn-danger float-right" @click="updateEst">Refresh</button>
+                </div>
+                <div class="card-body">
                     <div class="row">
                         <spinner v-if="e_loading" />
                         <estTable v-if="!e_loading" :estData="estData" />
@@ -109,9 +128,7 @@
     <actionBtn v-if="!loading" />
 
     <!-- Report modal -->
-    <reportModal
-        :site="site" :startDate="startDate" :endDate="endDate" 
-    />
+    <reportModal :site="site" :startDate="startDate" :endDate="endDate" />
 
     <!-- Change Date Modal -->
     <changeDateModal @change="changeDate" />
@@ -121,8 +138,12 @@
 
 <script>
 import axios from "axios";
-import { mapGetters } from "vuex";
-import { nextTick } from 'q';
+import {
+    mapGetters
+} from "vuex";
+import {
+    nextTick
+} from 'q';
 import dailyChart from '../components/charts/7units';
 import loading from 'vue-loading-overlay';
 import spinner from '../components/plugins/Spinner';
@@ -142,7 +163,7 @@ export default {
         actionBtn,
         reportModal,
         changeDateModal,
-        estTable
+        estTable,
     },
 
     props: {
@@ -152,15 +173,15 @@ export default {
 
     data() {
         return {
-            siteData: [],       //total data
-            estData: [],        //estimator KPI data
-            loading: true,      //total loading
-            c_loading: true,    //chart loading
-            d_loading: true,    //date loading
-            e_loading: true,    //estimator loading
-            show: true,         //chart reload
-            c_lastUpdate: "",   //chart last updated
-            lastUpdate: "",     //total and est last updated
+            siteData: [], //total data
+            estData: [], //estimator KPI data
+            loading: true, //total loading
+            c_loading: true, //chart loading
+            d_loading: true, //date loading
+            e_loading: true, //estimator loading
+            show: true, //chart reload
+            c_lastUpdate: "", //chart last updated
+            lastUpdate: "", //total and est last updated
         };
     },
 
@@ -304,22 +325,12 @@ export default {
             }
         },
 
-        updateEstData() {
-            this.updateEst();
-            this.updateEstTotal();
-        },
-
         updateChart() {
             this.c_lastUpdate = moment().format('MMMM Do YYYY, h:mm:ss a');
             this.show = false;
             nextTick(() => {
                 this.show = true
             })
-            toast.fire({
-                type: "success",
-                title: "Chart updating"
-            })
-
         },
 
         changeDate() {
