@@ -120,7 +120,7 @@
     </div>
 
     <!-- Action Button -->
-    <actionBtn v-if="!loading" />
+    <actionBtn v-if="!loading" @change="changeDate" />
 
     <!-- Report modal -->
     <reportModal :site="site" :startDate="startDate" :endDate="endDate" />

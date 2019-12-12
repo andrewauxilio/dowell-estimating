@@ -158,13 +158,13 @@
 .buttons:not(:last-child):nth-last-child(3) {
     -webkit-transition-delay: 75ms;
     transition-delay: 40ms;
-    background-color: #1cc88a;
+    background-color: #4e73df;
 }
 
 .buttons:not(:last-child):nth-last-child(4) {
     -webkit-transition-delay: 100ms;
     transition-delay: 60ms;
-    background-color: #1cc88a
+    background-color: #4e73df
 }
 
 /* Show tooltip content on hover */
