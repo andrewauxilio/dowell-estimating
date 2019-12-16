@@ -17,17 +17,47 @@
     </div>
 
     <div class="row animated fadeIn delay-1s">
-        <div class="col-xl-12 col-lg-12">
+        <div class="col-xl-2 col-lg-2">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-success">Past 7 Units</h6>
-                    <small>Last Updated: {{ c_lastUpdate }}</small>
+                    <h6 class="m-0 font-weight-bold text-success">Quote Lead Times</h6>
                     <button type="submit" class="btn btn-success float-right" @click="updateChart">Reload</button>
                 </div>
                 <spinner v-if="c_loading" />
                 <div v-if="!c_loading" class="card-body">
-                    <div class="card-body table-responsive p-0">
-                        <dailyChart v-if="show" :site="site" />
+                    <div class="card-body table-responsive p-0 text-center">
+                        <LeadTimes :site="site" />
+                        <!-- <small>Last Updated: {{ c_lastUpdate }}</small> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-5 col-lg-5">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-success">Monthly</h6>
+                    <button type="submit" class="btn btn-success float-right" @click="updateChart">Reload</button>
+                </div>
+                <spinner v-if="c_loading" />
+                <div v-if="!c_loading" class="card-body">
+                    <div class="card-body table-responsive p-0 text-center">
+                        <Monthly :site="site" />
+                        <!-- <small>Last Updated: {{ c_lastUpdate }}</small> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-5 col-lg-5">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-success">Past 7 Units</h6>
+                    <button type="submit" class="btn btn-success float-right" @click="updateChart">Reload</button>
+                </div>
+                <spinner v-if="c_loading" />
+                <div v-if="!c_loading" class="card-body">
+                    <div class="card-body table-responsive p-0 text-center">
+                        <SevenUnits v-if="show" :site="site" />
+                        <!-- <small>Last Updated: {{ c_lastUpdate }}</small> -->
                     </div>
                 </div>
             </div>
@@ -35,7 +65,7 @@
     </div>
 
     <div class="row animated fadeIn delay-2s">
-        <div class="col-xl-12 col-lg-12">
+        <div class="col-xl-6 col-lg-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-success">Totals</h6>
@@ -44,15 +74,15 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="col-xl-3 col-md-3 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <spinner v-if="loading" />
                                         <div v-if="!loading" class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Quotes</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ siteData[0].QUOTES_NO }} Quotes</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Value: ${{ siteData[0].QUOTES_$ }}</div>
+                                            <div class="mb-0 font-weight-bold text-gray-800">{{ siteData[0].QUOTES_NO }} Quotes</div>
+                                            <div class="mb-0 font-weight-bold text-gray-800">Value: ${{ siteData[0].QUOTES_$ }}</div>
                                         </div>
                                         <div v-if="!loading" class="col-auto">
                                             <i class="fas fa-book fa-2x text-gray-300"></i>
@@ -61,15 +91,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="col-xl-3 col-md-3 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <spinner v-if="loading" />
                                         <div v-if="!loading" class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Orders</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ siteData[0].ORDERS_IN_NO }} Orders</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Value: ${{ siteData[0].ORDERS_IN_$ }}</div>
+                                            <div class="mb-0 font-weight-bold text-gray-800">{{ siteData[0].ORDERS_IN_NO }} Orders</div>
+                                            <div class="mb-0 font-weight-bold text-gray-800">Value: ${{ siteData[0].ORDERS_IN_$ }}</div>
                                         </div>
                                         <div v-if="!loading" class="col-auto">
                                             <i class="fas fa-truck fa-2x text-gray-300"></i>
@@ -78,15 +108,32 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="col-xl-3 col-md-3 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <spinner v-if="loading" />
                                         <div v-if="!loading" class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Revisions</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ siteData[0].REVISION_NO }} Revisions</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Value: ${{ siteData[0].REVISION_$ }}</div>
+                                            <div class="mb-0 font-weight-bold text-gray-800">{{ siteData[0].REVISION_NO }} Revisions</div>
+                                            <div class="mb-0 font-weight-bold text-gray-800">Value: ${{ siteData[0].REVISION_$ }}</div>
+                                        </div>
+                                        <div v-if="!loading" class="col-auto">
+                                            <i class="fas fa-redo fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-3 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <spinner v-if="loading" />
+                                        <div v-if="!loading" class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Revisions</div>
+                                            <div class="mb-0 font-weight-bold text-gray-800">{{ siteData[0].REVISION_NO }} Revisions</div>
+                                            <div class="mb-0 font-weight-bold text-gray-800">Value: ${{ siteData[0].REVISION_$ }}</div>
                                         </div>
                                         <div v-if="!loading" class="col-auto">
                                             <i class="fas fa-redo fa-2x text-gray-300"></i>
@@ -99,10 +146,8 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row animated fadeIn delay-3s">
-        <div class="col-xl-12 col-lg-12">
+        <div class="col-xl-6 col-lg-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-success">KPIs</h6>
@@ -117,6 +162,10 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="row animated fadeIn delay-3s">
+        
     </div>
 
     <!-- Action Button -->
@@ -139,7 +188,7 @@ import {
 import {
     nextTick
 } from 'q';
-import dailyChart from '../components/charts/7units';
+import SevenUnits from '../components/charts/7units';
 import loading from 'vue-loading-overlay';
 import spinner from '../components/plugins/Spinner';
 import spinnerw from '../components/plugins/SpinnerWhite';
@@ -147,11 +196,13 @@ import actionBtn from '../components/buttons/ActionButton';
 import reportModal from '../components/modals/ReportModal';
 import changeDateModal from '../components/modals/ChangeDateModal';
 import estTable from '../components/tables/EstimatorKPITable';
+import LeadTimes from '../components/charts/LeadTimes';
+import Monthly from '../components/charts/Monthly';
 
 export default {
     name: "dashboard",
     components: {
-        dailyChart,
+        SevenUnits,
         loading,
         spinner,
         spinnerw,
@@ -159,6 +210,8 @@ export default {
         reportModal,
         changeDateModal,
         estTable,
+        LeadTimes,
+        Monthly
     },
 
     props: {
@@ -194,7 +247,7 @@ export default {
         this.fetchDataTotal();
         this.fetchDataEst();
         this.autoUpdate();
-        
+
     },
 
     methods: {

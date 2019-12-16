@@ -6,7 +6,7 @@
         <div class="bounce3"></div>
     </div>
     <!-- <transition name="fade"> -->
-    <bar-chart v-if="!loading" :chart-data="datacollection" :options="options"></bar-chart>
+    <bar-chart v-if="!loading" :height="250" :chart-data="datacollection" :options="options"></bar-chart>
     <!-- </transition> -->
 </div>
 </template>
@@ -42,9 +42,9 @@ export default {
                 maintainAspectRatio: false,
                 layout: {
                     padding: {
-                        left: 10,
-                        right: 25,
-                        top: 25,
+                        left: 5,
+                        right: 15,
+                        top: 15,
                         bottom: 0
                     }
                 },
@@ -54,7 +54,7 @@ export default {
                             display: false,
                             drawBorder: false
                         },
-                        maxBarThickness: 25,
+                        maxBarThickness: 30,
                         ticks: {
                             beginAtZero: true
                         }
@@ -83,12 +83,12 @@ export default {
                     titleFontSize: 14,
                     borderColor: "#dddfeb",
                     borderWidth: 1,
-                    xPadding: 15,
-                    yPadding: 15,
+                    xPadding: 10,
+                    yPadding: 10,
                     displayColors: false,
                     intersect: false,
                     mode: "index",
-                    caretPadding: 10
+                    caretPadding: 5
                 }
             }
         };
@@ -100,6 +100,7 @@ export default {
 
     mounted() {
         this.fetchData();
+        //this.testData();
     },
 
     computed: {
@@ -110,6 +111,29 @@ export default {
     },
 
     methods: {
+        //     testData() {
+        //         this.datacollection = {
+        //             labels: [
+        //                 "1 Day",
+        //                 "2 Days",
+        //                 "3 Days",
+        //                 "4 Days",
+        //                 "5+ Days"
+        //             ],
+        //             datasets: [{
+        //                 label: "No. Quotes",
+        //                 backgroundColor: "rgba(75, 192, 192, 0.7)",
+        //                 data: [
+        //                     10,
+        //                     20,
+        //                     15,
+        //                     23,
+        //                     5
+        //                 ]
+        //             }, ]
+        //         };
+        //     }
+        // }
         async fetchData() {
 
             let dateDifference = this.endDate - this.startDate
@@ -266,5 +290,5 @@ export default {
             };
         }
     }
-};
+}
 </script>
