@@ -40,7 +40,6 @@
             </div>
         </div>
     </div>
-    <!-- <component id="full_div" :is="currentView" /> -->
 </div>
 </template>
 
@@ -48,7 +47,6 @@
 import {
     mapGetters
 } from "vuex";
-import Simple from '../components/plugins/Map'
 
 export default {
     data() {

@@ -51,7 +51,7 @@
                         <spinner v-if="total_loading" />
                         <div v-if="!total_loading" class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Quotes</div>
-                            <div class="mb-0 font-weight-bold text-gray-800">{{ totalData[0].QUOTES_NO }}Quotes</div>
+                            <div class="mb-0 font-weight-bold text-gray-800">{{ totalData[0].QUOTES_NO }} Quotes</div>
                             <div class="mb-0 font-weight-bold text-gray-800">${{ totalData[0].QUOTES_$ }}</div>
                         </div>
                         <div v-if="!total_loading" class="col-auto">

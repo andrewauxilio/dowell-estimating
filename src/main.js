@@ -4,23 +4,14 @@ import router from './router';
 import store from './store';
 import axios from 'axios';
 
-import { Icon } from "leaflet";
-delete Icon.Default.prototype._getIconUrl;
-
-Icon.Default.mergeOptions({
-  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-  iconUrl: require("leaflet/dist/images/marker-icon.png"),
-  shadowUrl: require("leaflet/dist/images/marker-shadow.png")
-});
-
-//Bootstrap, Admin, Fontawesome CSS
+//CSS Imports
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/css/sb-admin-2.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./assets/css/custom.css";
 import "animate.css"
 
-//Bootstrap, Jquery, Popper.js, Filters
+//JS Imports
 import 'jquery/dist/jquery.min.js';
 import 'popper.js/dist/umd/popper.min.js';
 import 'bootstrap/dist/js/bootstrap.min.js';
@@ -28,9 +19,10 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 require ('./filters');
 require ('./plugins')
 
-Vue.config.productionTip = false
-
+//Axios base URL
 axios.defaults.baseURL = process.env.VUE_APP_API_URL
+
+Vue.config.productionTip = false
 
 new Vue({
   router,
