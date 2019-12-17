@@ -13,7 +13,7 @@
                 <th scope="col" class="bg-secondary text-light">Orders Value</th>
             </tr>
         </thead>
-        <tbody v-for="estimatorKPI in estData" :key="estimatorKPI.id">
+        <tbody v-for="estimatorKPI in kpiData" :key="estimatorKPI.id">
             <td>{{ estimatorKPI.ESTIMATOR }}</td>
             <td>{{ estimatorKPI.SALES_$ | toDollar }}</td>
             <td>{{ estimatorKPI.QUOTES_NO }}</td>
@@ -30,7 +30,7 @@
 <script>
 export default {
     props: {
-        estData: Array,
+        kpiData: Array,
     },
 }
 </script>

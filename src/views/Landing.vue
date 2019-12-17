@@ -1,7 +1,7 @@
 <template>
 <div v-if="isLoggedIn" class="container">
     <!-- Page Heading -->
-    <!-- <div class="row justify-content-center animated fadeIn">
+    <div class="row justify-content-center animated fadeIn">
         <h1 class="landing-text">Estimating Dashboard</h1>
     </div>
     <div class="row text-center mt-4">
@@ -39,8 +39,8 @@
                 <h4 class="landing-text">Flexible Date Selection</h4>
             </div>
         </div>
-    </div> -->
-    <component id="full_div" :is="currentView" />
+    </div>
+    <!-- <component id="full_div" :is="currentView" /> -->
 </div>
 </template>
 

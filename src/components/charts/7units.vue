@@ -28,13 +28,13 @@ export default {
     },
     data() {
         return {
-            siteData1: [],
-            siteData2: [],
-            siteData3: [],
-            siteData4: [],
-            siteData5: [],
-            siteData6: [],
-            siteData7: [],
+            unitData1: [],
+            unitData2: [],
+            unitData3: [],
+            unitData4: [],
+            unitData5: [],
+            unitData6: [],
+            unitData7: [],
             loading: true,
             datacollection: {},
             options: {
@@ -209,13 +209,13 @@ export default {
                     })
                 ])
                 .then(responseArr => {
-                    this.siteData1 = responseArr[0].data;
-                    this.siteData2 = responseArr[1].data;
-                    this.siteData3 = responseArr[2].data;
-                    this.siteData4 = responseArr[3].data;
-                    this.siteData5 = responseArr[4].data;
-                    this.siteData6 = responseArr[5].data;
-                    this.siteData7 = responseArr[6].data;
+                    this.unitData1 = responseArr[0].data;
+                    this.unitData2 = responseArr[1].data;
+                    this.unitData3 = responseArr[2].data;
+                    this.unitData4 = responseArr[3].data;
+                    this.unitData5 = responseArr[4].data;
+                    this.unitData6 = responseArr[5].data;
+                    this.unitData7 = responseArr[6].data;
 
                     this.fillData();
                     this.loading = false;
@@ -229,24 +229,32 @@ export default {
         },
 
         fillData() {
-            let day1 = this.siteData1;
-            let day2 = this.siteData2;
-            let day3 = this.siteData3;
-            let day4 = this.siteData4;
-            let day5 = this.siteData5;
-            let day6 = this.siteData6;
-            let day7 = this.siteData7;
+            let day1 = this.unitData1;
+            let day2 = this.unitData2;
+            let day3 = this.unitData3;
+            let day4 = this.unitData4;
+            let day5 = this.unitData5;
+            let day6 = this.unitData6;
+            let day7 = this.unitData7;
+
+            let unit1; 
+            let unit2; 
+            let unit3;
+            let unit4; 
+            let unit5; 
+            let unit6;
+            let unit7;
+
+            (day7[0].DATE_FROM == day7[0].DATE_TO) ? unit7 = moment(day7[0].DATE_FROM).format('MMM DD') : unit7 = moment(day7[0].DATE_FROM).format('MMM DD') + " - " + moment(day7[0].DATE_TO).format('MMM DD');
+            (day6[0].DATE_FROM == day6[0].DATE_TO) ? unit6 = moment(day6[0].DATE_FROM).format('MMM DD') : unit6 = moment(day6[0].DATE_FROM).format('MMM DD') + " - " + moment(day6[0].DATE_TO).format('MMM DD');
+            (day5[0].DATE_FROM == day5[0].DATE_TO) ? unit5 = moment(day5[0].DATE_FROM).format('MMM DD') : unit5 = moment(day5[0].DATE_FROM).format('MMM DD') + " - " + moment(day5[0].DATE_TO).format('MMM DD');
+            (day4[0].DATE_FROM == day4[0].DATE_TO) ? unit4 = moment(day4[0].DATE_FROM).format('MMM DD') : unit4 = moment(day4[0].DATE_FROM).format('MMM DD') + " - " + moment(day4[0].DATE_TO).format('MMM DD');
+            (day3[0].DATE_FROM == day3[0].DATE_TO) ? unit3 = moment(day3[0].DATE_FROM).format('MMM DD') : unit3 = moment(day3[0].DATE_FROM).format('MMM DD') + " - " + moment(day3[0].DATE_TO).format('MMM DD');
+            (day2[0].DATE_FROM == day2[0].DATE_TO) ? unit2 = moment(day2[0].DATE_FROM).format('MMM DD') : unit2 = moment(day2[0].DATE_FROM).format('MMM DD') + " - " + moment(day2[0].DATE_TO).format('MMM DD');
+            (day1[0].DATE_FROM == day1[0].DATE_TO) ? unit1 = moment(day1[0].DATE_FROM).format('MMM DD') : unit1 = moment(day1[0].DATE_FROM).format('MMM DD') + " - " + moment(day1[0].DATE_TO).format('MMM DD');
 
             this.datacollection = {
-                labels: [
-                    moment(day7[0].DATE_FROM).format('MMM DD YY') + " - " + moment(day7[0].DATE_TO).format('MMM DD YY'),
-                    moment(day6[0].DATE_FROM).format('MMM DD YY') + " - " + moment(day6[0].DATE_TO).format('MMM DD YY'),
-                    moment(day5[0].DATE_FROM).format('MMM DD YY') + " - " + moment(day5[0].DATE_TO).format('MMM DD YY'),
-                    moment(day4[0].DATE_FROM).format('MMM DD YY') + " - " + moment(day4[0].DATE_TO).format('MMM DD YY'),
-                    moment(day3[0].DATE_FROM).format('MMM DD YY') + " - " + moment(day3[0].DATE_TO).format('MMM DD YY'),
-                    moment(day2[0].DATE_FROM).format('MMM DD YY') + " - " + moment(day2[0].DATE_TO).format('MMM DD YY'),
-                    moment(day1[0].DATE_FROM).format('MMM DD YY') + " - " + moment(day1[0].DATE_TO).format('MMM DD YY'),
-                ],
+                labels: [unit7, unit6, unit5, unit4, unit3, unit2, unit1],
                 datasets: [{
                         label: "Quotes",
                         backgroundColor: "rgba(75, 192, 192, 0.7)",
