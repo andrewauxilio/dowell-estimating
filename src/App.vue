@@ -149,7 +149,7 @@
                 <button @click="sideBarToggle()" id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                     <i class="fa fa-bars text-success"></i>
                 </button>
-                <p class="float-left">version: 0.17-B</p>
+                <p class="float-left">version: 0.73-B</p>
                 <ul class="navbar-nav ml-auto">
                     <li v-if="isLoggedIn" class="nav-item dropdown no-arrow">
                         <span class="mr-2 d-none d-lg-inline text-gray-600 small">Welcome, {{ userName }}!</span>

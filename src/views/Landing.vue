@@ -74,7 +74,7 @@ export default {
     methods: {
         permissionCheck() {
             if (!this.isLoggedIn) {
-                this.$router.push("/404");
+                this.$router.push("/");
             }
         }
     }

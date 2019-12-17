@@ -8,8 +8,8 @@
 <script>
 import moment from "moment";
 import { mapGetters } from "vuex";
-import BarChart from "../../chart-js/bar-chart";
-import Spinner from '../../components/plugins/Spinner';
+import BarChart from "../../chart-js/bar-chart-horiz";
+import Spinner from "../../components/plugins/Spinner";
 
 import axios from "axios";
 axios.defaults.headers.common["Authorization"] =
@@ -88,10 +88,10 @@ export default {
   },
 
   computed: {
-      ...mapGetters({
-          startDate: "getStartDate",
-          endDate: "getEndDate"
-      })
+    ...mapGetters({
+      startDate: "getStartDate",
+      endDate: "getEndDate"
+    })
   },
 
   props: {
@@ -103,20 +103,24 @@ export default {
   },
 
   methods: {
-    async fetchData() {
+    fetchData() {
       this.loading = true;
-      await axios
-      .post("/estimating/kpis", {
+      axios
+        .post("/estimating/kpis", {
           end: this.endDate,
           start: this.startDate,
           site: this.site,
           grouped: 0
-      })
-      .then((response) => {
-        this.ql_data = response.data
-        this.fillData()
-        this.loading = false;
-      });
+        })
+        .then(response => {
+          this.ql_data = response.data;
+          this.fillData();
+          this.loading = false;
+          toast.fire({
+            type: "success",
+            title: "Quote Lead Times Chart Loaded"
+          });
+        });
     },
 
     fillData() {
@@ -127,8 +131,22 @@ export default {
         datasets: [
           {
             label: "No. Quotes",
-            backgroundColor: ["rgba(94, 255, 126, 0.7)", "rgba(204, 255, 94, 0.7)", "rgba(255, 239, 94, 0.7)", "rgba(255, 164, 94, 0.7)", "rgba(255, 94, 94, 0.7)", "rgba(247, 57, 57, 0.7)" ],
-            data: [ql_data[0].QL1DAY, ql_data[0].QL2DAY, ql_data[0].QL3DAY, ql_data[0].QL4DAY, ql_data[0].QL5DAY, ql_data[0].QL5PDAY]
+            backgroundColor: [
+              "rgba(94, 255, 126, 0.7)",
+              "rgba(204, 255, 94, 0.7)",
+              "rgba(255, 239, 94, 0.7)",
+              "rgba(255, 164, 94, 0.7)",
+              "rgba(255, 94, 94, 0.7)",
+              "rgba(247, 57, 57, 0.7)"
+            ],
+            data: [
+              ql_data[0].QL1DAY,
+              ql_data[0].QL2DAY,
+              ql_data[0].QL3DAY,
+              ql_data[0].QL4DAY,
+              ql_data[0].QL5DAY,
+              ql_data[0].QL5PDAY
+            ]
           }
         ]
       };

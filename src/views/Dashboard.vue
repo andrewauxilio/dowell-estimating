@@ -51,8 +51,8 @@
                         <spinner v-if="total_loading" />
                         <div v-if="!total_loading" class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Quotes</div>
-                            <div class="mb-0 font-weight-bold text-gray-800">{{ totalData[0].QUOTES_NO }} Quotes</div>
-                            <div class="mb-0 font-weight-bold text-gray-800">Value: ${{ totalData[0].QUOTES_$ }}</div>
+                            <div class="mb-0 font-weight-bold text-gray-800">{{ totalData[0].QUOTES_NO }}Quotes</div>
+                            <div class="mb-0 font-weight-bold text-gray-800">${{ totalData[0].QUOTES_$ }}</div>
                         </div>
                         <div v-if="!total_loading" class="col-auto">
                             <i class="fas fa-book fa-2x text-gray-300"></i>
@@ -178,14 +178,14 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-success">KPIs</h6>
                     <!-- <small>Last Updated: {{ e_lastUpdate }}</small> -->
-                    <button @click="updateKpi" class="btn btn-success btn-circle btn-sm">
+                    <button @click="updateBoth" class="btn btn-success btn-circle btn-sm">
                         <i class="fas fa-sync-alt"></i>
                     </button>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <spinner v-if="kpi_loading" />
-                        <estTable v-if="!kpi_loading" :kpiData="kpiData" />
+                        <KpiTable v-if="!kpi_loading" :kpiData="kpiData" />
                     </div>
                 </div>
             </div>
@@ -193,13 +193,13 @@
     </div>
 
     <!-- Action Button -->
-    <actionBtn v-if="!total_loading" @change="changeDate" />
+    <ActionBtn v-if="!total_loading" @change="changeDate" @refresh="updateAll"/>
 
     <!-- Report modal -->
-    <reportModal :site="site" :startDate="startDate" :endDate="endDate" />
+    <ReportModal :site="site" :startDate="startDate" :endDate="endDate" />
 
     <!-- Change Date Modal -->
-    <changeDateModal @change="changeDate" />
+    <ChangeDateModal @change="changeDate" />
 
 </div>
 </template>
@@ -213,13 +213,11 @@ import {
     nextTick
 } from 'q';
 import SevenUnits from '../components/charts/7units';
-import loading from 'vue-loading-overlay';
-import spinner from '../components/plugins/Spinner';
-import spinnerw from '../components/plugins/SpinnerWhite';
-import actionBtn from '../components/buttons/ActionButton';
-import reportModal from '../components/modals/ReportModal';
-import changeDateModal from '../components/modals/ChangeDateModal';
-import estTable from '../components/tables/EstimatorKPITable';
+import Spinner from '../components/plugins/Spinner';
+import ActionBtn from '../components/buttons/ActionButton';
+import ReportModal from '../components/modals/ReportModal';
+import ChangeDateModal from '../components/modals/ChangeDateModal';
+import KpiTable from '../components/tables/EstimatorKPITable';
 import LeadTimes from '../components/charts/LeadTimes';
 import Monthly from '../components/charts/Monthly';
 
@@ -227,13 +225,11 @@ export default {
     name: "dashboard",
     components: {
         SevenUnits,
-        loading,
-        spinner,
-        spinnerw,
-        actionBtn,
-        reportModal,
-        changeDateModal,
-        estTable,
+        Spinner,
+        ActionBtn,
+        ReportModal,
+        ChangeDateModal,
+        KpiTable,
         LeadTimes,
         Monthly
     },
@@ -300,10 +296,12 @@ export default {
         updateAll() {
             this.updateTotal();
             this.updateKpi();
-            this.updateChart();
+            this.updateMonthlyChart();
+            this.updateUnitChart();
+            this.updateQLChart();
         },
 
-        async fetchDataTotal() {
+        fetchDataTotal() {
             if (this.isLoggedIn && this.perm) {
                 this.show = false;
                 this.total_loading = true;
@@ -311,7 +309,7 @@ export default {
                 this.monthly_loading = true;
                 this.ql_loading = true;
                 try {
-                    await axios
+                    axios
                         .post("/estimating/kpis", {
                             end: this.endDate,
                             start: this.startDate,
@@ -346,11 +344,11 @@ export default {
             }
         },
 
-        async fetchDataKpi() {
+        fetchDataKpi() {
             if (this.isLoggedIn && this.perm) {
                 this.kpi_loading = true;
                 try {
-                    await axios
+                    axios
                         .post("/estimating/kpis", {
                             end: this.endDate,
                             start: this.startDate,
@@ -374,11 +372,16 @@ export default {
             }
         },
 
-        async updateKpi() {
+        updateBoth() {
+            this.updateKpi();
+            this.updateTotal();
+        },
+
+        updateKpi() {
             this.kpi_update = "";
             this.kpi_loading = true;
             try {
-                await axios
+                axios
                     .post("/estimating/kpis", {
                         end: this.endDate,
                         start: this.startDate,
@@ -402,11 +405,11 @@ export default {
             }
         },
 
-        async updateTotal() {
+        updateTotal() {
             this.total_update = "";
             this.total_loading = true;
             try {
-                await axios
+                axios
                     .post("/estimating/kpis", {
                         end: this.endDate,
                         start: this.startDate,

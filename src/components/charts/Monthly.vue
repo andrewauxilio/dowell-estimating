@@ -134,7 +134,7 @@ export default {
       };
     },
 
-    async fetchData() {
+    fetchData() {
       let date = new Date();
       let year = date.getFullYear();
       let month = date.getMonth();
@@ -158,72 +158,69 @@ export default {
         });
       }
 
-      for (let i = 0; i <= 6; i++) {
-        console.log(finalDays[i]);
-      }
-
       this.loading = true;
-      await axios.all([
-        axios.post("/estimating/kpis", {
-          end: moment(finalDays[0].end).format("YYYYMMDD"),
-          start: moment(finalDays[0].start).format("YYYYMMDD"),
-          site: this.site,
-          grouped: 0
-        }),
-      
-        axios.post("/estimating/kpis", {
-          end: moment(finalDays[1].end).format("YYYYMMDD"),
-          start: moment(finalDays[1].start).format("YYYYMMDD"),
-          site: this.site,
-          grouped: 0
-        }),
-        axios.post("/estimating/kpis", {
-          end: moment(finalDays[2].end).format("YYYYMMDD"),
-          start: moment(finalDays[2].start).format("YYYYMMDD"),
-          site: this.site,
-          grouped: 0
-        }),
-        axios.post("/estimating/kpis", {
-          end: moment(finalDays[3].end).format("YYYYMMDD"),
-          start: moment(finalDays[3].start).format("YYYYMMDD"),
-          site: this.site,
-          grouped: 0
-        }),
-        axios.post("/estimating/kpis", {
-          end: moment(finalDays[4].end).format("YYYYMMDD"),
-          start: moment(finalDays[4].start).format("YYYYMMDD"),
-          site: this.site,
-          grouped: 0
-        }),
-        axios.post("/estimating/kpis", {
-          end: moment(finalDays[5].end).format("YYYYMMDD"),
-          start: moment(finalDays[5].start).format("YYYYMMDD"),
-          site: this.site,
-          grouped: 0
-        }),
-        axios.post("/estimating/kpis", {
-          end: moment(finalDays[6].end).format("YYYYMMDD"),
-          start: moment(finalDays[6].start).format("YYYYMMDD"),
-          site: this.site,
-          grouped: 0
-        })
-      ])
-      .then(responseArr => {
-        this.monthData1 = responseArr[0].data;
-        this.monthData2 = responseArr[1].data;
-        this.monthData3 = responseArr[2].data;
-        this.monthData4 = responseArr[3].data;
-        this.monthData5 = responseArr[4].data;
-        this.monthData6 = responseArr[5].data;
-        this.monthData7 = responseArr[6].data;
+      axios
+        .all([
+          axios.post("/estimating/kpis", {
+            end: moment(finalDays[0].end).format("YYYYMMDD"),
+            start: moment(finalDays[0].start).format("YYYYMMDD"),
+            site: this.site,
+            grouped: 0
+          }),
 
-        this.fillData();
-        this.loading = false;
-        toast.fire({
-          type: "success",
-          title: "Chart data loaded"
+          axios.post("/estimating/kpis", {
+            end: moment(finalDays[1].end).format("YYYYMMDD"),
+            start: moment(finalDays[1].start).format("YYYYMMDD"),
+            site: this.site,
+            grouped: 0
+          }),
+          axios.post("/estimating/kpis", {
+            end: moment(finalDays[2].end).format("YYYYMMDD"),
+            start: moment(finalDays[2].start).format("YYYYMMDD"),
+            site: this.site,
+            grouped: 0
+          }),
+          axios.post("/estimating/kpis", {
+            end: moment(finalDays[3].end).format("YYYYMMDD"),
+            start: moment(finalDays[3].start).format("YYYYMMDD"),
+            site: this.site,
+            grouped: 0
+          }),
+          axios.post("/estimating/kpis", {
+            end: moment(finalDays[4].end).format("YYYYMMDD"),
+            start: moment(finalDays[4].start).format("YYYYMMDD"),
+            site: this.site,
+            grouped: 0
+          }),
+          axios.post("/estimating/kpis", {
+            end: moment(finalDays[5].end).format("YYYYMMDD"),
+            start: moment(finalDays[5].start).format("YYYYMMDD"),
+            site: this.site,
+            grouped: 0
+          }),
+          axios.post("/estimating/kpis", {
+            end: moment(finalDays[6].end).format("YYYYMMDD"),
+            start: moment(finalDays[6].start).format("YYYYMMDD"),
+            site: this.site,
+            grouped: 0
+          })
+        ])
+        .then(responseArr => {
+          this.monthData1 = responseArr[0].data;
+          this.monthData2 = responseArr[1].data;
+          this.monthData3 = responseArr[2].data;
+          this.monthData4 = responseArr[3].data;
+          this.monthData5 = responseArr[4].data;
+          this.monthData6 = responseArr[5].data;
+          this.monthData7 = responseArr[6].data;
+
+          this.fillData();
+          this.loading = false;
+          toast.fire({
+            type: "success",
+            title: "Monthly Chart Loaded"
+          });
         });
-      });
     },
 
     fillData() {
@@ -238,12 +235,12 @@ export default {
       this.datacollection = {
         labels: [
           moment(month7[0].DATE_FROM).format("MMM"),
-          moment(month6[0].DATE_FROM).format("MMM"), 
+          moment(month6[0].DATE_FROM).format("MMM"),
           moment(month5[0].DATE_FROM).format("MMM"),
           moment(month4[0].DATE_FROM).format("MMM"),
           moment(month3[0].DATE_FROM).format("MMM"),
           moment(month2[0].DATE_FROM).format("MMM"),
-          moment(month1[0].DATE_FROM).format("MMM"),
+          moment(month1[0].DATE_FROM).format("MMM")
         ],
         datasets: [
           {
