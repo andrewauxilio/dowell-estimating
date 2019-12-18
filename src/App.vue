@@ -3,7 +3,7 @@
     <!--------------------------------------------------------------------
                              Main Navigation
     --------------------------------------------------------------------->
-    <ul :class="{'toggled': isCollapsed}" class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul v-show="isVisibleSidebar" :class="{'toggled': isCollapsed}" class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
         <router-link class="sidebar-brand d-flex align-items-center justify-content-center" to="/landing">
             <div class="sidebar-brand-icon">
                 <i class="fas fa-chart-area"></i>
@@ -144,7 +144,7 @@
     --------------------------------------------------------------------->
     <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <nav v-show="isVisibleSidebar" class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                 <!-- Sidebar Toggle (Topbar) -->
                 <button @click="sideBarToggle()" id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                     <i class="fa fa-bars text-success"></i>
@@ -156,7 +156,7 @@
                     </li>
                 </ul>
             </nav>
-            <div class="container-fluid">
+            <div class="container-fluid mt-3">
                 <transition name="fade">
                     <!-- Router View -->
                     <router-view :key="$route.fullPath" />
@@ -164,6 +164,7 @@
             </div>
         </div>
     </div>
+    <ActionButton @hideSidebar="sideBarHide" />
 </div>
 </template>
 
@@ -171,16 +172,20 @@
 import axios from "axios";
 import {
     mapGetters
-} from 'vuex'
+} from 'vuex';
+import ActionButton from './components/buttons/ActionApp'
 
 export default {
     name: 'home',
     data() {
         return {
             isCollapsed: false,
+            isVisibleSidebar: true,
         }
     },
-
+    components: {
+        ActionButton
+    },
     props: {
         site: String
     },
@@ -234,6 +239,9 @@ export default {
         }),
     },
     methods: {
+        sideBarHide() {
+            this.isVisibleSidebar = !this.isVisibleSidebar
+        },
         //Sidebar open/close (Sidebar)
         sideBarToggle() {
             this.isCollapsed = !this.isCollapsed

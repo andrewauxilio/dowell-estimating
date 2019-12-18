@@ -49,16 +49,6 @@ import {
 } from "vuex";
 
 export default {
-    data() {
-        return {
-            currentView: "simple"
-        };
-    },
-
-    components: {
-        Simple
-    },
-
     computed: {
         ...mapGetters({
             isLoggedIn: "isLoggedIn",

@@ -193,7 +193,7 @@
     </div>
 
     <!-- Action Button -->
-    <ActionBtn v-if="!total_loading" @change="changeDate" @refresh="updateAll"/>
+    <ActionButton v-if="!total_loading" @change="changeDate" @refresh="updateAll"/>
 
     <!-- Report modal -->
     <ReportModal :site="site" :startDate="startDate" :endDate="endDate" />
@@ -214,7 +214,7 @@ import {
 } from 'q';
 import SevenUnits from '../components/charts/7units';
 import Spinner from '../components/plugins/Spinner';
-import ActionBtn from '../components/buttons/ActionButton';
+import ActionButton from '../components/buttons/ActionDashboard';
 import ReportModal from '../components/modals/ReportModal';
 import ChangeDateModal from '../components/modals/ChangeDateModal';
 import KpiTable from '../components/tables/EstimatorKPITable';
@@ -226,7 +226,7 @@ export default {
     components: {
         SevenUnits,
         Spinner,
-        ActionBtn,
+        ActionButton,
         ReportModal,
         ChangeDateModal,
         KpiTable,
