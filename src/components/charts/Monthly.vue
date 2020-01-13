@@ -135,28 +135,16 @@ export default {
     },
 
     fetchData() {
-      let date = new Date();
-      let year = date.getFullYear();
-      let month = date.getMonth();
+      let months = 0;
       let finalDays = [];
 
-      for (month; month >= 0; month--) {
-        getDaysInMonth(month, year);
-      }
-
-      function getDaysInMonth(month, year) {
-        let date = new Date(Date.UTC(year, month, 1));
-        let days = [];
-
-        while (date.getMonth() === month) {
-          days.push(new Date(date));
-          date.setDate(date.getDate() + 1);
-        }
+      for (months; months <= 6; months++) {
         finalDays.push({
-          start: days[0],
-          end: days[days.length - 1]
+          start:  moment().subtract(months, 'months').startOf('month').format('YYYYMMDD'),
+          end: moment().subtract(months, 'months').endOf('month').format('YYYYMMDD')
         });
       }
+
 
       this.loading = true;
       axios
