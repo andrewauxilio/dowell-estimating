@@ -36,6 +36,9 @@ export default {
             bottom: 0
           }
         },
+        dataset: {
+          maxBarThickness: 25
+        },
         scales: {
           xAxes: [
             {
@@ -43,7 +46,6 @@ export default {
                 display: false,
                 drawBorder: false
               },
-              maxBarThickness: 25,
               ticks: {
                 beginAtZero: true
               }
@@ -58,7 +60,6 @@ export default {
                 borderDash: [2],
                 zeroLineBorderDash: [2]
               },
-              maxBarThickness: 15,
               ticks: {
                 beginAtZero: true
               }
@@ -117,7 +118,7 @@ export default {
           this.fillData();
           this.loading = false;
           toast.fire({
-            type: "success",
+            icon: "success",
             title: "Quote Lead Times Chart Loaded"
           });
         });

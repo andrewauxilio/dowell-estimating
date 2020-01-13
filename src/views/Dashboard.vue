@@ -328,7 +328,7 @@ export default {
                                 this.show_ql = true;
                             })
                             toast.fire({
-                                type: "success",
+                                icon: "success",
                                 title: "Site data loaded"
                             });
                             this.total_update = moment().format('MMMM Do YYYY, h:mm:ss a');
@@ -359,7 +359,7 @@ export default {
                             this.kpiData = response.data;
                             this.kpi_loading = false;
                             toast.fire({
-                                type: "success",
+                                icon: "success",
                                 title: "Estimator KPI loaded"
                             })
                         })
@@ -392,7 +392,7 @@ export default {
                         this.kpiData = response.data;
                         this.kpi_loading = false;
                         toast.fire({
-                            type: "success",
+                            icon: "success",
                             title: "Site data loaded"
                         })
                         this.kpi_update = moment().format('MMMM Do YYYY, h:mm:ss a');
@@ -420,7 +420,7 @@ export default {
                         this.totalData = response.data;
                         this.total_loading = false;
                         toast.fire({
-                            type: "success",
+                            icon: "success",
                             title: "Estimator KPI updated"
                         })
                         this.total_update = moment().format('MMMM Do YYYY, h:mm:ss a');

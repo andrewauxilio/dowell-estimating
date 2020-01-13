@@ -46,6 +46,9 @@ export default {
             bottom: 0
           }
         },
+        dataset: {
+          maxBarThickness: 30
+        },
         scales: {
           xAxes: [
             {
@@ -53,7 +56,6 @@ export default {
                 display: false,
                 drawBorder: false
               },
-              maxBarThickness: 30,
               ticks: {
                 beginAtZero: true
               }
@@ -245,7 +247,7 @@ export default {
           this.fillData();
           this.loading = false;
           toast.fire({
-            type: "success",
+            icon: "success",
             title: "7 Unit Chart Loaded"
           });
         });

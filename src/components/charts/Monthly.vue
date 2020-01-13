@@ -46,6 +46,9 @@ export default {
             bottom: 0
           }
         },
+        dataset: {
+          maxBarThickness: 40
+        },
         scales: {
           xAxes: [
             {
@@ -53,7 +56,6 @@ export default {
                 display: false,
                 drawBorder: false
               },
-              maxBarThickness: 40,
               ticks: {
                 beginAtZero: true
               }
@@ -205,7 +207,7 @@ export default {
           this.fillData();
           this.loading = false;
           toast.fire({
-            type: "success",
+            icon: "success",
             title: "Monthly Chart Loaded"
           });
         });
