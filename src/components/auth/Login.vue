@@ -77,7 +77,7 @@ export default {
                             this.$router.push('/landing')
                             this.$store.dispatch('getDates')
                             toast.fire({
-                                type: "success",
+                                icon: "success",
                                 title: "You have logged in successfully"
                             })
                         } else {

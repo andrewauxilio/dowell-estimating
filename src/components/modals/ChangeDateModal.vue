@@ -46,7 +46,7 @@ export default {
             }).then((response) => {
                 this.$emit('change')
                 toast.fire({
-                    type: "success",
+                    icon: "success",
                     title: "Dates changed (from: " + this.startDate + " to: " + this.endDate + ")"
 
                 })

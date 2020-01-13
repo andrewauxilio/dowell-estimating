@@ -30,7 +30,7 @@ export default {
                 .then((response) => {
                     this.$emit('change')
                     toast.fire({
-                        type: "success",
+                        icon: "success",
                         title: "Dates changed to today"
 
                     });

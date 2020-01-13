@@ -9,7 +9,7 @@ export default {
             .then(response => {
                 this.$router.push('/')
                 toast.fire({
-                    type: "success",
+                    icon: "success",
                     title: "You have logged out successfully"
                 });
             })
