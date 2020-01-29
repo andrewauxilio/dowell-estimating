@@ -15,3 +15,11 @@ const toast = swal.mixin({
 });
 window.toast = toast;
 window.Fire = new Vue();
+
+//Google Analytics
+import VueAnalytics from 'vue-analytics'
+
+Vue.use(VueAnalytics, {
+  id: 'UA-157319262-1',
+  checkDuplicatedScript: true
+})
