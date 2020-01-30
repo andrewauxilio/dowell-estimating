@@ -62,7 +62,7 @@ export default {
     methods: {
         permissionCheck() {
             if (!this.isLoggedIn) {
-                this.$router.push("/");
+                this.$router.push("/logout");
             }
         }
     }

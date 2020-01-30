@@ -2,7 +2,9 @@ import axios from "axios";
 
 export default {
   state: {
+    db_token: '' || null,
     token: sessionStorage.getItem("access_token") || null,
+    user_id: '',
     user_name: '',
     apps: [],
     roles: [],
@@ -12,7 +14,7 @@ export default {
 
   getters: {
     isLoggedIn(state) {
-      return state.token !== null;
+      return state.token == state.db_token;
     },
 
     getUserName(state) {
@@ -194,11 +196,17 @@ export default {
   },
 
   mutations: {
+    SET_DB_TOKEN(state, payload) {
+      state.db_token = payload;
+    },
     SET_TOKEN(state, payload) {
       state.token = payload;
     },
     REMOVE_TOKEN(state) {
       state.token = null;
+    },
+    SET_USER_ID(state, payload) {
+      state.user_id = payload;
     },
     SET_USER_NAME(state, payload) {
       state.user_name = payload;
@@ -273,6 +281,7 @@ export default {
             });
 
             //Save each array in state
+            context.commit("SET_USER_ID", response.data.id);
             context.commit("SET_USER_NAME", response.data.name);
             context.commit("SET_APPS", apps);
             context.commit("SET_ROLES", roles);
@@ -305,6 +314,7 @@ export default {
           .then(response => {
             const token = response.data.access_token;
             sessionStorage.setItem("access_token", token);
+            context.commit("SET_DB_TOKEN", token);
             context.commit("SET_TOKEN", token);
             resolve(response);
           })
@@ -315,50 +325,44 @@ export default {
       });
     },
 
-    /**-------------------------------------------------------------------
-     ***                    Destroy User Token
-     ***-------------------------------------------------------------------
-     *** Function: The logout function. This destroys the token for the
-     *** user and their user details
-     ***-------------------------------------------------------------------
-     **/
-    // removeUserDetails(context) {
-    //   axios.defaults.headers.common["Authorization"] =
-    //     "Bearer " + context.state.token;
-
-    //   if (context.getters.loggedIn) {
-    //     return new Promise((resolve, reject) => {
-    //       axios
-    //         .post("/auth/logout")
-    //         .then(response => {
-    //           sessionStorage.removeItem("access_token");
-    //           context.commit("REMOVE_TOKEN");
-    //           context.commit("REMOVE_APPS");
-    //           context.commit("REMOVE_ROLES");
-    //           context.commit("REMOVE_STATES");
-    //           context.commit("REMOVE_SITES");
-    //           resolve(response);
-    //         })
-    //         .catch(error => {
-    //           sessionStorage.removeItem("access_token");
-    //           context.commit("REMOVE_TOKEN");
-    //           context.commit("REMOVE_APPS");
-    //           context.commit("REMOVE_ROLES");
-    //           context.commit("REMOVE_STATES");
-    //           context.commit("REMOVE_SITES");
-    //           reject(error);
-    //         });
-    //     });
-    //   }
-    // },
+    saveToken(context) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post("/user/saveToken/" + context.state.user_id, {
+            token: context.state.token
+          })
+          .then(response => {
+            console.log("token saved")
+            resolve(response);
+          })
+          .catch(error => {
+            reject(error);
+            console.log(error);
+          });
+      });
+    },
 
     removeUserDetails(context) {
-      sessionStorage.removeItem("access_token");
-      context.commit("REMOVE_TOKEN");
-      context.commit("REMOVE_APPS");
-      context.commit("REMOVE_ROLES");
-      context.commit("REMOVE_STATES");
-      context.commit("REMOVE_SITES");
+      return new Promise((resolve, reject) => {
+        axios
+          .post("/user/saveToken/" + context.state.user_id, {
+            token: null
+          })
+          .then(response => {
+            console.log("token saved")
+            resolve(response);
+            sessionStorage.removeItem("access_token");
+            context.commit("REMOVE_TOKEN");
+            context.commit("REMOVE_APPS");
+            context.commit("REMOVE_ROLES");
+            context.commit("REMOVE_STATES");
+            context.commit("REMOVE_SITES");
+          })
+          .catch(error => {
+            reject(error);
+            console.log(error);
+          });
+      });
     }
   }
 };

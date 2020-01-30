@@ -282,7 +282,7 @@ export default {
     methods: {
         permissionCheck() {
             if (!this.isLoggedIn || !this.perm) {
-                this.$router.push("/404");
+                this.$router.push("/logout");
             }
         },
 

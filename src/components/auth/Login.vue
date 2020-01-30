@@ -73,6 +73,7 @@ export default {
                 .then(response => {
                     this.$store.dispatch('getUserDetails')
                     .then(response => {
+                        this.$store.dispatch('saveToken')
                         if (this.$store.getters.isEstimating) {
                             this.$router.push('/landing')
                             this.$store.dispatch('getDates')
